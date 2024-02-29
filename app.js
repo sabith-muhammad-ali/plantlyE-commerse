@@ -7,7 +7,6 @@ const nochache = require('nocache');
 dotenv.config();
 const app = express();
 
-
 // Database connection
 mongoose.connect('mongodb://127.0.0.1:27017/ecommerse');
 
