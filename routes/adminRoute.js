@@ -4,12 +4,14 @@ const multer = require("multer");
 const path = require("path");
 const config = require("../config/config");
 const adminController = require("../controllers/adminController");
-// const auth = require('../middelware/admin.Auth');
-
+const categoryController = require('../controllers/categoryController')
 const admin = express();
 
-// Session setup
-// admin.use(session({ secret: config.sessionSecret }));
+
+admin.use(express.urlencoded({ extended: true }));
+admin.use(express.json());
+
+
 
 // View setup
 admin.set("views", path.join(__dirname, "views"));
@@ -36,5 +38,11 @@ admin.post("/", adminController.verifyLogin);
 admin.get("/admindashbord", adminController.loadDashbord);
 admin.get("/userprofile", adminController.userManagement);
 admin.patch("/blockusers/:id", adminController.blockUser);
+admin.get('/category',categoryController.productCategory);
+admin.get('/categoryadd',categoryController.addCategory);
+admin.post('/categoryadd',categoryController.insertCategory);
+admin.patch('/blockcategory/:id',categoryController.Categoryblock);
+admin.get('/categoryedit',categoryController.editCategory);
+admin.post('/categoryedit',categoryController.updateCategory);
 
 module.exports = admin;

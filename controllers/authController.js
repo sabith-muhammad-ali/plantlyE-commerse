@@ -51,10 +51,11 @@ const success = async (req, res) => {
         mobile: 0,
         varified: true,
         password: sPassword,
+        varified: true,
         is_admin: false,
         is_block: false,
         google: true,
-        facebook:false,
+        facebook: false,
       });
       const savedUser = await newUser.save();
 

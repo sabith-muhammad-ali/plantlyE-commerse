@@ -1,36 +1,51 @@
 const mongoose = require("mongoose");
-const productListSchema = new mongoose.Schema({
-  productName: {
+const categoryModel = require("./categoryModel");
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
+const productSchema = new mongoose.Schema({
+  name: {
     type: String,
     required: true,
   },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  categoryId: {
+    type: ObjectId,
+    ref: "categoryModel",
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  offer: {
+    type: ObjectId,
+    ref: "offerModel",
+  },
+  discountPrice: Number,
   description: {
     type: String,
-  },
-  prize: {
-    type: Number,
-    required: true,
+    required: false,
   },
   images: {
-    type: [String],
+    image1: {
+      type: String,
+    },
+    image2: {
+      type: String,
+    },
+    image3: {
+      type: String,
+    },
+  },
+  is_blocked: {
+    type: Boolean,
+    default: false,
     required: true,
-  },
-  categoryName: {
-    type: String,
-    required: true,
-  },
-  stock: {
-    type: Number,
-    required: true,
-  },
-  is_listed: {
-    type: Number,
-    default: 0,
-  },
-  offerName: {
-    type: String,
-  },
-  offerPrice: {
-    type: Number,
   },
 });
+
+const product = mongoose.model("product", productSchema);
+module.exports = product;

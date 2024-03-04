@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
     type: Boolean,
   },
   facebookId: {
-    type: String
-  }
+    type: String,
+  },
 });
 module.exports = mongoose.model("User", userSchema);

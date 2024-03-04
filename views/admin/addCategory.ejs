@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="adminAssets/assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="adminAssets/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="adminAssets/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
@@ -80,7 +82,7 @@
             <span class="nav-link">Navigation</span>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="/admin/admindashbord">
+            <a class="nav-link" href="../../index.html">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
@@ -112,11 +114,11 @@
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="/admin/userprofile">
+            <a class="nav-link" href="../../pages/tables/basic-table.html">
               <span class="menu-icon">
                 <i class="mdi mdi-table-large"></i>
               </span>
-              <span class="menu-title">User List</span>
+              <span class="menu-title">Tables</span>
             </a>
           </li>
           <li class="nav-item menu-items">
@@ -361,95 +363,103 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="page-header">
-            </div>
-
-              <!--  -->
-              <div class="col-lg-12 grid-margin stretch-card">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">User List</h4>
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                        <tr>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Phone</th>
-                          <th>Status</th>
-                          <th>Action</th>
-                        </tr>
-                        <% users.forEach((user,index) => { %>
-                          <tr>
-                            <td><%= user.name %></td>
-                            <td><%= user.email %></td>
-                            <td><%= user.mobile %></td>
-                            <td><%= user.varified %></td>
-                            <td class="text-end">
-                              <% if (user.is_block) { %>
-                                <a class="Unblock-user" data-user-id="<%= user._id %>"><button class="btn btn-success border-0 px-4 py-2">Unblock</button></a>
-                              <% } else { %>
-                                <a class="block-user" data-user-id="<%= user._id %>"><button class="btn btn-warning border-0 px-4 py-2">Block</button></a>
-                              <% } %>
-                            </td>
-                          </tr>
-                        <% }); %>
-                      </table>                 
-                    </div>
+                    <span id="errorId" style="color: red;"></span>
+                    <h4 class="card-title">Add Category</h4>
+                    <form id="categoryForm" onsubmit="validate(event)">
+                      <div class="form-group">
+                          <label for="name">Name</label>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                      </div>
+                      <div class="form-group">
+                          <label for="description">Description</label>
+                          <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                      <a href="/admin/category" class="btn btn-primary">Cancel</a>
+                     </form>
                   </div>
                 </div>
               </div>
-
+              
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->
-          <footer class="footer"></footer>
+          <footer class="footer">
+          </footer>
           <!-- partial -->
         </div>
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="adminAssets/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="adminAssets/assets/vendors/select2/select2.min.js"></script>
+    <script src="adminAssets/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="adminAssets/assets/js/off-canvas.js"></script>
+    <script src="adminAssets/assets/js/hoverable-collapse.js"></script>
+    <script src="adminAssets/assets/js/misc.js"></script>
+    <script src="adminAssets/assets/js/settings.js"></script>
+    <script src="adminAssets/assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="adminAssets/assets/js/file-upload.js"></script>
+    <script src="adminAssets/assets/js/typeahead.js"></script>
+    <script src="adminAssets/assets/js/select2.js"></script>
+    <!-- End custom js for this page -->
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.block-user, .Unblock-user').forEach(function(Element) {
-          console.log(Element);
-    
-          Element.addEventListener('click', function(event) {
-            event.preventDefault();
-    
-            const userId = Element.getAttribute('data-user-id');
-            const action = Element.classList.contains('block-user') ? 'block' : 'Unblock';
-            console.log('hii');
-    
-            fetch(`/admin/blockusers/${userId}`, {
-                method: 'PATCH',
-              })
-              .then(Response => Response.json())
-              .then(data => {
-                if (data.block == true) {
-                  console.log('hello');
-                  //updating the button text and color
-                  Element.querySelector('button').classList.toggle('btn-success');
-                  Element.querySelector('button').classList.toggle('btn-warning');
-                  Element.querySelector('button').innerText = action === 'block' ? 'unblock' : 'block';
-    
-                  //replace button class
-                  Element.classList.remove(action === 'block' ? 'block-user' : 'Unblock-user');
-                  Element.classList.add(action === 'block' ? 'Unblock-user' : 'block-user');
-                }
-              }).catch((error) => {
-                console.log(error.message);
-              });
-          });
-        });
-      });
+async function validate(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const errorshow = document.getElementById('errorId');
+    const alphabeticRegex = /^[A-Za-z\s]+$/;
+
+    if (name === '') {
+        errorshow.textContent = 'Enter Name';
+    } else if (description === '') {
+        errorshow.textContent = 'Enter Description';
+    } else if (!alphabeticRegex.test(name)) {
+        errorshow.textContent = 'Name should contain only alphabetic characters';
+    } else if (!alphabeticRegex.test(description)) {
+        errorshow.textContent = 'Description should contain only alphabetic characters';
+    } else {
+        const formData = {
+            name: name,
+            description: description
+        };
+
+        try {
+            const response = await fetch('/admin/categoryadd', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const responseData = await response.json();
+            console.log(responseData);
+            if (responseData.success) {
+                window.location.href = '/admin/category';
+            } else if (responseData.exists) {
+                errorshow.textContent = 'Category already exists';
+            }
+        } catch (error) {
+            console.log('Error', error);
+        }
+    }
+}
     </script>
-    
-  
-  <script src="adminAssets/assets/vendors/js/vendor.bundle.base.js"></script>
-  <script src="adminAssets/assets/js/off-canvas.js"></script>
-  <script src="adminAssets/assets/js/hoverable-collapse.js"></script>
-  <script src="adminAssets/assets/js/misc.js"></script>
-  <script src="adminAssets/assets/js/settings.js"></script>
-  <script src="adminAssets/assets/js/todolist.js"></script>  
+
+  </script>
   </body>
 </html>

@@ -6,6 +6,12 @@ const userController = require("../controllers/userController");
 const googleauthController = require("../controllers/authController");
 
 
+
+
+
+user.use(express.urlencoded({ extended: true }));
+user.use(express.json());
+
 user.use(
   session({
     secret: process.env.sessionSecret,
@@ -21,6 +27,7 @@ user.get("/userOTP", userController.sendOTP);
 user.post("/userOTP", userController.verifyOTP);
 user.get("/loginUser", userController.loadsignin);
 user.get("/logout", userController.userLogout);
+
 
 //gogole
 user.use(passport.initialize());
@@ -44,12 +51,5 @@ user.get("/auth/google/success", googleauthController.success);
 user.get("/auth/google/failure", (req, res) => {
   res.send("something failed");
 });
-
-
-
-
-
-
-
 
 module.exports = user;
