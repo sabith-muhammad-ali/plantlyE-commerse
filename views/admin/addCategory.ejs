@@ -368,7 +368,13 @@
                 <div class="card">
                   <div class="card-body">
                     <span id="errorId" style="color: red;"></span>
-                    <h4 class="card-title">Add Category</h4>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col text-center mt-5">
+                          <h3 class="page-title"> Add Category</h3>
+                        </div>
+                      </div>
+                    </div>
                     <form id="categoryForm" onsubmit="validate(event)">
                       <div class="form-group">
                           <label for="name">Name</label>
@@ -422,7 +428,7 @@ async function validate(event) {
     const name = document.getElementById('name').value.trim();
     const description = document.getElementById('description').value.trim();
     const errorshow = document.getElementById('errorId');
-    const alphabeticRegex = /^[A-Za-z\s]+$/;
+    const alphabeticRegex = /^[A-Za-z0-9\s,.\-'"]+$/;
 
     if (name === '') {
         errorshow.textContent = 'Enter Name';
@@ -451,7 +457,7 @@ async function validate(event) {
             if (responseData.success) {
                 window.location.href = '/admin/category';
             } else if (responseData.exists) {
-                errorshow.textContent = 'Category already exists';
+                errorshow.textContent = responseData.message;
             }
         } catch (error) {
             console.log('Error', error);

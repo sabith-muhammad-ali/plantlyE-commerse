@@ -1,5 +1,5 @@
 const categoryModel = require("../models/categoryModel");
-const category = require("../models/categoryModel");
+// const category = require("../models/categoryModel");
 
 const productCategory = async (req, res) => {
   try {
@@ -23,20 +23,17 @@ const insertCategory = async (req, res) => {
     const { name, description } = req.body;
     console.log(name);
     console.log(description);
-
-    const existingCategory = await category.findOne({ name });
-    const duplicateName = existingCategory.some(
-      (category) => category.name.toLowercase() === name.toLowercase()
-    );
-
-    if (duplicateName) {
-      return res.json({ exists: true, message: "category alredy exists" });
+    const regex = new RegExp("^" + name + "$", "i");
+    const existingCategory = await category.findOne({ name: regex });
+    if (existingCategory) {
+      return res.json({ exists: true, message: "Category already exists" });
     } else {
       const newCategory = new category({
         name,
         description,
         is_block: false,
       });
+
       console.log("hhhhhhhhhh");
       await newCategory.save();
 
@@ -76,11 +73,7 @@ const editCategory = async (req, res) => {
   try {
     const id = req.query.id;
     const categoryData = await category.findById({ _id: id });
-    if (categoryData) {
-      res.render("editCategory", { categories: categoryData });
-    } else {
-      res.redirect("/admin/category");
-    }
+    res.render("editCategory", { categories: categoryData });
   } catch (error) {
     console.log(error);
   }
@@ -88,20 +81,17 @@ const editCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
   try {
-    const name = req.body.name;
-    const description = req.body.description;
-    console.log(name);
-    console.log(description);
+    const { id, name, description } = req.body;
     const category = await categoryModel.findOne({ name: name });
-    console.log(category);
-    if (category && category.name == name) {
-      res.render("editCategory", { message: "already exist" });
+    if (category) {
+      return res.json({ ok: false });
     } else {
       await categoryModel.updateOne(
-        { _id: req.body.id },
-        { $set: { name: name, description: description } }
+        { _id: id },
+        { $set: { name: name, description: description } },
+        { new: true }
       );
-      res.redirect("/admin/category");
+      return res.json({ ok: true });
     }
   } catch (error) {
     console.log(error.message);

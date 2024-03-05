@@ -1,13 +1,9 @@
 const express = require("express");
 const user = express.Router();
-const session = require("express-session"); 
+const session = require("express-session");
 const passport = require("passport");
 const userController = require("../controllers/userController");
 const googleauthController = require("../controllers/authController");
-
-
-
-
 
 user.use(express.urlencoded({ extended: true }));
 user.use(express.json());
@@ -27,7 +23,6 @@ user.get("/userOTP", userController.sendOTP);
 user.post("/userOTP", userController.verifyOTP);
 user.get("/loginUser", userController.loadsignin);
 user.get("/logout", userController.userLogout);
-
 
 //gogole
 user.use(passport.initialize());
