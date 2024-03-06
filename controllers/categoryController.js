@@ -1,5 +1,5 @@
 const categoryModel = require("../models/categoryModel");
-// const category = require("../models/categoryModel");
+const category = require("../models/categoryModel");
 
 const productCategory = async (req, res) => {
   try {
@@ -21,8 +21,6 @@ const addCategory = async (req, res) => {
 const insertCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
-    console.log(name);
-    console.log(description);
     const regex = new RegExp("^" + name + "$", "i");
     const existingCategory = await category.findOne({ name: regex });
     if (existingCategory) {
@@ -34,7 +32,6 @@ const insertCategory = async (req, res) => {
         is_block: false,
       });
 
-      console.log("hhhhhhhhhh");
       await newCategory.save();
 
       return res.json({

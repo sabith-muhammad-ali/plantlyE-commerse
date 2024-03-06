@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const categoryModel = require("./categoryModel");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const productSchema = new mongoose.Schema({
@@ -13,7 +12,7 @@ const productSchema = new mongoose.Schema({
   },
   categoryId: {
     type: ObjectId,
-    ref: "categoryModel",
+    ref: "Category",
     required: true,
   },
   price: {
@@ -29,17 +28,8 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  images: {
-    image1: {
-      type: String,
-    },
-    image2: {
-      type: String,
-    },
-    image3: {
-      type: String,
-    },
-  },
+  images: [String],
+  
   is_blocked: {
     type: Boolean,
     default: false,

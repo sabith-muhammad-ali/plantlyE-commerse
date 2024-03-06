@@ -86,5 +86,5 @@ module.exports = {
   loadDashbord,
   userManagement,
   blockUser,
-  product
+
 };
