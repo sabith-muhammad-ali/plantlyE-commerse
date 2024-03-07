@@ -77,14 +77,10 @@ const blockUser = async (req, res) => {
   }
 };
 
-
-
-
 module.exports = {
   loadLogin,
   verifyLogin,
   loadDashbord,
   userManagement,
   blockUser,
-
 };

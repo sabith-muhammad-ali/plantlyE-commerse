@@ -5,9 +5,9 @@ const adminController = require("../controllers/adminController");
 const categoryController = require("../controllers/categoryController");
 const productController = require("../controllers/productController");
 const admin = express();
-const path = require("path"); 
+const path = require("path");
 
-console.log(path.join(__dirname , '../public/multer'));
+console.log(path.join(__dirname, "../public/multer"));
 
 admin.use(express.urlencoded({ extended: true }));
 admin.use(express.json());
@@ -25,7 +25,7 @@ const multer = require("multer");
 // Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.resolve(__dirname,"../public/assets/multer"));
+    cb(null, path.resolve(__dirname, "../public/assets/multer"));
   },
   filename: function (req, file, cb) {
     const name = Date.now() + "-" + file.originalname;
@@ -33,7 +33,6 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
-
 
 admin.get("/", adminController.loadLogin);
 admin.post("/", adminController.verifyLogin);
@@ -50,7 +49,18 @@ admin.get("/categoryedit", categoryController.editCategory);
 admin.post("/categoryedit", categoryController.updateCategory);
 //product
 admin.get("/product", productController.loadproduct);
-admin.get('/addproduct',productController.addProduct);
-admin.post('/addproduct',upload.array('image',4),productController.insertProduct);
+admin.get("/addproduct", productController.addProduct);
+admin.post(
+  "/addproduct",
+  upload.array("image", 4),
+  productController.insertProduct
+);
+admin.patch("/blockproduct/:id", productController.productblock);
+admin.get("/editproduct", productController.loadeditproduct);
+admin.post(
+  "/editproduct",
+  upload.array(image, 4),
+  productController.productedit
+);
 
 module.exports = admin;

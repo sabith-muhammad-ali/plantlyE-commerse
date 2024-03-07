@@ -1,5 +1,6 @@
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
+const sharp = require("sharp");
 
 const loadproduct = async (req, res) => {
   try {
@@ -30,6 +31,13 @@ const insertProduct = async (req, res) => {
     if (exisistingProduct) {
       console.log("this product already exists");
     } else {
+      for (let i = 0; i < images.length; i++) {
+        if (images[i]) {
+          await sharp(`public/assets/multer/${images[i]}`)
+            .resize(500, 500)
+            .toFile(`public/assets/sharp/${images[i]}`);
+        }
+      }
       const newProduct = new productModel({
         name,
         categoryId,
@@ -48,8 +56,48 @@ const insertProduct = async (req, res) => {
   }
 };
 
+const productblock = async (req, res) => {
+  try {
+    console.log("louy");
+    const productId = req.params.id;
+    const productValue = await productModel.findOne({ _id: productId });
+    if (productValue) {
+      const newBlockState = !productValue.is_blocked;
+      await productModel.updateOne(
+        { _id: productId },
+        { $set: { is_blocked: newBlockState } }
+      );
+      res.json({ block: true });
+    } else {
+      console.log("product not found");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "internal server error " });
+  }
+};
+
+const loadeditproduct = async (req, res) => {
+  try {
+    const category = await categoryModel.find({});
+    const id = req.query.id;
+    const productData = await productModel.findById(id).populate("categoryId");
+    console.log(productData,id);
+    res.render("editProduct", { productData, category });
+  } catch (error) {
+    console.log(error); 
+  }
+};
+const productedit = async (req,res) => {
+
+}
+
+
 module.exports = {
   loadproduct,
   addProduct,
   insertProduct,
+  productblock,
+  loadeditproduct,
+  productedit
 };
