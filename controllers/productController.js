@@ -1,6 +1,7 @@
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 const sharp = require("sharp");
+const product = require("../models/productModel");
 
 const loadproduct = async (req, res) => {
   try {
@@ -82,16 +83,22 @@ const loadeditproduct = async (req, res) => {
     const category = await categoryModel.find({});
     const id = req.query.id;
     const productData = await productModel.findById(id).populate("categoryId");
-    console.log(productData,id);
+    // console.log(productData,id);
     res.render("editProduct", { productData, category });
   } catch (error) {
-    console.log(error); 
+    console.log(error);
   }
 };
-const productedit = async (req,res) => {
 
-}
-
+const deleteImage = async (req, res) => {
+  try {
+    console.log("data ethi");
+    console.log(req.body.imageid);
+    res.status(200);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   loadproduct,
@@ -99,5 +106,5 @@ module.exports = {
   insertProduct,
   productblock,
   loadeditproduct,
-  productedit
+  deleteImage,
 };

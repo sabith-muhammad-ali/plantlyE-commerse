@@ -81,7 +81,7 @@ const updateCategory = async (req, res) => {
     const { id, name, description } = req.body;
     const category = await categoryModel.findOne({ name: name });
     if (category) {
-      return res.json({ ok: false });
+      return res.json({ exits: true });
     } else {
       await categoryModel.updateOne(
         { _id: id },

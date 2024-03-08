@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema({
     required: false,
   },
   images: [String],
-  
+
   is_blocked: {
     type: Boolean,
     default: false,

@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const UserOTPVerfication = require("../models/OTPModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const productModel = require("../models/productModel");
 
 // tempHomePage
 const homePage = async (req, res) => {
@@ -173,8 +174,14 @@ const verifyLogin = async (req, res) => {
     if (userData) {
       const passwordMatch = await bcrypt.compare(password, userData.password);
       if (passwordMatch) {
-        req.session.userId = userData._id;
-        res.redirect("/");
+        if (!userData.is_block) {
+          req.session.userId = userData._id;
+          res.redirect("/");
+        } else {
+          res.render("user/loginUser", {
+            message: "you are blocked user",
+          });
+        }
       } else {
         res.render("user/loginUser", {
           message: "Email and password is incorrect",
@@ -202,6 +209,29 @@ const userLogout = async (req, res) => {
   }
 };
 
+const loadshop = async (req, res) => {
+  try {
+    const product = await productModel.find({});
+    res.render("user/shop", { product });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const singleproduct = async (req, res) => {
+  try {
+    console.log("hello");
+    const id = req.query.id;
+    console.log(id);
+
+    const product = await productModel.findById({ _id: id });
+    console.log(product);
+    res.render("user/singleProduct", { product });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   homePage,
   loadRegister,
@@ -211,4 +241,6 @@ module.exports = {
   loadsignin,
   verifyLogin,
   userLogout,
+  loadshop,
+  singleproduct,
 };

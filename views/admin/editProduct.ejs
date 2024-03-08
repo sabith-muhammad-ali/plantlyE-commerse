@@ -12,6 +12,10 @@
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="adminAssets/assets/vendors/select2/select2.min.css">
     <link rel="stylesheet" href="adminAssets/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
+  <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
@@ -88,7 +92,7 @@
             <span class="nav-link">Navigation</span>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="adminAssets/index.html">
+            <a class="nav-link" href="/admin/admindashbord">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
@@ -96,35 +100,28 @@
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse" href="/admin/category" aria-expanded="false" aria-controls="ui-basic">
               <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
               </span>
-              <span class="menu-title">Basic UI Elements</span>
+              <span class="menu-title">Category</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="adminAssets/pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="adminAssets/pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="adminAssets/pages/ui-features/typography.html">Typography</a></li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="adminAssets/pages/forms/basic_elements.html">
+            <a class="nav-link" href="/admin/product">
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
-              <span class="menu-title">Edit Product</span>
+              <span class="menu-title">Product</span>
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="adminAssets/pages/tables/basic-table.html">
+            <a class="nav-link" href="/admin/userprofile">
               <span class="menu-icon">
                 <i class="mdi mdi-table-large"></i>
               </span>
-              <span class="menu-title">Tables</span>
+              <span class="menu-title">User List</span>
             </a>
           </li>
           <li class="nav-item menu-items">
@@ -217,7 +214,8 @@
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <form class="forms-sample" method="post" enctype="multipart/form-data" action="">
+               <form class="forms-sample" method="post" enctype="multipart/form-data" >
+                      <input type="hidden" name="productId" value="<%= productData._id %>">
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -236,32 +234,59 @@
                             <label for="exampleSelectGender">Price</label>
                             <input type="number" class="form-control" name="price" id="price" placeholder="Price" value="<%= productData.price %>"> 
                           </div>
+                          <form  method="post">
+                            <label class="text-white">Add Image</label>
+                              <input  type="file" accept="image/*"> 
+                          </form>
+              
+                          
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="exampleInputCity1">Stock</label>
-                            <input type="text" class="form-control" id="stock" name="stock" placeholder="0" value="<%= productData.quantity %>">
+                            <input type="text" class="form-control" id="stock" name="quantity" placeholder="0" value="<%= productData.quantity %>">
                           </div>
                           <div class="form-group">
                             <label for="exampleTextarea1">Description</label>
                             <textarea class="form-control" name="description" id="description" rows="6"><%= productData.description %></textarea>
                           </div>
-                          <div class="row">
-                            <% for (let i = 0; i < productData.images.length; i++) { %>
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="image<%= i %>">Image <%= i %></label>
-                                  <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="image<%= i %>" name="image<%= i %>" onchange="previewImage(this, '<%= i %>')">
-                                    <label class="custom-file-label" for="image<%= i %>">Choose file</label>
-                                  </div>
-                                  <div id="preview<%= i %>" class="mt-2" >
-                                    <img src="assets/multer/<%= productData.images[i] %>" alt="" class="preview-image">
-                                  </div>
+                            <div id="carouselExample" class="carousel slide">
+                              <div class="carousel-inner d-flex align-items-center justify-content-center ">
+                                <div class="carousel-item active  ">
+                                  <img src="assets/multer/<%= productData.images[0] %>" class="d-block w-25 h-25" alt="...">
+                                  <a href="">
+                                    <button class="btn btn-danger mt-2 w-25" onclick="deleteImage('<%= productData.images[0] %>')">Delete</button>
+                                  </a>
+                                </div>
+                                <div class="carousel-item   ">
+                                  <img src="assets/multer/<%= productData.images[1] %>" class="d-block w-25 h-25" alt="...">
+                                  <a href="">
+                                    <button class="btn btn-danger mt-2 w-25" onclick="deleteImage('<%= productData.images[1] %>')">Delete</button>
+                                  </a>
+                                </div>
+                                <div class="carousel-item   ">
+                                  <img src="assets/multer/<%= productData.images[2] %>" class="d-block w-25 h-25" alt="...">
+                                  <a href="">
+                                    <button class="btn btn-danger mt-2 w-25" onclick="deleteImage('<%= productData.images[2] %>')">Delete</button>
+                                  </a>
+                                </div>
+                                <div class="carousel-item   ">
+                                  <img src="assets/multer/<%= productData.images[3] %>" class="d-block w-25 h-25" alt="...">
+                                  <a href="">
+                                    <button class="btn btn-danger mt-2 w-25" onclick="deleteImage('<%= productData.images[3] %>')">Delete</button>
+                                  </a>
                                 </div>
                               </div>
-                            <% } %>
-                          </div>
+                              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                              </button>
+                              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                              </button>
+                            </div>
+                        </div>
                         </div>
                       </div>
                       <div class="row justify-content-center mt-4">
@@ -288,20 +313,27 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script>
-function previewImage(input, previewId) {
-  const preview = document.getElementById(`preview${previewId}`);
-  preview.innerHTML = ''; // Clear previous preview
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const img = document.createElement('img');
-      img.src = e.target.result;
-      img.className = 'img-fluid';
-      preview.appendChild(img);
-    }
-    reader.readAsDataURL(input.files[0]);
-  }
-}
+     async function deleteImage(imageid){
+console.log(imageid);
+        await fetch('/admin/editproduct',{
+          method : 'POST',
+          headers : {
+            'Content-Type' : 'application/json'
+          },
+          body : JSON.stringify({
+            imageid
+          })
+        }).then(response=>{
+          //  response.json()
+        }).then(data=>{
+          if(data){
+            alert('data is reached')
+          }
+        }).catch(error=>{
+          console.log(error);
+        })
+      }
+
     </script>
 
 
@@ -325,6 +357,8 @@ function previewImage(input, previewId) {
     <script src="adminAssets/assets/js/file-upload.js"></script>
     <script src="adminAssets/assets/js/typeahead.js"></script>
     <script src="adminAssets/assets/js/select2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
+    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- End custom js for this page -->
   </body>
 </html>

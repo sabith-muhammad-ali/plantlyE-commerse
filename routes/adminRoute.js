@@ -6,6 +6,7 @@ const categoryController = require("../controllers/categoryController");
 const productController = require("../controllers/productController");
 const admin = express();
 const path = require("path");
+const adminAuth = require("../middelware/adminAuth");
 
 console.log(path.join(__dirname, "../public/multer"));
 
@@ -34,33 +35,46 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-admin.get("/", adminController.loadLogin);
-admin.post("/", adminController.verifyLogin);
-admin.get("/admindashbord", adminController.loadDashbord);
+admin.get("/", adminAuth.isLogout, adminController.loadLogin);
+admin.post("/", adminAuth.isLogout, adminController.verifyLogin);
+admin.get("/admindashbord", adminAuth.isLogin, adminController.loadDashbord);
 //user
-admin.get("/userprofile", adminController.userManagement);
-admin.patch("/blockusers/:id", adminController.blockUser);
+admin.get("/userprofile", adminAuth.isLogin, adminController.userManagement);
+admin.patch("/blockusers/:id", adminAuth.isLogin, adminController.blockUser);
 //category
-admin.get("/category", categoryController.productCategory);
-admin.get("/categoryadd", categoryController.addCategory);
-admin.post("/categoryadd", categoryController.insertCategory);
-admin.patch("/blockcategory/:id", categoryController.Categoryblock);
-admin.get("/categoryedit", categoryController.editCategory);
-admin.post("/categoryedit", categoryController.updateCategory);
+admin.get("/category", adminAuth.isLogin, categoryController.productCategory);
+admin.get("/categoryadd", adminAuth.isLogin, categoryController.addCategory);
+admin.post(
+  "/categoryadd",
+  adminAuth.isLogin,
+  categoryController.insertCategory
+);
+admin.patch(
+  "/blockcategory/:id",
+  adminAuth.isLogin,
+  categoryController.Categoryblock
+);
+admin.get("/categoryedit", adminAuth.isLogin, categoryController.editCategory);
+admin.post(
+  "/categoryedit",
+  adminAuth.isLogin,
+  categoryController.updateCategory
+);
 //product
-admin.get("/product", productController.loadproduct);
-admin.get("/addproduct", productController.addProduct);
+admin.get("/product", adminAuth.isLogin, productController.loadproduct);
+admin.get("/addproduct", adminAuth.isLogin, productController.addProduct);
 admin.post(
   "/addproduct",
   upload.array("image", 4),
+  adminAuth.isLogin,
   productController.insertProduct
 );
-admin.patch("/blockproduct/:id", productController.productblock);
-admin.get("/editproduct", productController.loadeditproduct);
-admin.post(
-  "/editproduct",
-  upload.array(image, 4),
-  productController.productedit
+admin.patch(
+  "/blockproduct/:id",
+  adminAuth.isLogin,
+  productController.productblock
 );
+admin.get("/editproduct", adminAuth.isLogin, productController.loadeditproduct);
+admin.post("/editproduct", adminAuth.isLogin, productController.deleteImage);
 
 module.exports = admin;
