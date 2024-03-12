@@ -1,7 +1,6 @@
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 const sharp = require("sharp");
-const product = require("../models/productModel");
 
 const loadproduct = async (req, res) => {
   try {
@@ -59,7 +58,6 @@ const insertProduct = async (req, res) => {
 
 const productblock = async (req, res) => {
   try {
-    console.log("louy");
     const productId = req.params.id;
     const productValue = await productModel.findOne({ _id: productId });
     if (productValue) {
@@ -83,22 +81,73 @@ const loadeditproduct = async (req, res) => {
     const category = await categoryModel.find({});
     const id = req.query.id;
     const productData = await productModel.findById(id).populate("categoryId");
-    // console.log(productData,id);
     res.render("editProduct", { productData, category });
   } catch (error) {
     console.log(error);
   }
 };
 
-const deleteImage = async (req, res) => {
+const editProduct = async (req, res) => {
+  console.log('edit ');
   try {
-    console.log("data ethi");
-    console.log(req.body.imageid);
-    res.status(200);
+    const product = req.body.productId;
+    const { name, categoryId, price, stock, description } = req.body;
+    const images = req.files.map((file) => file.filename);
+    console.log(images);
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        if (images[i]) {
+          await sharp(`public/assets/multer/${images[i]}`)
+            .resize(500, 500)
+            .toFile(`public/assets/sharp/${images[i]}`);
+        }
+      }
+    }
+    
+    const update = await productModel.findByIdAndUpdate(
+      { _id: product },
+      {
+        $set: {
+          name,
+          categoryId,
+          price,
+          stock,
+          description,
+        },
+        $push: {
+          images: { $each: images }, 
+        },
+      },
+      { new: true }
+    );
+    const data = update.save();
+    if (data) {
+      res.redirect("/admin/product");
+    }
   } catch (error) {
     console.log(error);
   }
 };
+
+const editProductImage = async (req, res) => {
+  console.log('deltee');
+  try {
+    const product = req.body.productId;
+    const imageName = req.body.imageName;
+    console.log('product',product);
+    console.log('imagename',imageName);
+    const findProduct = await productModel.findByIdAndUpdate({_id:product},{$pull:{images: imageName}})
+    if(findProduct){
+      console.log('image is deleted');
+      res.json({message:'image is succesfully deleted'})
+    } 
+  } catch (error) {
+    console.log(error);
+  }
+        
+};
+
+
 
 module.exports = {
   loadproduct,
@@ -106,5 +155,6 @@ module.exports = {
   insertProduct,
   productblock,
   loadeditproduct,
-  deleteImage,
+  editProduct,
+  editProductImage
 };

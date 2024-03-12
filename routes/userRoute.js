@@ -22,9 +22,11 @@ user.get("/registration", auth.isLogout, userController.loadRegister);
 user.post("/registration", auth.isLogout, userController.insertUser);
 user.get("/userOTP", auth.isLogout, userController.sendOTP);
 user.post("/userOTP", auth.isLogout, userController.verifyOTP);
+user.post("/resendotp", userController.resendOtp);
 user.get("/loginUser", auth.isLogout, userController.loadsignin);
 user.post("/loginUser", auth.isLogout, userController.verifyLogin);
 user.get("/logout", auth.isLogin, userController.userLogout);
+user.get('/user-profile',userController.userProfile);
 
 //gogole
 user.use(passport.initialize());

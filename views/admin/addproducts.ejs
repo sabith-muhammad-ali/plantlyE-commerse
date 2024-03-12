@@ -19,11 +19,12 @@
     <link rel="stylesheet" href="adminAssets/assets/css/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="adminAssets/assets/images/favicon.png" />
+
     <style>
       .preview-image {
-          max-width: 100px; /* Adjust the maximum width of the image preview */
-          max-height: 100px; /* Adjust the maximum height of the image preview */
-          margin-right: 10px; /* Adjust the spacing between image previews */
+          max-width: 100px; 
+          max-height: 100px; 
+          margin-right: 10px; 
       }
   </style>
   </head>
@@ -239,7 +240,7 @@
                             </span>
                         </div>
                         <!-- Image previews container -->
-                        <div id="imagePreviews" class="mt-2"></div>
+                        <div id="imagePreviews" class="mt-2 row"></div>
                     </div>
                       <!--  -->
                       <div class="form-group">
@@ -275,35 +276,41 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-    const imageInput = document.getElementById('image');
-    const imagePreviews = document.getElementById('imagePreviews');
-
-    // Event listener for file input change
-    imageInput.addEventListener('change', function (event) {
-        const files = event.target.files;
-        if (!files.length) {
-            return;
-        }
-        // Clear previous image previews
-        imagePreviews.innerHTML = '';
-        for (const file of files) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                // Create image element for each selected file
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.classList.add('preview-image');
-                // Append image preview to container
-                imagePreviews.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-});
-    </script> 
-
+      const fileInput = document.getElementById('image');
+      
+      const imagePreviewsContainer = document.getElementById('imagePreviews');
+  
+      fileInput.addEventListener('change', function(event) {
+          imagePreviewsContainer.innerHTML = '';
+  
+          const files = event.target.files;
+  
+          if (files.length > 4) {
+            alert('You can only add up to 4 images.')
+              this.value = ''; 
+              return;
+          }
+  
+          for (let i = 0; i < files.length; i++) {
+              const file = files[i];
+              const reader = new FileReader();
+  
+              const imageElement = document.createElement('img');
+              imageElement.classList.add('img-thumbnail', 'mr-2');
+              imageElement.style.height = '100px'; // Set image height
+  
+              reader.readAsDataURL(file);
+  
+              reader.onload = function(e) {
+                  imageElement.src = e.target.result;
+              };
+  
+              imagePreviewsContainer.appendChild(imageElement);
+          }
+      });
+  </script>
 
 
 

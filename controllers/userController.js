@@ -23,7 +23,6 @@ const securePassword = async (password) => {
   }
 };
 
-// User registration page
 const loadRegister = async (req, res) => {
   try {
     res.render("user/registration");
@@ -32,14 +31,12 @@ const loadRegister = async (req, res) => {
   }
 };
 
-// User registration handler
 const insertUser = async (req, res) => {
   try {
     const sPassword = await securePassword(req.body.password);
     const user = new User({
       name: req.body.fname,
       email: req.body.email,
-      mobile: req.body.mobile,
       varified: false,
       password: sPassword,
       is_admin: false,
@@ -74,12 +71,22 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
     // hash the otp
     const saltRounds = 10;
     const hashedOTP = await bcrypt.hash(otp.toString(), saltRounds); // Convert OTP to string before hashing
-    new UserOTPVerfication({
+
+    const userOTPVerificationRecord = await UserOTPVerfication.findOne({
       userId: _id,
-      otp: hashedOTP,
-      createdAt: Date.now(),
-      expiresAt: Date.now() + 3600000,
-    }).save();
+    });
+    if (userOTPVerificationRecord) {
+      await UserOTPVerfication.updateOne(
+        { userId: _id },
+        { otp: hashedOTP, createdAt: Date.now() }
+      );
+    } else {
+      new UserOTPVerfication({
+        userId: _id,
+        otp: hashedOTP,
+        createdAt: Date.now(),
+      }).save();
+    }
 
     await transporter.sendMail(mailOptions);
     console.log("otp verification email sent successfully");
@@ -105,6 +112,23 @@ const sendOTP = async (req, res) => {
     res.render("user/userOTP", { userId });
   } catch (error) {
     console.log(error);
+  }
+};
+
+// resend OTP
+const resendOtp = async (req, res) => {
+  try {
+    console.log("gillo");
+    const Id = req.query.userId;
+    console.log("id", Id);
+    const userData = await User.findOne({ _id: Id });
+    console.log(userData);
+    await sendOTPVerificationEmail(
+      { email: userData.email, _id: userData._id },
+      res
+    );
+  } catch (error) {
+    console.log("error in resendOTP", error);
   }
 };
 
@@ -220,7 +244,6 @@ const loadshop = async (req, res) => {
 
 const singleproduct = async (req, res) => {
   try {
-    console.log("hello");
     const id = req.query.id;
     console.log(id);
 
@@ -232,15 +255,26 @@ const singleproduct = async (req, res) => {
   }
 };
 
+const userProfile = async (req,res) => {
+  try {
+    const user = await User.findByOne({_id:req.session.userId});
+    res.render('user/userProfile');
+  } catch (error) {
+    
+  }
+}
+
 module.exports = {
   homePage,
   loadRegister,
   insertUser,
   sendOTP,
+  resendOtp,
   verifyOTP,
   loadsignin,
   verifyLogin,
   userLogout,
   loadshop,
   singleproduct,
+  userProfile
 };

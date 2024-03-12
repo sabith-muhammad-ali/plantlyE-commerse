@@ -37,16 +37,16 @@ passport.deserializeUser((user, done) => {
 
 const success = async (req, res) => {
   try {
-    //check if the user already exists in your database based on the email
+  
     const existingUser = await User.findOne({ email: req.user.email });
 
     if (existingUser) {
       req.session.userId = existingUser._id;
       return res.redirect("/");
     } else {
-      const sPassword = await securePassword(req.user.id); // await the password hashing
+      const sPassword = await securePassword(req.user.id);
       const newUser = new User({
-        name: req.user.displayName, // use displayName insted of name
+        name: req.user.displayName, 
         email: req.user.email,
         mobile: 0,
         varified: true,

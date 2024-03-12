@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 
-// Admin login
+
 const loadLogin = async (req, res) => {
   try {
     res.render("loginAdmin");
@@ -9,6 +9,8 @@ const loadLogin = async (req, res) => {
     console.log(error);
   }
 };
+
+
 const verifyLogin = async (req, res) => {
   try {
     const email = req.body.email;
@@ -40,7 +42,7 @@ const verifyLogin = async (req, res) => {
   }
 };
 
-// Admin Dashboard
+
 const loadDashbord = async (req, res) => {
   try {
     res.render("adminDashbord");
@@ -77,10 +79,20 @@ const blockUser = async (req, res) => {
   }
 };
 
+const logout = async (req,res) => {
+  try {
+    req.session.destroy();
+    res.redirect("/admin");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   loadLogin,
   verifyLogin,
   loadDashbord,
   userManagement,
   blockUser,
+  logout
 };

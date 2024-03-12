@@ -41,17 +41,20 @@
              border-radius: 10px;
              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
              padding: 20px;
-             border: 2px solid #28a745; 
+             border: 2px solid #28a745;
          }
      
          .otp-input {
-             border: 1px solid #ced4da; 
+             border: 1px solid #ced4da;
              border-radius: 5px;
              padding: 12px;
              width: 100%;
              font-size: 16px;
              transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
          }
+         #resend_otp_btn {
+        display: none; 
+    }
      </style>
   
    </head>
@@ -667,7 +670,7 @@
                            <p style="color: red;" ><%= message %></p>
                         <% } %>
                         <form class="needs-validation" method="post" action="" novalidate>
-                           <input type="hidden" name="userId" value="<%= userId %>">
+                           <input type="hidden" name="userId" id="userId" value="<%= userId %>">
                            <div class="form-group">
                                <input type="text" class="form-control otp-input" name="otp" placeholder="0000" required>
                                <div class="invalid-feedback">Please enter the OTP code.</div>
@@ -676,10 +679,10 @@
                                <button type="submit" class="btn btn-primary btn-block">Submit OTP</button>
                            </div>
                            <hr>
-                           <div class="form-group text-center">
-                               <p class="mb-1">Didn't receive OTP?</p>
-                               <button type="button" class="btn btn-link" id="resend_otp_btn">Resend OTP</button>
-                           </div>
+                           <div class="form-group text-center" id="resend_otp_div">
+                              <p class="mb-1">Resend OTP in <span id="countdown"></span> seconds</p>
+                              <button type="button" class="btn btn-link" id="resend_otp_btn" onclick="resendOTP()">Resend OTP</button>
+                          </div>
                        </form>
                     </div>
                 </div>
@@ -967,13 +970,10 @@
       <!-- custom js -->
       <script src="assets/js/custom.js"></script>
       <script>
-         // Disable form submissions if there are invalid fields
          (function() {
            'use strict';
            window.addEventListener('load', function() {
-             // Get the forms we want to add validation styles to
              var forms = document.getElementsByClassName('needs-validation');
-             // Loop over them and prevent submission
              var validation = Array.prototype.filter.call(forms, function(form) {
                form.addEventListener('submit', function(event) {
                  if (form.checkValidity() === false) {
@@ -986,6 +986,63 @@
            }, false);
          })();
       </script>
+
+<script>
+        
+   function startCountdown(duration, display) {
+       let countdown = duration, minutes, seconds;
+       let interval = setInterval(function () {
+           minutes = parseInt(countdown / 60, 10);
+           seconds = parseInt(countdown % 60, 10);
+
+           minutes = minutes < 10 ? "0" + minutes : minutes;
+           seconds = seconds < 10 ? "0" + seconds : seconds;
+
+           display.textContent = minutes + ":" + seconds;
+
+           if (--countdown < 0) {
+               clearInterval(interval);
+               display.textContent = "00:00";
+
+               document.getElementById("resend_otp_btn").style.display = "block";
+           }
+       }, 1000);
+   }
+
+   
+   function resendOTP() {
+       
+       document.getElementById("resend_otp_btn").style.display = "none";
+       const userId = document.getElementById('userId').value
+       console.log(userId);
+             
+       
+       let oneMinute = 60 * 1;
+       let display = document.querySelector('#countdown');
+       startCountdown(oneMinute, display);
+      if (userId) {
+         fetch(`/resendotp?userId=${userId}`, {
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json'
+           },
+       })
+       .catch(error => {
+           console.error('Error resending OTP:', error);
+       }); 
+      }
+       
+
+   }
+
+   window.onload = function () {
+       let oneMinute = 60 * 1,
+           display = document.querySelector('#countdown');
+
+       startCountdown(oneMinute, display);
+   };
+   </script>
+
    </body>
 
 <!-- Mirrored from dostguru.com/HTML/plantly/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->

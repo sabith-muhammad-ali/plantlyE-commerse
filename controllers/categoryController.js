@@ -41,7 +41,6 @@ const insertCategory = async (req, res) => {
     }
   } catch (error) {
     console.error(error, "error insert the category");
-    // Send an error response if something went wrong
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };

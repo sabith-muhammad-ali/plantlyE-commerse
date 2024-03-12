@@ -38,10 +38,11 @@ const upload = multer({ storage: storage });
 admin.get("/", adminAuth.isLogout, adminController.loadLogin);
 admin.post("/", adminAuth.isLogout, adminController.verifyLogin);
 admin.get("/admindashbord", adminAuth.isLogin, adminController.loadDashbord);
-//user
+admin.get("/logout", adminController.logout);
+
 admin.get("/userprofile", adminAuth.isLogin, adminController.userManagement);
 admin.patch("/blockusers/:id", adminAuth.isLogin, adminController.blockUser);
-//category
+
 admin.get("/category", adminAuth.isLogin, categoryController.productCategory);
 admin.get("/categoryadd", adminAuth.isLogin, categoryController.addCategory);
 admin.post(
@@ -75,6 +76,11 @@ admin.patch(
   productController.productblock
 );
 admin.get("/editproduct", adminAuth.isLogin, productController.loadeditproduct);
-admin.post("/editproduct", adminAuth.isLogin, productController.deleteImage);
-
+admin.post(
+  "/editproduct",
+  upload.array("image", 4),
+  adminAuth.isLogin,
+  productController.editProduct
+);
+admin.post("/deleteimage",productController.editProductImage);
 module.exports = admin;

@@ -8,6 +8,8 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="adminAssets/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="adminAssets/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -461,6 +463,12 @@
           });
       });
       </script>
+      <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+      <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable();
+        });
+        </script>
 
   </body>
 </html>

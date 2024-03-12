@@ -213,94 +213,69 @@
               <!--  -->
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
-                  <div class="card-body">
-               <form class="forms-sample" method="post" enctype="multipart/form-data" >
-                      <input type="hidden" name="productId" value="<%= productData._id %>">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="exampleInputName1">Product Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Product Name" value="<%= productData.name %>">
-                          </div>
-                          <div class="form-group">
-                            <label>Category</label>
-                            <select class="form-control" name="categoryId">
-                              <% for (let i = 0; i < category.length; i++) { %>
-                                <option value="<%= category[i]._id %>"><%= category[i].name %></option>
-                              <% } %>                             
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="exampleSelectGender">Price</label>
-                            <input type="number" class="form-control" name="price" id="price" placeholder="Price" value="<%= productData.price %>"> 
-                          </div>
-                          <form  method="post">
-                            <label class="text-white">Add Image</label>
-                              <input  type="file" accept="image/*"> 
-                          </form>
-              
-                          
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="exampleInputCity1">Stock</label>
-                            <input type="text" class="form-control" id="stock" name="quantity" placeholder="0" value="<%= productData.quantity %>">
-                          </div>
-                          <div class="form-group">
-                            <label for="exampleTextarea1">Description</label>
-                            <textarea class="form-control" name="description" id="description" rows="6"><%= productData.description %></textarea>
-                          </div>
-                            <div id="carouselExample" class="carousel slide">
-                              <div class="carousel-inner d-flex align-items-center justify-content-center ">
-                                <div class="carousel-item active  ">
-                                  <img src="assets/multer/<%= productData.images[0] %>" class="d-block w-25 h-25" alt="...">
-                                  <a href="">
-                                    <button class="btn btn-danger mt-2 w-25" onclick="deleteImage('<%= productData.images[0] %>')">Delete</button>
-                                  </a>
+                    <div class="card-body">
+                        <form class="forms-sample" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="productId" value="<%= productData._id %>">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1" class="text-white">Product Name</label>
+                                        <input type="text" class="form-control text-white" id="name" name="name" placeholder="Product Name" value="<%= productData.name %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-white">Category</label>
+                                        <select class="form-control text-white" name="categoryId">
+                                            <% for (let i = 0; i < category.length; i++) { %>
+                                                <option value="<%= category[i]._id %>"><%= category[i].name %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleSelectGender" class="text-white">Price</label>
+                                        <input type="number" class="form-control text-white" name="price" id="price" placeholder="Price" value="<%= productData.price %>">
+                                    </div>
+                                    <div class="form-group">
+                                      <div class="form-group">
+                                        <label for="exampleInputFile" class="text-white">Product Images</label>
+                                        <input type="file" class="form-control text-white" id="productImage" name="image" multiple>                                        <small id="fileHelp" class="form-text text-white">Choose images for the product.</small>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div class="carousel-item   ">
-                                  <img src="assets/multer/<%= productData.images[1] %>" class="d-block w-25 h-25" alt="...">
-                                  <a href="">
-                                    <button class="btn btn-danger mt-2 w-25" onclick="deleteImage('<%= productData.images[1] %>')">Delete</button>
-                                  </a>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputCity1" class="text-white">Stock</label>
+                                        <input type="text" class="form-control text-white" id="stock" name="stock" placeholder="0" value="<%= productData.quantity %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleTextarea1" class="text-white">Description</label>
+                                        <textarea class="form-control text-white" name="description" id="description" rows="6"><%= productData.description %></textarea>
+                                    </div>
+                                    <div class="row">
+                                      <% for (let i = 0; i < 4; i++) { %>
+                                          <div class="col-md-3">
+                                              <div class="preview-image" id="imageContainer<%= i %>">
+                                                  <% if (productData.images[i]) { %>
+                                                      <img src="assets/multer/<%= productData.images[i] %>" id="image<%= i %>" style="height: 200px; width: 100%; object-fit: cover;" alt="...">
+                                                      <button type="button" class="btn btn-danger mt-2 w-100" onclick="replaceImage('<%= productData.images[i] %>', '<%= productData._id %>')">Replace</button>
+                                                  <% } %>
+                                              </div>
+                                          </div>
+                                      <% } %>
+                                  </div>
                                 </div>
-                                <div class="carousel-item   ">
-                                  <img src="assets/multer/<%= productData.images[2] %>" class="d-block w-25 h-25" alt="...">
-                                  <a href="">
-                                    <button class="btn btn-danger mt-2 w-25" onclick="deleteImage('<%= productData.images[2] %>')">Delete</button>
-                                  </a>
-                                </div>
-                                <div class="carousel-item   ">
-                                  <img src="assets/multer/<%= productData.images[3] %>" class="d-block w-25 h-25" alt="...">
-                                  <a href="">
-                                    <button class="btn btn-danger mt-2 w-25" onclick="deleteImage('<%= productData.images[3] %>')">Delete</button>
-                                  </a>
-                                </div>
-                              </div>
-                              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                              </button>
-                              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                              </button>
                             </div>
-                        </div>
-                        </div>
-                      </div>
-                      <div class="row justify-content-center mt-4">
-                        <div class="col-md-6">
-                          <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                        </div>
-                        <div class="col-md-6">
-                          <a href="/admin/product" class="btn btn-secondary btn-block">Cancel</a>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="/admin/product" class="btn btn-secondary btn-block">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-              </div>
+            </div>
               <!--  -->
           <!-- content-wrapper ends -->
           <!-- partial:adminAssets/partials/_footer.html -->
@@ -313,28 +288,29 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script>
-     async function deleteImage(imageid){
-console.log(imageid);
-        await fetch('/admin/editproduct',{
-          method : 'POST',
-          headers : {
-            'Content-Type' : 'application/json'
-          },
-          body : JSON.stringify({
-            imageid
+       function replaceImage(imageName,product_id) {
+          console.log(imageName);
+          console.log('prodctid',product_id);
+           fetch('/admin/deleteimage', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  imageName: imageName,
+                  productId:product_id
+              })
+          }).then(response => {
+             return  response.json()
+          }).then(data=>{
+            if(data){
+              location.reload()
+            }
+          }).catch(error=>{
+            console.log(error);
           })
-        }).then(response=>{
-          //  response.json()
-        }).then(data=>{
-          if(data){
-            alert('data is reached')
-          }
-        }).catch(error=>{
-          console.log(error);
-        })
       }
-
-    </script>
+  </script>
 
 
 
