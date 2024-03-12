@@ -3,6 +3,8 @@ const UserOTPVerfication = require("../models/OTPModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const productModel = require("../models/productModel");
+const Swal = require('sweetalert2')
+
 
 // tempHomePage
 const homePage = async (req, res) => {
@@ -118,11 +120,8 @@ const sendOTP = async (req, res) => {
 // resend OTP
 const resendOtp = async (req, res) => {
   try {
-    console.log("gillo");
     const Id = req.query.userId;
-    console.log("id", Id);
     const userData = await User.findOne({ _id: Id });
-    console.log(userData);
     await sendOTPVerificationEmail(
       { email: userData.email, _id: userData._id },
       res
@@ -245,24 +244,36 @@ const loadshop = async (req, res) => {
 const singleproduct = async (req, res) => {
   try {
     const id = req.query.id;
-    console.log(id);
-
     const product = await productModel.findById({ _id: id });
-    console.log(product);
     res.render("user/singleProduct", { product });
   } catch (error) {
     console.log(error);
   }
 };
 
-const userProfile = async (req,res) => {
+const userProfile = async (req, res) => {
   try {
-    const user = await User.findByOne({_id:req.session.userId});
-    res.render('user/userProfile');
+    const user = await User.findOne({ _id: req.session.userId });
+    console.log(user);
+    res.render("user/userProfile", { user });
   } catch (error) {
-    
+    console.log(error);
   }
-}
+};
+
+const editUserProfile = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.session.userId });
+    await User.findOneAndUpdate(
+      { email: user.email },
+      { $set: { name: req.body.name, mobile: req.body.mobile } },
+      { new: true }
+    );
+    res.redirect("/user-profile");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   homePage,
@@ -276,5 +287,6 @@ module.exports = {
   userLogout,
   loadshop,
   singleproduct,
-  userProfile
+  userProfile,
+  editUserProfile,
 };

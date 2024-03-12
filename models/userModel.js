@@ -8,6 +8,10 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  mobile:{
+    type:Number,
+    
+  },
   varified: {
     type: Boolean,
     required: false,

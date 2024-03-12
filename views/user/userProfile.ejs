@@ -33,6 +33,15 @@
       <link rel="preconnect" href="https://fonts.gstatic.com/">
       <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"> 
    </head>
+   <style>
+      .form-control {
+    border: 1px solid #ced4da; /* Set border to a light gray color */
+    border-radius: 0; /* Optionally remove border-radius */
+}
+.red-text {
+    color: red;
+}
+   </style>
    <body>
       <!-- cart-model -->
       <div class="modal fade" id="cart_model" tabindex="-1"  aria-hidden="true">
@@ -634,32 +643,37 @@
          </div>
 
          <div class="container custom_container">
-            <h1 class="text-center h1_">SIGNUP WITH PLANTLY </h1>
+            <h1 class="text-center h1_"> User Profile </h1>
             <div id="Registration" class="page-content card card-block p-3 p-sm-4">
-                <form class="needs-validation" method="post" novalidate>
+                <form class="needs-validation" method="" novalidate>
                     <input type="hidden">
                     <div class="form-group">
                         <label for="f_name" class="font-weight-bolder">First name</label>
-                        <input type="text" class="form-control" id="f_name" name="fname" required>
+                        <input type="text" class="form-control" id="name" name="name" required value="<%= user.name %>">
                         <div class="invalid-feedback">Please Enter your Name.</div>
                     </div>
                     <div class="form-group">
                         <label for="r_email" class="font-weight-bolder">Email address</label>
-                        <input type="email" class="form-control" id="r_email" name="email" required>
+                        <input type="email" class="form-control" id="r_email" name="email" required value="<%= user.email %>">
                         <div class="invalid-feedback">Please Enter your Account Name.</div>
                     </div>
-                    <div class="form-group">
+                    <% if (user.mobile) { %>
+
+                     <div class="form-group">
                         <label for="r_password" class="font-weight-bolder">Phone Number</label>
-                        <input type="number" class="form-control" id="phone" name="phone" required>
+                        <input type="number" class="form-control" id="phone" name="phone" value="<%= user.mobile %>" required>
                         <div class="invalid-feedback">Please Enter your Phone Number.</div>
-                    </div>
+                     </div>
+                     <% } %>
                     <div class="clearfix">
                         <button id="resetpassword" type="reset" class="btn btn-primary rese float-left mt-3">Reset Password</button>
-                        <input type="submit" name="submit" class="btn btn-primary mt-3 float-right" value="Edit Profile">
-                    </div>
+                        <button type="button" class="btn btn-primary rese float-right mt-3"  onclick="editprofile()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit profiile</button>
+                     </div>
                 </form>
             </div>
         </div>
+
+
 
 
 
@@ -926,6 +940,95 @@
          </div>
          <!-- row first_footer -->
       </div>
+      <!-- Button trigger modal -->
+
+ <!-- Modal -->
+ <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+         <h3 class="modal-title fs-4" id="staticBackdropLabel">Edit Profile</h3>
+      </div>
+       <div class="modal-body">
+         <form class="needs-validation" method="post" novalidate id="myForm">
+            <div class="form-group">
+                <label for="f_name" class="font-weight-bolder">First name</label>
+                <input type="text" class="form-control" id="name" name="name" required value="<%= user.name %>">
+                <div class="invalid-feedback">Please Enter your Name.</div>
+            </div>
+            <div class="form-group">
+                <label for="r_email" class="font-weight-bolder">Email address</label>
+                <input type="email" class="form-control red-text " id="r_email" name="email" required value="To change email, please contact support at plantlyecom@gmail.com">
+                <div class="invalid-feedback">Please Enter your Account Name.</div>
+            </div>
+            <div class="form-group">
+                <label for="r_password" class="font-weight-bolder">Phone Number</label>
+                <input type="number" class="form-control" id="mobile" name="mobile" value="<%= user.mobile %>"required> 
+                <div class="invalid-feedback">Please Enter your Phone Number.</div>
+            </div>
+        </form>
+       </div>
+       <div class="modal-footer">
+         <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal()">Close</button>
+         <button type="submit" class="btn btn-primary" id="save" onclick="save()">Save</button>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <script>
+   function save() {
+      var form =document.getElementById('myForm');
+      form.submit()
+   }
+ </script>
+ <!-- <script>
+   function save() {
+      const form = document.getElementById('myForm');
+      const name = document.getElementById('name').value;
+      const mobile = document.getElementById('mobile').value;
+      
+       fetch('/user-profile', {
+           method: 'POST', 
+           headers: {
+               'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+              name:name,
+              mobile:mobile 
+           }),
+       })
+       .then(response => {
+           if (!response.ok) {
+               throw new Error('Network response was not ok');
+           }
+           window.location
+       })
+       .then(data => {
+           console.log(data);
+           
+       })
+       .catch(error => {
+           console.error('There was an error with the fetch operation:', error);
+       });
+   }
+</script> -->
+
+
+
+
+ <script>
+   function closeModal() {
+       $('#staticBackdrop').modal('hide'); 
+   }
+</script>
+
+ <script>
+   function editprofile() {
+      $('#staticBackdrop').modal('show')
+   }
+ </script>
+
       <!-- footer -->
       <!-- footer end -->
       <script src="assets/js/jquery-3.4.1.min.js"></script>
