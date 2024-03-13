@@ -41,6 +41,9 @@ const success = async (req, res) => {
     const existingUser = await User.findOne({ email: req.user.email });
 
     if (existingUser) {
+        if(existingUser.is_block === true){
+          return res.redirect('/loginUser')
+        }
       req.session.userId = existingUser._id;
       return res.redirect("/");
     } else {

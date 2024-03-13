@@ -28,8 +28,10 @@ user.post("/loginUser", auth.isLogout, userController.verifyLogin);
 user.get("/logout", auth.isLogin, userController.userLogout);
 user.get("/user-profile", userController.userProfile);
 user.post("/user-profile", userController.editUserProfile);
+user.get("/add-address",userController.loadAddAddress);
+user.post("/add-address",userController.addAddress);
 
-//shop
+
 user.get("/shop", userController.loadshop);
 user.get("/singleproduct", userController.singleproduct);
 
