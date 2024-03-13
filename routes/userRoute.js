@@ -30,6 +30,7 @@ user.get("/user-profile", userController.userProfile);
 user.post("/user-profile", userController.editUserProfile);
 user.get("/add-address",userController.loadAddAddress);
 user.post("/add-address",userController.addAddress);
+user.get('/addresses',userController.loadAddresses);
 
 
 user.get("/shop", userController.loadshop);

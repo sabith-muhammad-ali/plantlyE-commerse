@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html class="" lang="en">
    
 <!-- Mirrored from dostguru.com/HTML/plantly/registration.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->
 <head>
-      <title>User Profile | Plantly</title>
+      <title>Addresses | Plantly</title>
       <meta charset="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!-- Favicon -->
@@ -32,29 +30,31 @@
       <!-- googleapis -->
       <link rel="preconnect" href="https://fonts.gstatic.com/">
       <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"> 
-   </head>
-   <style>
-      .form-control {
-      border: 1px solid #ced4da; 
-      border-radius: 0; 
-   }
-      .red-text {
-      color: red;
-   }
 
-   
-   .professional-box {
-     border: 3px solid #4CAF50;
-     background-color: #fff;
-     padding: 20px;
-     margin: 20px;
-     border-radius: 10px; 
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-     width: 300px; 
-     text-align: center;
-     font-size: 30px;
-   }
+   <style>
+.small-form {
+  width: 250px; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the form horizontally */
+  border-radius: 10px; /* Add border-radius for rounded corners */
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%; /* Make input fields take full width */
+}
+
+button[type="submit"] {
+  width: 100%;
+}
    </style>
+
+
+   </head>
+
 
 
    <body>
@@ -330,7 +330,7 @@
                   <div class="col-xl-10 col-lg-10 col-6  head-search">
                      <div class="d-flex navbar">
                         <div class="input-class  text-left col-xl-8 col-lg-7 col-md-12  ">
-                           <!-- <div class="between-header border border-danger rounded mb-0 head-left">
+                           <div class="between-header border border-danger rounded mb-0 head-left">
                               <select class="select-menu form-select d-none d-sm-block" >
                                  <option value="selected">all categories</option>
                                  <option value="1">laptop</option>
@@ -341,12 +341,12 @@
                                  <input type="text" placeholder="search" class="form-control" aria-label="search" aria-describedby="button-addon2">
                                  <div class="input-group-btn"><button type="button" class="btn btn-danger text-uppercase font-weight-normal">search</button></div>
                               </div>
-                           </div> -->
+                           </div>
                            <!-- between-header text-left col-sm-8 head-left border border-danger rounded mb-0 -->
                         </div>
                         <div class="col-xl-4 col-lg-5 head-right text-right">
                            <ul class="top_cart">
-                              <!-- <li class="dropdown right1 md_acc md_acco">
+                              <li class="dropdown right1 md_acc md_acco">
                                  <span class="account-block">
                                  </span>
                                  <span class="dropdown-toggle my_account" role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My account
@@ -357,7 +357,7 @@
                                  <a class="dropdown-item font-weight-bolderer" href="login.html">log in</a>
                                  <a class="dropdown-item font-weight-bolderer" href="registration.html">register</a>
                                  </span>
-                              </li> -->
+                              </li>
                               <!--  <li class="d-lg-none d-md-inline-block user">
                                  <div class="head_ border rounded bg-white text-left">
                                     <a class=" md_login" href="#"></a>
@@ -435,9 +435,13 @@
             <div class="row">
                <div class="col-lg-12 text-left">
                   <ul class="main-menu navbar">
-                     <li><a href="/">Home</a></li>
+                     <li><a href="index.html">Home</a></li>
                      <li>
-                  <a  href="/shop">shop&nbsp;<span ><i></i></span></a>
+                  <a class="dropdown-toggle" href="shop-left-sidebar.html"  role="button" data-toggle="dropdown" aria-expanded="false">shop&nbsp;<span class="float-right"><i class="fas fa-angle-down"></i></span></a>
+                  <ul class="dropdown-menu all-page-drop">
+                     <li><a class="dropdown-item font-weight-bolder" href="shop-left-sidebar.html">left sidebar</a></li>
+                     <li><a class="dropdown-item font-weight-bolder" href="shop-right-sidebar.html">right sidebar</a></li>
+                  </ul>
                </li>
                </li>
                <li class="dropdown mega_menu m1 level-1 font-weight-bolderer">
@@ -640,68 +644,78 @@
          </div>
          <!-- row -->
       </div>
-
       <!-- container  menu_slider mt-4 -->
       <!-- vertical menu and slider end -->
       <!-- registration page -->
-      <!-- < id="Registration_page" class="Registration-page animate__animated animate__fadeInUp"> -->
-      <h1 class="text-center h1_ mt-5"> User Profile </h1>
+      <div id="Registration_page" class="Registration-page animate__animated animate__fadeInUp">
          <div class="sp_header bg-white p-3">
             <div class="container custom_container">
                <div class="row ">
                   <div class="col-12 ">
                      <ul>
-                        <li class="d-inline-block font-weight-bolder"><a href="/l">home</a></li>
+                        <li class="d-inline-block font-weight-bolder"><a href="/">home</a></li>
                         <li class="d-inline-block hr_ font-weight-bolder"><a href="/user-profile">Profile</a></li>
                      </ul>
                   </div>
                </div>
             </div>
          </div>
-
-         
-         <div class="container custom_container" style="display: flex;">
-            <div class="professional-box">
-               <br><a href="/add-address" class="mt-3">Add Address</a><br><br><br>
-               <a href="/addresses" class="mt-3">Address</a><br><br><br>
-               <a class="mt-3">Orders</a>
-             </div>
-
-            <div id="Registration" class="page-content card card-block p-3 p-sm-4">
-                <form class="needs-validation" method="" novalidate>
-                    <input type="hidden">
-                    <div class="form-group">
-                        <label for="f_name" class="font-weight-bolder">First name</label>
-                        <input type="text" class="form-control" id="name" name="name" required value="<%= user.name %>">
-                        <div class="invalid-feedback">Please Enter your Name.</div>
+         <!--  -->
+        <% for(let i = 0; i < address.length; i++) { %>
+         <div class="container custom_container">
+            <h1 class="text-center h1_">Add Address</h1>
+            <div id="Registration" class="page-content card card-block p-3 p-sm-4 small-form">
+                <form class="needs-validation" method="post" novalidate>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="f_name" class="font-weight-bolder">First name</label>
+                            <input type="text" class="form-control" id="f_name" name="name" required value="<%= address[i].address[0].name %>">
+                            <div class="invalid-feedback">Please Enter your Name.</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="r_email" class="font-weight-bolder">Address Line 1</label>
+                            <input type="text" name="address" class="form-control" id="" required value="<%= address[i].address[0].address %>">
+                            <div class="invalid-feedback">Please Enter your Address Line 1.</div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="r_email" class="font-weight-bolder">Email address</label>
-                        <input type="email" class="form-control" id="r_email" name="email" required value="<%= user.email %>">
-                        <div class="invalid-feedback">Please Enter your Account Name.</div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="r_password" class="font-weight-bolder">City</label>
+                            <input type="text" name="city" class="form-control" id="" required value="<%= address[i].address[0].city %>">
+                            <div class="invalid-feedback">Please Enter your City.</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="r_date" class="font-weight-bolder">State</label>
+                            <input type="text" id="" name="state" class="form-control" value="<%= address[i].address[0].state %>" required>
+                            <div class="invalid-feedback">Please Enter your State.</div>
+                        </div>
                     </div>
-                    <% if (user.mobile) { %>
-
-                     <div class="form-group">
-                        <label for="r_password" class="font-weight-bolder">Phone Number</label>
-                        <input type="number" class="form-control" id="phone" name="phone" value="<%= user.mobile %>" required>
-                        <div class="invalid-feedback">Please Enter your Phone Number.</div>
-                     </div>
-                     <% } %>
-                    <div class="clearfix">
-                        <button id="resetpassword" type="reset" class="btn btn-primary rese float-left mt-3">Reset Password</button>
-                        <button type="button" class="btn btn-primary rese float-right mt-3"  onclick="editprofile()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit profiile</button>
-                     </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="r_date" class="font-weight-bolder">Post Code</label>
+                            <input type="number" name="postcode" id="" class="form-control" value="<%= address[i].address[0].postcode %>" required>
+                            <div class="invalid-feedback">Please Enter your Post Code.</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="r_date" class="font-weight-bolder">Mobile Number</label>
+                            <input type="number" name="country" id="" class="form-control" value="<%= address[i].address[0].mobile %>" required>
+                            <div class="invalid-feedback">Please Enter your Mobile Number.</div>
+                        </div>
+                        <div class="form-group col-md-12 d-flex justify-content-between align-items-center">
+                           <div>
+                               <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                           </div>
+                           <div class="ml-auto">
+                               <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                           </div>
+                       </div>
                 </form>
             </div>
         </div>
+      <% } %>
+         <!--  -->
 
-
-
-
-
-
-
+         
       <!-- login_page -->
       <!-- registration page -->
       <!-- footer -->
@@ -965,63 +979,13 @@
          </div>
          <!-- row first_footer -->
       </div>
-      <!-- Button trigger modal -->
-
- <!-- Modal -->
- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-   <div class="modal-dialog">
-     <div class="modal-content">
-      <div class="modal-header d-flex justify-content-center">
-         <h3 class="modal-title fs-4" id="staticBackdropLabel">Edit Profile</h3>
-      </div>
-       <div class="modal-body">
-         <form class="needs-validation" method="post" novalidate id="myForm">
-            <div class="form-group">
-                <label for="f_name" class="font-weight-bolder">First name</label>
-                <input type="text" class="form-control" id="name" name="name" required value="<%= user.name %>">
-                <div class="invalid-feedback">Please Enter your Name.</div>
-            </div>
-            <div class="form-group">
-                <label for="r_email" class="font-weight-bolder">Email address</label>
-                <input type="email" class="form-control red-text " id="r_email" name="email" required value="To change email, please contact support at plantlyecom@gmail.com">
-                <div class="invalid-feedback">Please Enter your Account Name.</div>
-            </div>
-            <div class="form-group">
-                <label for="r_password" class="font-weight-bolder">Phone Number</label>
-                <input type="number" class="form-control" id="mobile" name="mobile" value="<%= user.mobile %>"required> 
-                <div class="invalid-feedback">Please Enter your Phone Number.</div>
-            </div>
-        </form>
-       </div>
-       <div class="modal-footer">
-         <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal()">Close</button>
-         <button type="submit" class="btn btn-primary" id="save" onclick="save()">Save</button>
-       </div>
-     </div>
-   </div>
- </div>
-<!--  -->
- <script>
-   function save() {
-      var form =document.getElementById('myForm');
-      form.submit()
-   }
- </script>
-<!--  -->
- <script>
-   function closeModal() {
-       $('#staticBackdrop').modal('hide'); 
-   }
-</script>
-<!--  -->
- <script>
-   function editprofile() {
-      $('#staticBackdrop').modal('show')
-   }
- </script>
-
       <!-- footer -->
       <!-- footer end -->
+
+      <script src="path/to/bootstrap.bundle.min.js"></script>
+      <script src="path/to/jquery.min.js"></script>
+      <script src="path/to/bootstrap.bundle.min.js"></script>
+
       <script src="assets/js/jquery-3.4.1.min.js"></script>
       <script src="assets/js/owl.carousel.js"></script>
       <script src="assets/js/bootstrap.min.js"></script>
@@ -1067,6 +1031,15 @@
            }, false);
          })();
       </script>
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <script>
+         function modal() {
+            $('#addressModal').modal('show')
+         }
+      </script>
+
 
 
    </body>

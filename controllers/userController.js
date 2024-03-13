@@ -277,7 +277,7 @@ const editUserProfile = async (req, res) => {
 const loadAddAddress = async (req, res) => {
   try {
     const address = await addressModel.find({ user: req.session.userId });
-    res.render("user/address", { address });
+    res.render("user/add-address", { address });
   } catch (error) {
     console.log(error);
   }
@@ -286,7 +286,6 @@ const loadAddAddress = async (req, res) => {
 const addAddress = async (req, res) => {
   try {
     const { name, address, state, city, postcode, mobile } = req.body;
-    console.log(req.body);
     const Address ={
       name:name,
       address:address,
@@ -302,6 +301,16 @@ const addAddress = async (req, res) => {
     console.log(error);
   }
 };
+
+const loadAddresses = async(req,res) => {
+  try {
+    const address = await addressModel.find({user:req.session.userId});
+    console.log(address);
+    res.render("user/addresses",{address});
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 module.exports = {
   homePage,
@@ -319,4 +328,5 @@ module.exports = {
   editUserProfile,
   loadAddAddress,
   addAddress,
+  loadAddresses
 };
