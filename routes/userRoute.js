@@ -4,6 +4,7 @@ const session = require("express-session");
 const passport = require("passport");
 const userController = require("../controllers/userController");
 const googleauthController = require("../controllers/authController");
+const addressController = require("../controllers/addressController");
 const auth = require("../middelware/userAuth");
 
 user.use(express.urlencoded({ extended: true }));
@@ -28,9 +29,10 @@ user.post("/loginUser", auth.isLogout, userController.verifyLogin);
 user.get("/logout", auth.isLogin, userController.userLogout);
 user.get("/user-profile", userController.userProfile);
 user.post("/user-profile", userController.editUserProfile);
-user.get("/add-address",userController.loadAddAddress);
-user.post("/add-address",userController.addAddress);
-user.get('/addresses',userController.loadAddresses);
+user.get("/add-address",addressController.loadAddAddress);
+user.post("/add-address",addressController.addAddress);
+user.get('/addresses',addressController.loadAddresses);
+user.post("/addresses",addressController.editAddress);
 
 
 user.get("/shop", userController.loadshop);

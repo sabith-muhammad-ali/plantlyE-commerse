@@ -660,50 +660,51 @@ button[type="submit"] {
                </div>
             </div>
          </div>
-         <!--  -->
-        <% for(let i = 0; i < address.length; i++) { %>
+         
+         <h1 class="text-center h1_">Addresses</h1>
+        <% address[0].address.forEach(function(address,index)  { %>
          <div class="container custom_container">
-            <h1 class="text-center h1_">Add Address</h1>
             <div id="Registration" class="page-content card card-block p-3 p-sm-4 small-form">
                 <form class="needs-validation" method="post" novalidate>
                     <div class="form-row">
                         <div class="form-group col-md-6">
+                           <input type="hidden" value="<%= address._id %>" name="id">
                             <label for="f_name" class="font-weight-bolder">First name</label>
-                            <input type="text" class="form-control" id="f_name" name="name" required value="<%= address[i].address[0].name %>">
+                            <input type="text" class="form-control" id="f_name" name="name" required value="<%= address.name %>">
                             <div class="invalid-feedback">Please Enter your Name.</div>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="r_email" class="font-weight-bolder">Address Line 1</label>
-                            <input type="text" name="address" class="form-control" id="" required value="<%= address[i].address[0].address %>">
+                            <input type="text" name="address" class="form-control" id="" required value="<%= address.address %>">
                             <div class="invalid-feedback">Please Enter your Address Line 1.</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="r_password" class="font-weight-bolder">City</label>
-                            <input type="text" name="city" class="form-control" id="" required value="<%= address[i].address[0].city %>">
+                            <input type="text" name="city" class="form-control" id="" required value="<%= address.city %>">
                             <div class="invalid-feedback">Please Enter your City.</div>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="r_date" class="font-weight-bolder">State</label>
-                            <input type="text" id="" name="state" class="form-control" value="<%= address[i].address[0].state %>" required>
+                            <input type="text" id="" name="state" class="form-control" value="<%= address.state %>" required>
                             <div class="invalid-feedback">Please Enter your State.</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="r_date" class="font-weight-bolder">Post Code</label>
-                            <input type="number" name="postcode" id="" class="form-control" value="<%= address[i].address[0].postcode %>" required>
+                            <input type="number" name="postcode" id="" class="form-control" value="<%= address.postcode %>" required>
                             <div class="invalid-feedback">Please Enter your Post Code.</div>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="r_date" class="font-weight-bolder">Mobile Number</label>
-                            <input type="number" name="country" id="" class="form-control" value="<%= address[i].address[0].mobile %>" required>
+                            <input type="number" name="mobile" id="" class="form-control" value="<%= address.mobile %>" required>
                             <div class="invalid-feedback">Please Enter your Mobile Number.</div>
                         </div>
                         <div class="form-group col-md-12 d-flex justify-content-between align-items-center">
                            <div>
-                               <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                               <button type="submit" class="btn btn-primary btn-sm">Edit</button>
                            </div>
                            <div class="ml-auto">
                                <button type="button" class="btn btn-danger btn-sm">Delete</button>
@@ -712,7 +713,7 @@ button[type="submit"] {
                 </form>
             </div>
         </div>
-      <% } %>
+      <% })  %>
          <!--  -->
 
          

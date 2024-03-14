@@ -3,7 +3,6 @@ const UserOTPVerfication = require("../models/OTPModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const productModel = require("../models/productModel");
-const addressModel = require("../models/addressModel");
 const Swal = require("sweetalert2");
 
 // tempHomePage
@@ -274,43 +273,7 @@ const editUserProfile = async (req, res) => {
   }
 };
 
-const loadAddAddress = async (req, res) => {
-  try {
-    const address = await addressModel.find({ user: req.session.userId });
-    res.render("user/add-address", { address });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-const addAddress = async (req, res) => {
-  try {
-    const { name, address, state, city, postcode, mobile } = req.body;
-    const Address ={
-      name:name,
-      address:address,
-      state:state,
-      city:city,
-      postcode:postcode,
-      mobile:mobile
-      };
-      const userAddress = await addressModel.findOneAndUpdate({user:req.session.userId},{$push:{address:Address}},{upsert:true,new:true})
-      console.log(userAddress);
-      res.redirect('/user-profile')
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const loadAddresses = async(req,res) => {
-  try {
-    const address = await addressModel.find({user:req.session.userId});
-    console.log(address);
-    res.render("user/addresses",{address});
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 module.exports = {
   homePage,
@@ -326,7 +289,4 @@ module.exports = {
   singleproduct,
   userProfile,
   editUserProfile,
-  loadAddAddress,
-  addAddress,
-  loadAddresses
 };
