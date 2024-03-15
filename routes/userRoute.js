@@ -27,14 +27,15 @@ user.post("/resendotp", userController.resendOtp);
 user.get("/loginUser", auth.isLogout, userController.loadsignin);
 user.post("/loginUser", auth.isLogout, userController.verifyLogin);
 user.get("/logout", auth.isLogin, userController.userLogout);
-user.get("/user-profile", userController.userProfile);
-user.post("/user-profile", userController.editUserProfile);
-user.get("/add-address",addressController.loadAddAddress);
-user.post("/add-address",addressController.addAddress);
-user.get('/addresses',addressController.loadAddresses);
-user.post("/addresses",addressController.editAddress);
-user.delete('/delete-addresses',addressController.deleteAddress);
-
+user.get("/user-profile", auth.isLogin, userController.userProfile);
+user.post("/user-profile", auth.isLogin, userController.editUserProfile);
+user.get("/add-address", auth.isLogin, addressController.loadAddAddress);
+user.post("/add-address", auth.isLogin, addressController.addAddress);
+user.get("/addresses", auth.isLogin, addressController.loadAddresses);
+user.post("/addresses", auth.isLogin, addressController.editAddress);
+user.delete("/delete-addresses", auth.isLogin, addressController.deleteAddress);
+user.get("/change-password", auth.isLogin, userController.loadChangePassword);
+user.post('/change-password',auth.isLogin,userController.changePassword);
 
 user.get("/shop", userController.loadshop);
 user.get("/singleproduct", userController.singleproduct);

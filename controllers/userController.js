@@ -273,7 +273,46 @@ const editUserProfile = async (req, res) => {
   }
 };
 
+const loadChangePassword = async (req, res) => {
+  try {
+    res.render("user/changepassword");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+const changePassword = async (req, res) => {
+  try {
+    const { currPass, changePass } = req.body;
+    console.log(req.body);
+    const id = req.session.userId;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    const isPasswordMatch = await bcrypt.compare(currPass, user.password);
+
+    if (!isPasswordMatch) {
+      return res.json({
+        success: false,
+        message: "current password is not matching ",
+      });
+    }
+    const hashedPassword = await bcrypt.hash(changePass, 10);
+    console.log(hashedPassword);
+    await User.findOneAndUpdate(
+      { _id: id },
+      { $set: { password: hashedPassword } },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "password changed successfully",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   homePage,
@@ -289,4 +328,6 @@ module.exports = {
   singleproduct,
   userProfile,
   editUserProfile,
+  loadChangePassword,
+  changePassword,
 };
