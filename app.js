@@ -9,6 +9,7 @@ const app = express();
 const User = require("./models/userModel");
 const bcrypt = require("bcrypt");
 
+
 // Database connection
 mongoose.connect("mongodb://127.0.0.1:27017/ecommerse");
 

@@ -43,29 +43,54 @@ const loadAddresses = async (req, res) => {
 
 const editAddress = async (req, res) => {
   try {
-    const user = await addressModel.findOne({ user: req.session.userId });
-    const address = user.address.find(
-      (address) => address._id.toString() === req.body.id
+    const useraddresID = req.body.id;
+    const { name, address, city, state, postcode, mobile } = req.body;
+    const userid = req.session.userId;
+    const updateUser = await addressModel.findOneAndUpdate(
+      { user: userid, "address._id": useraddresID },
+      {
+        $set: {
+          "address.$.name": name,
+          "address.$.address": address,
+          "address.$.state": state,
+          "address.$.city": city,
+          "address.$.postcode": postcode,
+          "address.$.mobile": mobile,
+        },
+      },
+      { new: true }
     );
-    address.name = req.body.name;
-    address.address = req.body.address;
-    address.city = req.body.city;
-    address.state = req.body.state;
-    address.postcode = req.body.postcode;
-    address.mobile = req.body.mobile;
-
-    await user.save();
-    res.redirect("/user-profile");
+    if (updateUser) {
+      res.redirect("/user-profile");
+    } else {
+      res.status(400).json("failed to update address");
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
-
+const deleteAddress = async (req, res) => {
+  try {
+    const id = req.body.id;
+    const deleted = await addressModel.updateOne(
+      { user: req.session.userId },
+      { $pull: { address: { _id: id } } },
+      { new: true }
+    );
+    if (deleted) {
+      res.status(200).json({ message: "user address has been deleted!" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occurred while deleting the address");
+  }
+};
 
 module.exports = {
   loadAddAddress,
   addAddress,
   loadAddresses,
   editAddress,
+  deleteAddress,
 };

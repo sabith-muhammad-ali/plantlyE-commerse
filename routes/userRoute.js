@@ -33,6 +33,7 @@ user.get("/add-address",addressController.loadAddAddress);
 user.post("/add-address",addressController.addAddress);
 user.get('/addresses',addressController.loadAddresses);
 user.post("/addresses",addressController.editAddress);
+user.delete('/delete-addresses',addressController.deleteAddress);
 
 
 user.get("/shop", userController.loadshop);
