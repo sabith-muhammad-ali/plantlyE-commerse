@@ -71,7 +71,7 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
     };
     // hash the otp
     const saltRounds = 10;
-    const hashedOTP = await bcrypt.hash(otp.toString(), saltRounds); 
+    const hashedOTP = await bcrypt.hash(otp.toString(), saltRounds);
 
     const userOTPVerificationRecord = await UserOTPVerfication.findOne({
       userId: _id,
@@ -335,7 +335,7 @@ const checkEmail = async (req, res) => {
         .status(404)
         .json({ success: false, message: "sorry, you are blocked user " });
     } else {
-      const token = crypto.randomBytes(20).toString("hex")
+      const token = crypto.randomBytes(20).toString("hex");
       user.resetToken = token;
       user.resetTokenExpiry = Date.now() + 300000;
       await user.save();
@@ -363,51 +363,46 @@ const checkEmail = async (req, res) => {
   }
 };
 
-const loadRestPassword = async (req,res) => {
+const loadRestPassword = async (req, res) => {
   try {
     const token = req.params.token;
-    console.log(token);
-    console.log('in cntrlr');
-    res.render('user/password',{token});
-    
+    res.render("user/password", { token });
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 const resetPassword = async (req, res) => {
   try {
     const token = req.body.token;
-    console.log(token,'asdfghjkl');
     const newPassword = req.body.password;
 
-    console.log(req.body);
-
     const user = await User.findOne({ resetToken: req.body.token });
-    console.log(user); 
 
-    if(!user) {
-      return res.status(404).json({error:'User not found'});
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    const newpasswordHash = await bcrypt.hash(newPassword,10);
+    const newpasswordHash = await bcrypt.hash(newPassword, 10);
 
-    if(await bcrypt.compare(newPassword, user.password)){
-      return res.json({error: "Your old password and new password are the same!"})
+    if (await bcrypt.compare(newPassword, user.password)) {
+      return res.json({
+        error: "Your old password and new password are the same!",
+      });
     } else {
       user.password = newpasswordHash;
       user.resetToken = null;
       user.resetTokenExpiry = null;
       await user.save();
-      return res.status(200).json({ success:true, message:'Password reset successfully'});
+      return res
+        .status(200)
+        .json({ success: true, message: "Password reset successfully" });
     }
-
   } catch (error) {
     console.log(error);
-    return res.status(500).json({error:"Internal Server Error"});
+    return res.status(500).json({ error: "Internal Server Error" });
   }
-}
-
+};
 
 module.exports = {
   homePage,
@@ -428,5 +423,5 @@ module.exports = {
   loadForgerPassword,
   checkEmail,
   loadRestPassword,
-  resetPassword
+  resetPassword,
 };

@@ -5,6 +5,7 @@ const passport = require("passport");
 const userController = require("../controllers/userController");
 const googleauthController = require("../controllers/authController");
 const addressController = require("../controllers/addressController");
+const cartController = require("../controllers/cartController");
 const auth = require("../middelware/userAuth");
 
 user.use(express.urlencoded({ extended: true }));
@@ -38,8 +39,14 @@ user.get("/change-password", auth.isLogin, userController.loadChangePassword);
 user.post("/change-password", auth.isLogin, userController.changePassword);
 user.get("/forget-password", auth.isLogout, userController.loadForgerPassword);
 user.post("/forget-password", auth.isLogout, userController.checkEmail);
-user.get("/reset-password/:token",userController.loadRestPassword);
-user.post("/reset-password",userController.resetPassword);
+//cart
+user.get('/cart',auth.isLogin,cartController.cartLoad);
+user.get(
+  "/reset-password/:token",
+  auth.isLogout,
+  userController.loadRestPassword
+);
+user.post("/reset-password", auth.isLogout, userController.resetPassword);
 
 user.get("/shop", userController.loadshop);
 user.get("/singleproduct", userController.singleproduct);
