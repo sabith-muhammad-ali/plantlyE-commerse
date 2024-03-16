@@ -35,7 +35,11 @@ user.get("/addresses", auth.isLogin, addressController.loadAddresses);
 user.post("/addresses", auth.isLogin, addressController.editAddress);
 user.delete("/delete-addresses", auth.isLogin, addressController.deleteAddress);
 user.get("/change-password", auth.isLogin, userController.loadChangePassword);
-user.post('/change-password',auth.isLogin,userController.changePassword);
+user.post("/change-password", auth.isLogin, userController.changePassword);
+user.get("/forget-password", auth.isLogout, userController.loadForgerPassword);
+user.post("/forget-password", auth.isLogout, userController.checkEmail);
+user.get("/reset-password/:token",userController.loadRestPassword);
+user.post("/reset-password",userController.resetPassword);
 
 user.get("/shop", userController.loadshop);
 user.get("/singleproduct", userController.singleproduct);

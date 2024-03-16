@@ -37,5 +37,8 @@ const userSchema = mongoose.Schema({
   facebookId: {
     type: String,
   },
+  resetToken: String,
+  resetTokenExpiry:Date,
+  
 });
 module.exports = mongoose.model("User", userSchema);

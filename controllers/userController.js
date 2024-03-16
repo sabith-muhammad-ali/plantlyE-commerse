@@ -3,7 +3,7 @@ const UserOTPVerfication = require("../models/OTPModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const productModel = require("../models/productModel");
-const Swal = require("sweetalert2");
+const crypto = require("crypto");
 
 // tempHomePage
 const homePage = async (req, res) => {
@@ -71,7 +71,7 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
     };
     // hash the otp
     const saltRounds = 10;
-    const hashedOTP = await bcrypt.hash(otp.toString(), saltRounds); // Convert OTP to string before hashing
+    const hashedOTP = await bcrypt.hash(otp.toString(), saltRounds); 
 
     const userOTPVerificationRecord = await UserOTPVerfication.findOne({
       userId: _id,
@@ -314,6 +314,101 @@ const changePassword = async (req, res) => {
   }
 };
 
+const loadForgerPassword = async (req, res) => {
+  try {
+    res.render("user/forgetPassword");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const checkEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    } else if (user.is_block) {
+      return res
+        .status(404)
+        .json({ success: false, message: "sorry, you are blocked user " });
+    } else {
+      const token = crypto.randomBytes(20).toString("hex")
+      user.resetToken = token;
+      user.resetTokenExpiry = Date.now() + 300000;
+      await user.save();
+
+      const resetLink = `http://localhost:3001/reset-Password/${token}`;
+      const resetMail = {
+        from: process.env.user_email,
+        to: email,
+        subject: "Reset Password",
+        html: `
+        <p>Dear User,</p>
+        <p>We received a request to reset your password. Click the following link to proceed:</p>
+        <p><a href="${resetLink}" style="text-decoration: none; color: #007BFF; font-weight: bold;">Reset Your Password</a></p>
+        <p>If you didn't initiate this request, please ignore this email.</p>
+        <p>Thank you,</p>
+        <p>Plantly</p>
+         `,
+      };
+      await transporter.sendMail(resetMail);
+      res.status(200).json({ success: true });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+const loadRestPassword = async (req,res) => {
+  try {
+    const token = req.params.token;
+    console.log(token);
+    console.log('in cntrlr');
+    res.render('user/password',{token});
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const resetPassword = async (req, res) => {
+  try {
+    const token = req.body.token;
+    console.log(token,'asdfghjkl');
+    const newPassword = req.body.password;
+
+    console.log(req.body);
+
+    const user = await User.findOne({ resetToken: req.body.token });
+    console.log(user); 
+
+    if(!user) {
+      return res.status(404).json({error:'User not found'});
+    }
+
+    const newpasswordHash = await bcrypt.hash(newPassword,10);
+
+    if(await bcrypt.compare(newPassword, user.password)){
+      return res.json({error: "Your old password and new password are the same!"})
+    } else {
+      user.password = newpasswordHash;
+      user.resetToken = null;
+      user.resetTokenExpiry = null;
+      await user.save();
+      return res.status(200).json({ success:true, message:'Password reset successfully'});
+    }
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({error:"Internal Server Error"});
+  }
+}
+
+
 module.exports = {
   homePage,
   loadRegister,
@@ -330,4 +425,8 @@ module.exports = {
   editUserProfile,
   loadChangePassword,
   changePassword,
+  loadForgerPassword,
+  checkEmail,
+  loadRestPassword,
+  resetPassword
 };
