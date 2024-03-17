@@ -412,7 +412,7 @@
             <div class="row">
                <div class="col-lg-12 text-left">
                   <ul class="main-menu navbar">
-                     <li><a href="index.html">Home</a></li>
+                     <li><a href="/">Home</a></li>
                      <li>
                   <a class="dropdown-toggle" href="shop-left-sidebar.html"  role="button" data-toggle="dropdown" aria-expanded="false">shop&nbsp;<span class="float-right"><i class="fas fa-angle-down"></i></span></a>
                   <ul class="dropdown-menu all-page-drop">
@@ -520,7 +520,7 @@
                         <a href="javascript:void(0)" class="closebtn pull-right" onclick="closeNav()"><i class="fas fa-times"></i></a>
                      </div>
                      <ul class="vertical_main_menu h_menu navbar navbar-nav">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li class="">
                            <a class="dropdown-toggle" href="shop-left-sidebar.html"  role="button" data-toggle="dropdown" aria-expanded="false">shop&nbsp;<span class="float-right"><i class="fas fa-angle-down"></i></span></a>
                            <ul class="dropdown-menu">
@@ -630,8 +630,8 @@
                <div class="row ">
                   <div class="col-12 ">
                      <ul class="p-md-3 p-2 bg-light">
-                        <li class="d-inline-block font-weight-bolderer"><a href="index.html">home</a></li>
-                        <li class="d-inline-block  font-weight-bolderer"><a href="#" class="hr_">Cart</a></li>
+                        <li class="d-inline-block font-weight-bolderer"><a href="/">home</a></li>
+                        <li class="d-inline-block  font-weight-bolderer"><a href="/cart" class="hr_">Cart</a></li>
                      </ul>
                   </div>
                </div>
@@ -655,31 +655,28 @@
                         <div class="card-title mb-0">
                            <div class="row">
                               <div class="col-12">
-                                 <h5 class="mb-0"><i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Shopping Cart</h5>
+                                 <h5 class="mb-0"><i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Shopping Cart </h5>
                               </div>
                            </div>
                         </div>
                      </div>
+
+                     <% if (data && data.product && data.product.length > 0) { %>
+                        <% data.product.forEach(function( product,index ) { %>
+
                      <div class="card-body cart_body">
                         <div class="row view-cart-d">
-                           <!-- <div class="col-12 my-2 mt-1 text-right ">
-                              <a href="#"><i class="fas fa-trash-alt"></i></a>
-                            </div> -->   
+                        
                            <div class="col-12 col-md-6 pr-0">
                               <div class="d-flex">
                                  <div class=" col-xl-4 col-lg-5 col-md-4 col-4 px-0">
                                     <a href="#"><img src="assets/img/product/product_13.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_13"></a>
                                  </div>
                                  <div class=" col-xl-8 col-lg-7 col-md-8 col-8 pr-0">
-                                    <h4 class="product-name font-weight-bolder mb-2 mb-sm-3 mb-xl-3 mt-sm-2 mt-md-2"><a href="#">Aliquam Top Erat Volutpat</a></h4>
-                                    <div><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></div>
-                                    <div class="my-1 f_13">
-                                       <span>size:</span>
-                                       <span>s</span>
-                                    </div>
-                                    <div class="f_13">
-                                       <span>color:</span>
-                                       <span>white</span>
+                                    <h4 class="product-name font-weight-bolder mb-2 mb-sm-3 mb-xl-3 mt-sm-2 mt-md-2"><a href="#"><%= product.productId.name %></a></h4>
+                                    <div>
+                                       <span class="font-weight-bolder price"><%= product.productId.price %></span>
+                                       <del class="text-muted">1500.00</del>
                                     </div>
                                  </div>
                               </div>
@@ -696,43 +693,10 @@
                            </div>
                         </div>
                         <hr>
-                        <div class="row cart_p_remove1 view-cart-d">
-                           <!-- <div class="col-12 my-2 mt-1 text-right view-cart-d ">
-                              <a href="#"><i class="fas fa-trash-alt"></i></a>
-                            </div>  -->  
-                           <div class="col-12 col-md-6 pr-0">
-                              <div class="d-flex">
-                                 <div class=" col-xl-4 col-lg-5 col-md-4 col-4 px-0">
-                                    <a href="#"><img src="assets/img/product/product_17.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_17"></a>
-                                 </div>
-                                 <div class=" col-xl-8 col-lg-7 col-md-8 col-8 pr-0">
-                                    <h4 class="product-name font-weight-bolder mb-2 mb-sm-3 mb-xl-3 mt-sm-2 mt-md-2"><a href="#">Aliquam Top Erat Volutpat</a></h4>
-                                    <div><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></div>
-                                    <div class="my-1 f_13">
-                                       <span>size:</span>
-                                       <span>s</span>
-                                    </div>
-                                    <div class="f_13">
-                                       <span>color:</span>
-                                       <span>white</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col-12 col-md-6 mt-4">
-                              <div class="d-flex">
-                                 <div class="col-md-3 col-sm-4 col-5 text-left text-md-right my-2 ">
-                                    <span class="font-weight-bolder">$45.00</span>
-                                 </div>
-                                 <div class="col-md-9 col-sm-4 col-5">
-                                    <input type="number" class="form-control border"  placeholder="0">
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                        <% }); %>
 
                         <div class="card-footer">
-                        <div class="row">
+                         <div class="row">
                            <div class="col-6 col-sm-7 text-right">
                               <div class="my-2 font-weight-bolder">
                                  <span>total:</span>
@@ -742,8 +706,8 @@
                            <div class="col-6 col-sm-5 checkout-btn">
                               <a href="checkout.html" class="btn btn-block f_13 font-weight-bolder">Checkout</a>
                            </div>
-                        </div>
-                     </div>
+                         </div>
+                       </div>
 
                      </div>
 
@@ -751,6 +715,7 @@
                      
                   </div>
                </div>
+            <% } %>
                <div class="col-12 col-lg-4">
                   <div class="border rounded bg-white final_payment">
                      <div class="card-body  border-bottom">

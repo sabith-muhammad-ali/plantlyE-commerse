@@ -134,11 +134,8 @@ const editProductImage = async (req, res) => {
   try {
     const product = req.body.productId;
     const imageName = req.body.imageName;
-    console.log('product',product);
-    console.log('imagename',imageName);
     const findProduct = await productModel.findByIdAndUpdate({_id:product},{$pull:{images: imageName}})
     if(findProduct){
-      console.log('image is deleted');
       res.json({message:'image is succesfully deleted'})
     } 
   } catch (error) {

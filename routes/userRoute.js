@@ -40,7 +40,12 @@ user.post("/change-password", auth.isLogin, userController.changePassword);
 user.get("/forget-password", auth.isLogout, userController.loadForgerPassword);
 user.post("/forget-password", auth.isLogout, userController.checkEmail);
 //cart
-user.get('/cart',auth.isLogin,cartController.cartLoad);
+user.get("/cart", auth.isLogin, cartController.cartLoad);
+user.post("/addTo-cart", auth.isLogin, cartController.getCart);
+//shop
+user.get("/shop", userController.loadshop);
+user.get("/singleproduct", userController.singleproduct);
+
 user.get(
   "/reset-password/:token",
   auth.isLogout,
@@ -48,8 +53,7 @@ user.get(
 );
 user.post("/reset-password", auth.isLogout, userController.resetPassword);
 
-user.get("/shop", userController.loadshop);
-user.get("/singleproduct", userController.singleproduct);
+
 
 //gogole
 user.use(passport.initialize());
