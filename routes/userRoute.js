@@ -25,8 +25,8 @@ user.post("/registration", auth.isLogout, userController.insertUser);
 user.get("/userOTP", auth.isLogout, userController.sendOTP);
 user.post("/userOTP", auth.isLogout, userController.verifyOTP);
 user.post("/resendotp", userController.resendOtp);
-user.get("/loginUser", auth.isLogout, userController.loadsignin);
-user.post("/loginUser", auth.isLogout, userController.verifyLogin);
+user.get("/login-User", auth.isLogout, userController.loadsignin);
+user.post("/login-User", auth.isLogout, userController.verifyLogin);
 user.get("/logout", auth.isLogin, userController.userLogout);
 user.get("/user-profile", auth.isLogin, userController.userProfile);
 user.post("/user-profile", auth.isLogin, userController.editUserProfile);
@@ -42,9 +42,10 @@ user.post("/forget-password", auth.isLogout, userController.checkEmail);
 //cart
 user.get("/cart", auth.isLogin, cartController.cartLoad);
 user.post("/addTo-cart", auth.isLogin, cartController.getCart);
+user.post("/add-quantity",auth.isLogin,cartController.updateCartQuantity)
 //shop
 user.get("/shop", userController.loadshop);
-user.get("/singleproduct", userController.singleproduct);
+user.get("/single-product", userController.singleproduct);
 
 user.get(
   "/reset-password/:token",

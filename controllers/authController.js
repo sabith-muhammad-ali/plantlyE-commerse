@@ -42,7 +42,7 @@ const success = async (req, res) => {
 
     if (existingUser) {
         if(existingUser.is_block === true){
-          return res.redirect('/loginUser')
+          return res.redirect('/login-User')
         }
       req.session.userId = existingUser._id;
       return res.redirect("/");
