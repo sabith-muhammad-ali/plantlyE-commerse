@@ -108,7 +108,6 @@
                      <div class="col-sm-7 col-12">
                         <h5 class="font-weight-bolder border-bottom me_name">Aliquam Top Erat Volutpat</h5>
                         <div class="font-weight-bolder border-bottom me_price">$19.12</div>
-                        <div class="my-2 border-bottom me_des">Fashion has been creating well-designed collections since 2010. </div>
                         <div class="me_quan">
                            <div class="sp_counter ">
                               <div class="input-group">
@@ -188,10 +187,6 @@
                </div>
                <div class="modal-body">
                   <ul>
-                     <li>Fashion has been creating well-designed collections since 2010. </li>
-                     <li>The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. </li>
-                     <li>The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. </li>
-                     <li>All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</li>
                   </ul>
                </div>
             </div>
@@ -637,108 +632,116 @@
                </div>
             </div>
          </div>
-         <div class="container custom_container ">
+
+         <div class="container custom_container">
             <div class="row">
-               <div class="col-12">
-                  <div class="title_outer">
-                     <h1 class="mb-3 d-inline-block pb-3 position-relative border-bottom h1_">Cart</h1>
-                  </div>
-                  <!-- title_outer -->
-               </div>
-               <!-- col-12 -->
+                <div class="col-12">
+                    <div class="title_outer">
+                        <h1 class="mb-3 d-inline-block pb-3 position-relative border-bottom h1_">Cart</h1>
+                    </div>
+                    <!-- title_outer -->
+                </div>
+                <!-- col-12 -->
             </div>
             <!-- row -->
             <div class="row">
-               <div class="col-12 col-lg-8">
-                  <div class="card">
-                     <div class="card-header cart_header bg-white">
-                        <div class="card-title mb-0">
-                           <div class="row">
-                              <div class="col-12">
-                                 <h5 class="mb-0"><i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Shopping Cart </h5>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-
-                     <% if (data && data.product && data.product.length > 0) { %>
-                        <% data.product.forEach(function( product,index ) { %>
-
-                     <div class="card-body cart_body">
-                        <div class="row view-cart-d">
-                        
-                           <div class="col-12 col-md-6 pr-0">
-                              <div class="d-flex">
-                                 <div class=" col-xl-4 col-lg-5 col-md-4 col-4 px-0">
-                                    <a href="#"><img src="assets/img/product/product_13.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_13"></a>
-                                 </div>
-                                 <div class=" col-xl-8 col-lg-7 col-md-8 col-8 pr-0">
-                                    <h4 class="product-name font-weight-bolder mb-2 mb-sm-3 mb-xl-3 mt-sm-2 mt-md-2"><a href="#"><%= product.productId.name %></a></h4>
-                                    <div>
-                                       <span class="font-weight-bolder price"><%= product.productId.price %></span>
-                                       <del class="text-muted">1500.00</del>
+                <div class="col-12 col-lg-8">
+                    <div class="card">
+                        <div class="card-header cart_header bg-white">
+                            <div class="card-title mb-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="mb-0"><i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Shopping Cart</h5>
                                     </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col-12 col-md-6 mt-4">
-                              <div class="d-flex">
-                                 <div class="col-md-3 col-sm-4 col-5 text-left text-md-right my-2 ">
-                                    <span class="font-weight-bolder">$45.00</span>
-                                 </div>
-                                 <div class="col-md-9 col-sm-4 col-5">
-                                    <input type="number" class="form-control border"  placeholder="0">
-                                 </div>
-                              </div>
-                           </div>
+                                </div>
+                            </div>
                         </div>
-                        <hr>
-                        <% }); %>
-
-                        <div class="card-footer">
-                         <div class="row">
-                           <div class="col-6 col-sm-7 text-right">
-                              <div class="my-2 font-weight-bolder">
-                                 <span>total:</span>
-                                 <span>$56.00</span>
-                              </div>
-                           </div>
-                           <div class="col-6 col-sm-5 checkout-btn">
-                              <a href="checkout.html" class="btn btn-block f_13 font-weight-bolder">Checkout</a>
-                           </div>
-                         </div>
-                       </div>
-
-                     </div>
-
-                     <p class="text-center cartempty1">Your Shopping cart is empty!</p>
-                     
-                  </div>
-               </div>
-            <% } %>
-               <div class="col-12 col-lg-4">
-                  <div class="border rounded bg-white final_payment">
-                     <div class="card-body  border-bottom">
-                        <p class="text-muted">5 items</p>
-                        <p class="font-weight-bolderer">show details</p>
-                        <div>
-                           <span class="font-weight-bolder">subtotal</span>
-                           <span class="float-right font-weight-bolder">$94.00</span>
+                        <% if(data && data.product && data.product.length > 0 ) { %>
+                        <div class="card-body cart_body">
+                            <div class="row ">
+                                <% data.product.forEach(function(product, index) { %>
+                                <div class="col-12 col-md-6 pr-0">
+                                    <div class="d-flex">
+                                        <div class=" col-xl-4 col-lg-5 col-md-4 col-4 px-0">
+                                          <a href="/singleproduct?id=<%= product.productId._id %>">
+                                             <img src="/assets/sharp/<%= product.productId.images[0] %>" class="fst-image mx-auto d-block img-fluid" alt="product_13">
+                                          </a>
+                                        </div>
+                                        <div class=" col-xl-8 col-lg-7 col-md-8 col-8 pr-0">
+                                            <h4 class="product-name font-weight-bolder mb-2 mb-sm-3 mb-xl-3 mt-sm-2 mt-md-2"><a href="#"></a><%= product.productId.name %></h4>
+                                            <div><span class="font-weight-bolderer price">₹<%= product.price %></span> <del class="text-muted">₹1500.00</del></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-4">
+                                    <div class="d-flex">
+                                        <div class="col-md-3 col-sm-4 col-5 text-left text-md-right my-2 ">
+                                            <span class="font-weight-bolder">₹<%= product.price %></span>
+                                        </div>
+                                        <div class="col-md-9 col-sm-4 col-5">
+                                          <div class="input-group">
+                                              <div class="input-group-prepend">
+                                                  <button class="btn btn-outline-secondary" type="button" id="sub" onclick="updateQuantity">-</button>
+                                              </div>
+                                              <input type="number" class="form-control border" placeholder="" value="<%= product.quantity %>" min="1" max="10" disabled>
+                                              <div class="input-group-append">
+                                                  <button class="btn btn-outline-secondary" type="button" id="add" onclick="updateQuantity">+</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                            </div>
+                            <hr>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-6 col-sm-7 text-right">
+                                        <div class="my-2 font-weight-bolder">
+                                            <span>total:</span>
+                                            <% var total = 0; %>
+                                            <% data.product.forEach(function(product) { %>
+                                            <% total += product.price; %>
+                                            <% }) %>
+                                            <span>₹<%= total %></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-5 checkout-btn">
+                                        <a href="checkout.html" class="btn btn-block f_13 font-weight-bolder">Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                     </div>
-                     <div class="card-body ">
-                        <div>
-                           <span class="font-weight-bolder">total(tax excl.)</span>
-                           <span class="float-right font-weight-bolder">$94.00</span>
+                        <% } else { %>
+                        <p class="text-center cartempty1">Your Shopping cart is empty!</p>
+                        <% } %>
+                    </div>
+                </div>
+                <!-- col-lg-8 -->
+                <!-- Move this small box to the right side -->
+                <div class="col-12 col-lg-4">
+                    <div class="border rounded bg-white final_payment">
+                        <div class="card-body  border-bottom">
+                            <p class="text-muted">5 items</p>
+                            <p class="font-weight-bolderer">show details</p>
+                            <div>
+                                <span class="font-weight-bolder">subtotal</span>
+                                <span class="float-right font-weight-bolder">₹94.00</span>
+                            </div>
                         </div>
-                        <div>
-                           <span class="font-weight-bolder">taxes</span>
-                           <span class="float-right font-weight-bolder">$9.00</span>
+                        <div class="card-body ">
+                            <div>
+                                <span class="font-weight-bolder">total</span>
+                                <span class="float-right font-weight-bolder">₹94.00</span>
+                            </div>
                         </div>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
+                <!-- col-lg-4 -->
             </div>
+            <!-- row -->
+        </div>
+
          </div>
       </div>
       <!-- footer -->
@@ -1028,8 +1031,15 @@
       <script  src="assets/js/jquery.fancybox.min.js"></script>
       <!-- custom js -->
       <script src="assets/js/custom.js"></script>
-  
       </script>
+
+      <script>
+         function updateQuantity() {
+            
+         }
+      </script>
+
+
    </body>
 
 <!-- Mirrored from dostguru.com/HTML/plantly/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->

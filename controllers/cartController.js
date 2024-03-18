@@ -3,11 +3,12 @@ const Category = require("../models/categoryModel");
 const User = require("../models/userModel");
 const Product = require("../models/productModel");
 const Address = require("../models/addressModel");
+const product = require("../models/productModel");
 
 const getCart = async (req, res) => {
   try {
     if (req.session.userId) {
-      console.log("rechead");
+      console.log("rechead",req.body,req.body.product);
       const product_id = req.body.product;
       const userId = req.session.userId;
       const productData = await Product.findById(product_id);
@@ -22,12 +23,12 @@ const getCart = async (req, res) => {
           res.json({ status: "already Added", cartProduct });
         } else {
           const data = {
-            ProductId: product_id,
+            productId: product_id,
             price: productData.price,
             total: productData.price,
           };
           console.log(data);
-          await cartModel.findOneAndUpdate(
+          await Cart.findOneAndUpdate(
             { user: userId },
             { $set: { user: userId }, $push: { product: data } },
             { upsert: true, new: true }
@@ -47,11 +48,13 @@ const cartLoad = async (req, res) => {
   try {
     if (req.session.userId) {
       const id = req.session.userId;
-      const cartData = await cartModel
+      const cartData = await Cart
         .findOne({ user: id })
-        .populate('product.productId');
-
-      console.log(cartData,"sldfjkasldfjas");
+        .populate("product.productId");
+        
+      // console.log(product.productId.name);
+      console.log(cartData,"cartData");
+      
       res.render("user/cart-load", { data: cartData, id });
     }
   } catch (error) {
