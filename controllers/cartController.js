@@ -70,7 +70,7 @@ const updateCartQuantity = async (req, res) => {
     const cartData = await Cart.findOne({ user: userId });
 
     if (count === -1) {
-      const currentQuantity = cartData.product.find(
+      const currentQuantity = cartData.items.find(
         (p) => p.productId == product_id
       ).quantity;
       if (currentQuantity + count > productCount.quantity) {
@@ -83,7 +83,7 @@ const updateCartQuantity = async (req, res) => {
     console.log('hello');
     let currentQuantity
     if (count === 1) {
-       currentQuantity = cartData.product.find(
+       currentQuantity = cartData.items.find(
         (p) => p.productId == product_id
       ).quantity;
       if (currentQuantity + count > productCount.quantity) {
@@ -91,7 +91,7 @@ const updateCartQuantity = async (req, res) => {
       }
     }
 
-    const totalPrice = currentQuantity * cartData.product.find((p) => p.productId == product_id).price
+    const totalPrice = currentQuantity * cartData.items.find((p) => p.productId == product_id).price
     console.log(totalPrice);
 
         await Cart.findOneAndUpdate(
