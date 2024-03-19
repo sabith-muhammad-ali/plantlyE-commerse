@@ -774,12 +774,9 @@
             </div>
          </div>
       </div>
-
-      <% if(address[0].address.length===0) { %>
          <div class="container text-center">
             <a href="/add-address" class="btn btn-primary">Add Address <span class="badge badge-light">New</span></a>
          </div>
-         <% } else { %>
             <h1 class="text-center h1_">Addresses</h1>
             <% address[0].address.forEach(function(address,index) { %>
                <div class="container custom_container">
@@ -840,7 +837,6 @@
                   </div>
                </div>
                <% }) %>
-                  <% } %>
                      <!-- login_page -->
                      <!-- registration page -->
                      <!-- footer -->

@@ -131,10 +131,19 @@ const removeCart = async (req, res) => {
 };
 
 
+const loadCheckOut = async (req, res) => {
+  try {
+    res.render("user/checkOut");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 module.exports = {
   cartLoad,
   getCart,
   updateCartQuantity,
   removeCart,
+  loadCheckOut,
 };

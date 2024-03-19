@@ -35,6 +35,7 @@ const addAddress = async (req, res) => {
 const loadAddresses = async (req, res) => {
   try {
     const address = await addressModel.find({ user: req.session.userId });
+    console.log(address);
     res.render("user/addresses", { address });
   } catch (error) {
     console.log(error);
