@@ -82,7 +82,7 @@ const updateCartQuantity = async (req, res) => {
       currentQuantity = cartData.items.find(
         (p) => p.productId == product_id
       ).quantity;
-      if (currentQuantity + count > productCount.quantity) {
+      if (currentQuantity + count > 5) {
         return res.json({ response: false, message: "Stock limit reached" });
       }
     }
