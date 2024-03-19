@@ -241,6 +241,10 @@ const loadshop = async (req, res) => {
       product = await productModel.find({}).sort({ price: -1 });
     } else if (req.query.sort === "low to high") {
       product = await productModel.find({}).sort({ price: 1 });
+    } else if (req.query.sort === "A to Z") {
+      product = await productModel.find({}).sort({ name: 1 });
+    } else if (req.query.sort === "Z to A") {
+      product = await productModel.find({}).sort({ name: -1 });
     }
     res.render("user/shop", { product });
   } catch (error) {
