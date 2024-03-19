@@ -64,7 +64,7 @@ const updateCartQuantity = async (req, res) => {
     const userId = req.session.userId;
     const product_id = req.body.productId;
     const count = req.body.count;
-    console.log(req.body,"body  sabith ");
+    console.log(req.body, "body  sabith ");
     const productCount = await Product.findOne({ _id: product_id });
     console.log("PRODUCT COUNT", productCount);
     const cartData = await Cart.findOne({ user: userId });
@@ -80,10 +80,10 @@ const updateCartQuantity = async (req, res) => {
         });
       }
     }
-    console.log('hello');
-    let currentQuantity
+    console.log("hello");
+    let currentQuantity;
     if (count === 1) {
-       currentQuantity = cartData.items.find(
+      currentQuantity = cartData.items.find(
         (p) => p.productId == product_id
       ).quantity;
       if (currentQuantity + count > productCount.quantity) {
@@ -91,16 +91,11 @@ const updateCartQuantity = async (req, res) => {
       }
     }
 
-    const totalPrice = currentQuantity * cartData.items.find((p) => p.productId == product_id).price
-    console.log(totalPrice);
-
-        await Cart.findOneAndUpdate(
+    await Cart.findOneAndUpdate(
       { user: userId, "items.productId": product_id },
       {
         $inc: {
           "items.$.quantity": count,
-          "items.$total":
-            totalPrice,
         },
       },
       { new: true }
