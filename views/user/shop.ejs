@@ -358,7 +358,7 @@
                                              <span class="float-right">$230.00</span>
                                           </li>
                                           <li class="d-block font-weight-bolderer pt-2">
-                                             <span class="text-left"><a href="cart.html">view cart</a></span>
+                                             <span class="text-left"><a href="/cartl">view cart</a></span>
                                              <span class="float-right"><a href="checkout.html">check out</a></span>
                                           </li>
                                     </ul>
@@ -607,9 +607,9 @@
          <div class="container custom_container">
             <div class="row">
                <div class="col-lg-3 col-md-4">
-                  <form action="#" id="shop_page-form" method="post" class="needs-validation" novalidate>
-                     <div class="shop_sidebar border card-body rounded bg-white">
-                        <h2 class="text-uppercase card-title  font-weight-bolder d-md-block d-none">filter by</h2>
+                  <!-- <form action="#" id="shop_page-form" method="post" class="needs-validation" novalidate> -->
+                     <!-- <div class="shop_sidebar border card-body rounded bg-white"> -->
+                        <!-- <h2 class="text-uppercase card-title  font-weight-bolder d-md-block d-none">filter by</h2>
                         <div class="s_filter mt-0">
                            <h6 class="text-uppercase  border-bottom font-weight-bold">Range<button class="toggle collapsed" data-toggle="collapse" data-target="#shop_range_collapse"></button></h6>
                            <div class="collapse " id="shop_range_collapse">
@@ -622,7 +622,7 @@
                                  <input type="number" class="form-control"  placeholder="0">
                               </div>
                            </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="s_filter form">
                            <h6 class="text-uppercase  border-bottom font-weight-bold">color<button class="toggle collapsed" data-toggle="collapse" data-target="#shop_color_collapse"></button></h6>
                            <div class="collapse" id="shop_color_collapse">
@@ -695,9 +695,9 @@
                                
                            </div>
                         </div> -->
-                       <button id="clearButton" data-search-url="#" class="btn btn-primary clear_btn" type="reset">Clear all</button>
-                     </div>
-                  </form>
+                       <!-- <button id="clearButton" data-search-url="#" class="btn btn-primary clear_btn" type="reset">Clear all</button>
+                     </div> -->
+                  <!-- </form> -->
                </div>
                <div class="col-lg-9 col-md-8">
                   <div class="row shop_grid_list_row mb-5 bg-white p-2 p-md-1 mb-lg-3 mx-0">
@@ -715,13 +715,13 @@
                      <div class="col-xl-6 col-sm-10 col-8 pr-0 sortpro">
                         <div class="sort-by text-right">
                            <div class="sort">
-                              <select class="custom-select" id="inlineFormCustomSelect">
+                              <select class="custom-select" id="filter" onchange="filterProduct(value)">
                                  <option selected>Relevance...</option>
                                  <option value="1">Relevance</option>
-                                 <option value="2">Name, A to Z</option>
-                                 <option value="3">Name, Z to A</option>
-                                 <option value="3">Price, low to high</option>
-                                 <option value="3">Price, high to low</option>
+                                 <option value="Name, A to Z">Name, A to Z</option>
+                                 <option value="Name, Z to A">Name, Z to A</option>
+                                 <option value="low to high">Price, low to high</option>
+                                 <option value="high to low">Price, high to low</option>
                               </select>
                            </div>
                         </div>
@@ -1073,6 +1073,16 @@
       <script src="assets/js/all.min.js"></script>
       <!-- custom js -->
       <script src="assets/js/custom.js"></script>
+
+      <script>
+         function filterProduct (value) {
+            console.log(value);
+            window.location.href = `/shop?sort=${value}`;
+         }
+      </script>
+
+
+
    </body>
 
 <!-- Mirrored from dostguru.com/HTML/plantly/shop-left-sidebar.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->

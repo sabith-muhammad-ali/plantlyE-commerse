@@ -42,7 +42,8 @@ user.post("/forget-password", auth.isLogout, userController.checkEmail);
 //cart
 user.get("/cart", auth.isLogin, cartController.cartLoad);
 user.post("/addTo-cart", auth.isLogin, cartController.getCart);
-user.post("/add-quantity",auth.isLogin,cartController.updateCartQuantity)
+user.post("/add-quantity",auth.isLogin,cartController.updateCartQuantity);
+user.delete("/remove-cart",auth.isLogin,cartController.removeCart);
 //shop
 user.get("/shop", userController.loadshop);
 user.get("/single-product", userController.singleproduct);

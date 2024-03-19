@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const productModel = require("../models/productModel");
 const crypto = require("crypto");
+const { log } = require("console");
 
 // tempHomePage
 const homePage = async (req, res) => {
@@ -233,7 +234,14 @@ const userLogout = async (req, res) => {
 
 const loadshop = async (req, res) => {
   try {
-    const product = await productModel.find({});
+    let product;
+    console.log(req.query.sort);
+    product = await productModel.find({});
+    if (req.query.sort === "high to low") {
+      product = await productModel.find({}).sort({ price: -1 });
+    } else if (req.query.sort === "low to high") {
+      product = await productModel.find({}).sort({ price: 1 });
+    }
     res.render("user/shop", { product });
   } catch (error) {
     console.log(error);
