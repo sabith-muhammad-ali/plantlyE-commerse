@@ -33,6 +33,11 @@
       <link rel="preconnect" href="https://fonts.gstatic.com/">
       <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"> 
    </head>
+   <style>
+      .registerForm{
+         color: red;
+      }
+   </style>
    <body>
       <!-- cart-model -->
       <div class="modal fade" id="cart_model" tabindex="-1"  aria-hidden="true">
@@ -221,7 +226,7 @@
                            <input type="email" class="form-control" placeholder="Enter Your Mail">
                         </div>
                         <div class="col-12 sp_form pl-0 pb-3 ">
-                           <input type="tel" pattern=".{10}" class="form-control" id="other_number" oninput="check(this)" required placeholder="Enter Your Phone">
+                           <input type="tel" pattern=".{10}" class="form-control" id="other_number" oninput="check(this)"  placeholder="Enter Your Phone">
                         </div>
                         <div class="col-12 sp_form pl-0 pb-3">
                            <button type="submit" class="btn btn-primary">submit review</button>
@@ -636,42 +641,47 @@
          <div class="container custom_container">
             <h1 class="text-center h1_">SIGNUP WITH PLANTLY </h1>
             <div id="Registration" class="page-content card card-block p-3 p-sm-4">
-                <form class="needs-validation" method="post" novalidate>
-                    <p>Already have an account?<a href="#"> Log in instead!</a></p>
-                    <div class="form-group">
-                        <label for="f_name" class="font-weight-bolder">First name</label>
-                        <input type="text" class="form-control" id="f_name" name="fname" required>
-                        <div class="invalid-feedback">Please Enter your Name.</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="r_email" class="font-weight-bolder">Email address</label>
-                        <input type="email" class="form-control" id="r_email" name="email" required>
-                        <div class="invalid-feedback">Please Enter your Account Name.</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="r_password" class="font-weight-bolder">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                        <div class="invalid-feedback">Please Enter your password.</div>
-                    </div>
-                    <div class="clearfix">
-                        <button id="clearButton" type="reset" class="btn btn-primary rese float-left mt-3">Reset</button>
-                        <input type="submit" name="submit" class="btn btn-primary mt-3 float-right" value="Save">
-                    </div>
-                    <!-- Google button -->
-                    <div class="text-center mt-3">
-                     <a href="/auth/google" class="btn btn-light">
-                         <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google Logo" class="icon">
-                         Signup with Google
-                     </a>
-                      </div>
-                      <!-- facebook button -->
-                      <div class="text-center mt-3">
-                        <a href="/auth/facebook" class="btn btn-light facebook-login-button">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" alt="Facebook Logo" class="icon" style="width: 24px; height: 24px;">
-                            Sign up with Facebook
-                        </a>
-                    </div>
-                </form>
+               <form method="post" id="user-form">
+                  <p>Already have an account?<a href="#"> Log in instead!</a></p>
+                  <div class="form-group">
+                      <label for="f_name" class="font-weight-bolder">First name</label>
+                      <input type="text" class="form-control" id="f_name" name="fname">
+                      <div class="registerForm" id="name" ></div>
+                  </div>
+                  <div class="form-group">
+                      <label for="r_email" class="font-weight-bolder">Email address</label>
+                      <input type="email" class="form-control" id="r_email" name="email">
+                      <div class="registerForm" id="emailError"></div>
+                  </div>
+                  <div class="form-group">
+                      <label for="r_password" class="font-weight-bolder">Password</label>
+                      <input type="password" class="form-control" id="password" name="password">
+                      <div class="registerForm" id="passwordError"></div>
+                  </div>
+                  <div class="form-group">
+                      <label for="c_password" class="font-weight-bolder">Confirm Password</label>
+                      <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+                      <div class="registerForm" id="confirmPasswordError"></div>
+                  </div>
+                  <div class="clearfix">
+                      <button id="clearButton" type="reset" class="btn btn-primary rese float-left mt-3">Reset</button>
+                      <input type="submit" name="submit" class="btn btn-primary mt-3 float-right" value="Save">
+                  </div>
+                  <!-- Google button -->
+                  <div class="text-center mt-3">
+                      <a href="/auth/google" class="btn btn-light">
+                          <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google Logo" class="icon">
+                          Signup with Google
+                      </a>
+                  </div>
+                  <!-- facebook button -->
+                  <div class="text-center mt-3">
+                      <a href="/auth/facebook" class="btn btn-light facebook-login-button">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" alt="Facebook Logo" class="icon" style="width: 24px; height: 24px;">
+                          Sign up with Facebook
+                      </a>
+                  </div>
+              </form>
             </div>
         </div>
 
@@ -968,26 +978,79 @@
       <!-- custom js -->
       <script src="assets/js/custom.js"></script>
       <script>
-         // Disable form submissions if there are invalid fields
-         (function() {
-           'use strict';
-           window.addEventListener('load', function() {
-             // Get the forms we want to add validation styles to
-             var forms = document.getElementsByClassName('needs-validation');
-             // Loop over them and prevent submission
-             var validation = Array.prototype.filter.call(forms, function(form) {
-               form.addEventListener('submit', function(event) {
-                 if (form.checkValidity() === false) {
-                   event.preventDefault();
-                   event.stopPropagation();
-                 }
-                 form.classList.add('was-validated');
-               }, false);
-             });
-           }, false);
-         })();
-      </script>
-
+         var form = document.getElementById('user-form');
+         form.addEventListener('submit', function(event) {
+             if (!formValidity()) {
+                 event.preventDefault();
+             }
+         });
+     
+         function formValidity() {
+             var valid = true;
+     
+             // Validate first name
+             var firstName = document.getElementById('f_name').value.trim();
+             if (firstName === '') {
+                 valid = false;
+                 document.getElementById('name').textContent = 'Please enter your first name.';
+             } else {
+                 document.getElementById('name').textContent = '';
+             }
+     
+             // Validate email
+             var email = document.getElementById('r_email').value.trim();
+             var emailError = document.getElementById('emailError');
+             if (email === '') {
+                 valid = false;
+                 emailError.textContent = 'Please enter a valid email address.';
+             } else if (!isValidEmail(email)) {
+                 valid = false;
+                 emailError.textContent = 'Please enter a valid email address.';
+             } else {
+                 emailError.textContent = '';
+             }
+     
+             // Validate password
+             var password = document.getElementById('password').value.trim();
+             var passwordError = document.getElementById('passwordError');
+             if (password === '') {
+                 valid = false;
+                 passwordError.textContent = 'Please enter a password.';
+             } else if (!isValidPassword(password)) {
+                 valid = false;
+                 passwordError.textContent = 'Password must be at least 8 characters long, including at least one special character and one digit.';
+             } else {
+                 passwordError.textContent = '';
+             }
+     
+             // Validate confirm password
+             var confirmPassword = document.getElementById('confirmPassword').value.trim();
+             var confirmPasswordError = document.getElementById('confirmPasswordError');
+             if (confirmPassword === '') {
+                 valid = false;
+                 confirmPasswordError.textContent = 'Please confirm your password.';
+             } else if (password !== confirmPassword) {
+                 valid = false;
+                 confirmPasswordError.textContent = 'Passwords do not match.';
+             } else {
+                 confirmPasswordError.textContent = '';
+             }
+     
+             return valid;
+         }
+     
+         function isValidEmail(email) {
+             // Simple email validation
+             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+             return emailRegex.test(email);
+         }
+     
+         function isValidPassword(password) {
+             // Password validation with regular expression
+             var passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+             return passwordRegex.test(password);
+         }
+     </script>
 
    </body>
 

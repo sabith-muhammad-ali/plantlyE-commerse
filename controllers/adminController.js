@@ -67,7 +67,6 @@ const blockUser = async (req, res) => {
     const user = req.params.id;
     console.log(user);
     const value = await User.findOne({ _id: user });
-    console.log("hello");
     if (value.is_block) {
       await User.updateOne({ _id: user }, { $set: { is_block: false } });
     } else if (value.is_block == false) {
