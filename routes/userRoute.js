@@ -8,8 +8,7 @@ const addressController = require("../controllers/addressController");
 const cartController = require("../controllers/cartController");
 const auth = require("../middelware/userAuth");
 
-user.use(express.urlencoded({ extended: true }));
-user.use(express.json());
+
 
 user.use(
   session({

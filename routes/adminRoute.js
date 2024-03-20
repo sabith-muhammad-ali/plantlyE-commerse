@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require("express-session");
-const config = require("../config/config");
+
 const adminController = require("../controllers/adminController");
 const categoryController = require("../controllers/categoryController");
 const productController = require("../controllers/productController");
@@ -10,8 +10,7 @@ const adminAuth = require("../middelware/adminAuth");
 
 console.log(path.join(__dirname, "../public/multer"));
 
-admin.use(express.urlencoded({ extended: true }));
-admin.use(express.json());
+
 
 // View setup
 admin.set("views", path.join(__dirname, "views"));
@@ -45,42 +44,16 @@ admin.patch("/blockusers/:id", adminAuth.isLogin, adminController.blockUser);
 
 admin.get("/category", adminAuth.isLogin, categoryController.productCategory);
 admin.get("/categoryadd", adminAuth.isLogin, categoryController.addCategory);
-admin.post(
-  "/categoryadd",
-  adminAuth.isLogin,
-  categoryController.insertCategory
-);
-admin.patch(
-  "/blockcategory/:id",
-  adminAuth.isLogin,
-  categoryController.Categoryblock
-);
+admin.post("/categoryadd",adminAuth.isLogin,categoryController.insertCategory);
+admin.patch("/blockcategory/:id",adminAuth.isLogin,categoryController.Categoryblock);
 admin.get("/categoryedit", adminAuth.isLogin, categoryController.editCategory);
-admin.post(
-  "/categoryedit",
-  adminAuth.isLogin,
-  categoryController.updateCategory
-);
+admin.post("/categoryedit",adminAuth.isLogin,categoryController.updateCategory);
 //product
 admin.get("/product", adminAuth.isLogin, productController.loadproduct);
 admin.get("/addproduct", adminAuth.isLogin, productController.addProduct);
-admin.post(
-  "/addproduct",
-  upload.array("image", 4),
-  adminAuth.isLogin,
-  productController.insertProduct
-);
-admin.patch(
-  "/blockproduct/:id",
-  adminAuth.isLogin,
-  productController.productblock
-);
+admin.post("/addproduct",upload.array("image", 4),adminAuth.isLogin,productController.insertProduct);
+admin.patch("/blockproduct/:id",adminAuth.isLogin,productController.productblock);
 admin.get("/editproduct", adminAuth.isLogin, productController.loadeditproduct);
-admin.post(
-  "/editproduct",
-  upload.array("image", 4),
-  adminAuth.isLogin,
-  productController.editProduct
-);
+admin.post("/editproduct",upload.array("image", 4),adminAuth.isLogin,productController.editProduct);
 admin.post("/deleteimage",productController.editProductImage);
 module.exports = admin;

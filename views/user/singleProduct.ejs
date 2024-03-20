@@ -816,7 +816,8 @@
                      </div>
                      <div class="sp_counter">
                         <span class="sp_c_count2 ">
-                           <button type="button" class="btn btn-primary primary" onclick="addToCart('<%= product._id %>')">add to cart</button>
+                           <button type="button" class="btn btn-primary primary"
+                              onclick="addToCart('<%= product._id %>')">add to cart</button>
                         </span>
                      </div>
                      <div class="form-check sp_check my-3">
@@ -1958,9 +1959,16 @@
                      window.location.href = '/cart'
                   }
                });
+            } else {
+               Swal.fire({
+                  title: "Already in Cart",
+                  text: data.message,
+                  icon: "info",
+                  confirmButtonColor: "#4CAF50",
+               });
             }
          } catch (error) {
-            console.log('An error occurred:',error);
+            console.log('An error occurred:', error);
          }
       }
    </script>

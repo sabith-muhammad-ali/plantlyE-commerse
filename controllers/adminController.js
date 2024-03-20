@@ -15,10 +15,8 @@ const verifyLogin = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    console.log(email, password);
 
     const userData = await User.findOne({ email: email });
-    console.log(userData);
 
     if (userData) {
       const passwordMatch = await bcrypt.compare(password, userData.password);
@@ -65,7 +63,6 @@ const userManagement = async (req, res) => {
 const blockUser = async (req, res) => {
   try {
     const user = req.params.id;
-    console.log(user);
     const value = await User.findOne({ _id: user });
     if (value.is_block) {
       await User.updateOne({ _id: user }, { $set: { is_block: false } });
@@ -80,7 +77,7 @@ const blockUser = async (req, res) => {
 
 const logout = async (req,res) => {
   try {
-    req.session.destroy();
+    req.session.admin_id = null ;
     res.redirect("/admin");
   } catch (error) {
     console.log(error);

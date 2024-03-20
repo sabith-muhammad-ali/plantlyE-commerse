@@ -225,7 +225,7 @@ const verifyLogin = async (req, res) => {
 // userLogout
 const userLogout = async (req, res) => {
   try {
-    req.session.destroy();
+    req.session.userId = null;
     res.redirect("/");
   } catch (error) {
     console.log(error.message);

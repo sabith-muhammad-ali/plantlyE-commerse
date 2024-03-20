@@ -3,6 +3,7 @@ const Category = require("../models/categoryModel");
 const User = require("../models/userModel");
 const Product = require("../models/productModel");
 const Address = require("../models/addressModel");
+const product = require("../models/productModel");
 
 
 const getCart = async (req, res) => {
@@ -87,6 +88,16 @@ const updateCartQuantity = async (req, res) => {
       }
     }
 
+    if (count === 1) {
+      currentQuantity = cartData.items.find(
+        (p) => p.productId == product_id 
+      ).quantity;
+        if(currentQuantity + count > productCount.quantity ) {
+          return res.json({ response: false, message: "Stock limit reached" });
+        }
+    }    
+    
+
     await Cart.findOneAndUpdate(
       { user: userId, "items.productId": product_id },
       {
@@ -107,7 +118,6 @@ const removeCart = async (req, res) => {
     console.log("hello");
     const userId = req.session.userId;
     const product_id = req.body.productId;
-    console.log(userId, product_id, 'fffffffffffff');
 
     if (!userId || !product_id) {
       return res.status(400).json({ error: "Invalid user ID or product ID" });

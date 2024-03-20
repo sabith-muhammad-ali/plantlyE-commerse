@@ -1130,7 +1130,7 @@
                } else {
                   Swal.fire({
                      title: "Oops!",
-                     text: data.response.message,
+                     text: data.message,
                      icon: "info"
                   });
                }
@@ -1145,47 +1145,47 @@
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <script>
       function removeFromCart(productId) {
-         console.log('sssssssssss');
-         const data = { productId }
-         fetch("/remove-cart", {
-            method: 'delete',
-            headers: {
-               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-         })
-            .then(response => {
-               if (!response.ok) {
-                  throw new Error('response was not ok');
-               }
-               return response.json()
-            })
-            .then(data => {
-               console.log(data);
-               if (data.response == true) {
-                  Swal.fire({
-                     title: "Are you sure?",
-                     text: "You won't be able to revert this!",
-                     icon: "warning",
-                     showCancelButton: true,
-                     confirmButtonColor: "#3085d6",
-                     cancelButtonColor: "#d33",
-                     confirmButtonText: "Yes, delete it!"
-                  }).then((response) => {
-                     Swal.fire({
-                        title: "success",
-                        text: "Your item was  deleted.",
-                        icon: "success"
-                     }).then((response) => {
-                        $("#cart-list").load("/cart #cart-list");
-                     })
+         Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+         }).then((response) => {
+            if (response.isConfirmed) {
+               console.log('sssssssssss');
+               const data = { productId };
+               fetch("/remove-cart", {
+                  method: 'DELETE',
+                  headers: {
+                     'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(data)
+               })
+                  .then(response => {
+                     if (!response.ok) {
+                        throw new Error('response was not ok');
+                     }
+                     return response.json();
+                  })
+                  .then(data => {
+                     if (data.response === true) {
+                        Swal.fire({
+                           title: "Success",
+                           text: "Your item was deleted.",
+                           icon: "success"
+                        }).then((response) => {
+                           $("#cart-list").load("/cart #cart-list");
+                        });
+                     }
+                  })
+                  .catch(error => {
+                     console.error('Error removing cart', error);
                   });
-               }
-            })
-            .catch(error => {
-               ;
-               console.error('error remove cart', error);
-            })
+            }
+         });
       }
    </script>
 
