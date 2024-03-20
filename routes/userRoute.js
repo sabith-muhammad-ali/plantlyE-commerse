@@ -6,6 +6,7 @@ const userController = require("../controllers/userController");
 const googleauthController = require("../controllers/authController");
 const addressController = require("../controllers/addressController");
 const cartController = require("../controllers/cartController");
+const orderController = require("../controllers/orderController");
 const auth = require("../middelware/userAuth");
 
 
@@ -48,7 +49,8 @@ user.get("/cart", auth.isLogin, cartController.cartLoad);
 user.post("/addTo-cart", auth.isLogin, cartController.getCart);
 user.post("/add-quantity",auth.isLogin,cartController.updateCartQuantity);
 user.delete("/remove-cart",auth.isLogin,cartController.removeCart);
-user.get('/checkOut',auth.isLogin,cartController.loadCheckOut);
+//order
+user.get('/checkOut',auth.isLogin,orderController.loadCheckOut);
 
 
 
