@@ -25,7 +25,6 @@ const addAddress = async (req, res) => {
       { $push: { address: Address } },
       { upsert: true, new: true }
     );
-    console.log(userAddress);
     res.redirect("/user-profile");
   } catch (error) {
     console.log(error);
@@ -35,7 +34,6 @@ const addAddress = async (req, res) => {
 const loadAddresses = async (req, res) => {
   try {
     const address = await addressModel.find({ user: req.session.userId });
-    console.log(address);
     res.render("user/addresses", { address });
   } catch (error) {
     console.log(error);

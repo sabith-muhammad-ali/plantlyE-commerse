@@ -774,10 +774,12 @@
             </div>
          </div>
       </div>
-         <div class="container text-center">
+         <div class="container text-center mb-5">
             <a href="/add-address" class="btn btn-primary">Add Address <span class="badge badge-light">New</span></a>
          </div>
             <h1 class="text-center h1_">Addresses</h1>
+            <% console.log(address) %>
+            <% if (address.length > 0  ) { %>
             <% address[0].address.forEach(function(address,index) { %>
                <div class="container custom_container">
                   <div id="Registration" class="page-content card card-block p-3 p-sm-4 small-form">
@@ -837,6 +839,8 @@
                   </div>
                </div>
                <% }) %>
+           <% } %>
+
                      <!-- login_page -->
                      <!-- registration page -->
                      <!-- footer -->
