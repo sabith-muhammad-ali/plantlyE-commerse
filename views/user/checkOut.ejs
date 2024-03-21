@@ -32,6 +32,18 @@
       <!-- googleapis -->
       <link rel="preconnect" href="https://fonts.gstatic.com/">
       <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"> 
+      <!-- bootstrap -->
+      <style>
+         /* Remove dark overlay from modal backdrop */
+         .modal-backdrop {
+             background-color: rgba(0, 0, 0, 0) !important;
+         }
+         .form-control {
+         border: 1px solid #ced4da; 
+         border-radius: 0.25rem; 
+         }
+     </style>
+
    </head>
    <body>
       <!-- cart-model -->
@@ -614,7 +626,7 @@
       <!-- container  menu_slider mt-4 -->
       <!-- vertical menu and slider end -->
       <!-- checkout page -->
-      <div id="checkout_page" class="checkout-page animate__animated animate__fadeInUp">
+       <div id="checkout_page" class="checkout-page animate__animated animate__fadeInUp">
          <div class="sp_header bg-white p-3 ">
             <div class="container custom_container ">
                <div class="row ">
@@ -627,114 +639,94 @@
                </div>
             </div>
          </div>
+         
          <div class="container custom_container">
             <div class="row">
                <div class="col-lg-8 col-12">
                   <div class="accordion" id="check_out_toggle">
                      <div class="card rounded mb-2">
                         <div class="card-header bg-white" id="checkout_info">
-                           <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left text-body p-0 font-weight-bolder" type="button" data-toggle="collapse" data-target="#check_info" aria-expanded="true" aria-controls="check_info">
-                              Select Existing Address<span class="float-right"><i class="fas fa-angle-down"></i></span>
-                              </button>
-                           </h2>
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left text-body p-0 font-weight-bolder" type="button" data-toggle="collapse" data-target="#check_info" aria-expanded="true" aria-controls="check_info">
+                                    Select Existing Address<span class="float-right"><i class="fas fa-angle-down"></i></span>
+                                </button>
+                            </h2>
                         </div>
                         <div id="check_info" class="collapse show" aria-labelledby="checkout_info" data-parent="#check_out_toggle">
-                           <div class="card-body">
-                              <ul class="nav nav-tabs " role="tablist" >
-                                 <li class="nav-item" >
-                                    <a class="nav-link p-0 font-weight-bolder active" id="order_guest_tab" data-toggle="tab" href="#order_guest" role="tab" aria-controls="order_guest" aria-selected="true">order as a guest</a>
-                                 </li>
-                                 <li class="hr_"></li>
-                                 <li class="nav-item" >
-                                    <a class="nav-link p-0 font-weight-bolder" id="sign_in_tab" data-toggle="tab" href="#sign_in" role="tab" aria-controls="sign_in" aria-selected="false">sign in</a>
-                                 </li>
-                              </ul>
-                              <div class="tab-content" >
-                                 <div class="tab-pane fade show active" id="order_guest"  aria-labelledby="order_guest">
-                                    <div id="Registration" class="page-content mt-4 mb-0">
-                                       <form  class="needs-validation " method="post" novalidate>
-                                          <div class="form-group text-left">
-                                             <label class="font-weight-bolder">Social title</label><br>
-                                             <span class="form-check">
-                                             <input class="form-check-input" type="radio" name="gridRadios" id="gender_mr" checked>
-                                             <label class="form-check-label" for="gender_mr">
-                                             mr.
-                                             </label>
-                                             </span>
-                                             <span class="form-check">
-                                             <input class="form-check-input" type="radio" name="gridRadios" id="gender_mrs">
-                                             <label class="form-check-label" for="gender_mrs">
-                                             mrs.
-                                             </label>
-                                             </span>
-                                          </div>
-                                          <div class="form-group">
-                                             <label for="f_name" class="font-weight-bolder">First name</label>
-                                             <input type="text" class="form-control" id="f_name" placeholder="First name"  required>
-                                             <div class="invalid-feedback">Please enter your name.</div>
-                                          </div>
-                                          <div class="form-group" >
-                                             <label for="l_name" class="font-weight-bolder">Last name</label>
-                                             <input type="text" class="form-control" id="l_name" placeholder="Last Name" required>
-                                             <div class="invalid-feedback">Please enter your name.</div>
-                                          </div>
-                                          <div class="form-group">
-                                             <label for="r_email" class="font-weight-bolder">Email address</label>
-                                             <input type="email" class="form-control" id="r_email" aria-describedby="emailHelp" placeholder="Email" required>
-                                             <div class="invalid-feedback">Please enter your account name.</div>
-                                          </div>
-                                          <div class="form-group font-weight-bolder">
-                                             <label for="r_password" class="font-weight-bolder">Password</label>
-                                             <input type="password" class="form-control" id="r_password" placeholder="password" required>
-                                             <div class="invalid-feedback">Please enter your password.</div>
-                                          </div>
-                                          <div class="form-group">
-                                             <label class="font-weight-bolder">birth date</label>
-                                             <input class="form-control"  type="date" required/>
-                                             <div class="invalid-feedback">Please enter your birthdate.</div>
-                                          </div>
-                                          <div class="form-group form-check d-block">
-                                             <input type="checkbox" class="form-check-input" >
-                                             <label class="form-check-label" for="user_check">Sign up for our newsletter</label>
-                                          </div>
-                                          <div class="form-group form-check d-block">
-                                             <input type="checkbox" class="form-check-input" >
-                                             <label class="form-check-label" for="user_check">I agree to the terms and conditions and the privacy policy</label>
-                                          </div>
-                                          <div><input type="submit" name="submit" class="btn btn-primary mt-3" value="Save"></div>
-                                       </form>
-                                    </div>
-                                 </div>
-                                 <div class="tab-pane fade" id="sign_in"  aria-labelledby="sign_in_tab">
-                                    <div id="login" class="page-content  mt-4 ">
-                                       <form class="needs-validation " method="post" novalidate>
-                                          <div class="form-group">
-                                             <label for="user_email" class="font-weight-bolder">Email address</label>
-                                             <input type="email" class="form-control" id="user_email" aria-describedby="emailHelp" required>
-                                             <div class="invalid-feedback">Please enter account name.</div>
-                                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                          </div>
-                                          <div class="form-group font-weight-bolder" >
-                                             <label for="user_password" class="font-weight-bolder">Password</label>
-                                             <input type="password" class="form-control" id="user_password" required>
-                                             <div class="invalid-feedback">Please enter your Password.</div>
-                                          </div>
-                                          <div class="form-group form-check">
-                                             <input type="checkbox" class="form-check-input" id="user_check" >
-                                             <label class="form-check-label" for="user_check">Check me out</label>
-                                          </div>
-                                          <input type="submit" name="submit" class="btn btn-primary mb-3 d-inline-block" value="submit">
-                                          <div class="pass_acc d-inline-block float-right pt-3">
-                                             <span class="forgot_password font-weight-bolderer"><a href="forgot.html">Forgot your password? </a></span>
-                                          </div>
-                                       </form>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
+                            <div class="card-body">
+                                <!-- Address Cards -->
+                                <div class="address-card mb-3">
+                                 <% if (addressData.address.length > 0) { %>
+                                     <% addressData.address.forEach(function(address, index) { %>
+                                         <div class="card mb-2">
+                                             <div class="card-body">
+                                                <input type="hidden" value="<%= address._id %>" name="id">
+                                                 <h6 class="card-title mb-1"><%= address.name %></h6>
+                                                 <p class="card-text mb-1"><%= address.address %>, <%= address.state %>, <%= address.city %>, <%= address.postcode %></p>
+                                                 <p class="card-text mb-1">Mobile: <%= address.mobile %></p>
+                                                 <button class="btn btn-primary btn-sm select-address-btn" data-address-id="<%= address._id %>">Select Address</button>
+                                                 <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                                             </div> 
+                                         </div>
+                                     <% }) %>
+                                 <% } else { %>
+                                     <p>No addresses found</p>
+                                 <% } %>
+                             </div>
+                            </div>
                         </div>
-                     </div>
+                    </div>
+
+                     <!-- edit checkoit address -->
+                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Address</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form class="needs-validation" novalidate>
+                                <div class="form-group mb-3">
+                                  <label for="f_name" class="form-label font-weight-bolder">First Name</label>
+                                  <input type="text" class="form-control" id="f_name" name="name" value="" required>
+                                  <div class="invalid-feedback">Please enter your name.</div>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <label for="address" class="form-label font-weight-bolder">Address Line 1</label>
+                                  <input type="text" name="address" class="form-control" id="address" value="" required>
+                                  <div class="invalid-feedback">Please enter your address.</div>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <label for="city" class="form-label font-weight-bolder">City</label>
+                                  <input type="text" name="city" class="form-control" id="city" value="" required>
+                                  <div class="invalid-feedback">Please enter your city.</div>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <label for="state" class="form-label font-weight-bolder">State</label>
+                                  <input type="text" id="state" name="state" class="form-control" value="" required>
+                                  <div class="invalid-feedback">Please enter your state.</div>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <label for="postcode" class="form-label font-weight-bolder">Post Code</label>
+                                  <input type="number" name="postcode" id="postcode" class="form-control" value="" required>
+                                  <div class="invalid-feedback">Please enter your post code.</div>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <label for="mobile" class="form-label font-weight-bolder">Mobile Number</label>
+                                  <input type="number" name="mobile" id="mobile" class="form-control" value="" required>
+                                  <div class="invalid-feedback">Please enter your mobile number.</div>
+                                </div>
+                                <div class="text-center">
+                                  <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                      <!-- card -->
                      <div class="card rounded mb-2">
                         <div class="card-header bg-white" id="chechout_add">
@@ -746,42 +738,49 @@
                         </div>
                         <div id="check_add" class="collapse" aria-labelledby="chechout_add" data-parent="#check_out_toggle">
                            <div class="card-body">
-                              <div id="c_address" class="page-content">
-                                 <form class="needs-validation " method="post" novalidate>
-                                    <div class="form-group" >
-                                       <label for="f_name" class="font-weight-bolder">line 1</label>
-                                       <input type="text" class="form-control"  placeholder="Address Line 1"  required>
-                                       <div class="invalid-feedback">Please Enter your address.</div>
-                                    </div>
-                                    <div class="form-group" >
-                                       <label for="l_name" class="font-weight-bolder">line 2</label>
-                                       <input type="text" class="form-control"  placeholder="Address Line 2"  required>
-                                       <div class="invalid-feedback">Please Enter your address.</div>
-                                    </div>
-                                    <div class="form-group">
-                                       <label for="r_email" class="font-weight-bolder">city</label>
-                                       <input type="text" class="form-control"  placeholder="City"  required>
-                                       <div class="invalid-feedback">Please Enter your city.</div>
-                                    </div>
-                                    <div class="form-group">
-                                       <label for="r_password" class="font-weight-bolder">state</label>
-                                       <input type="text" class="form-control"  placeholder="State"  required>
-                                    </div>
-                                    <div class="form-group">
-                                       <label for="r_password" class="font-weight-bolder">post code</label>
-                                       <input type="text" class="form-control"  placeholder="Post Code"  required>
-                                       <div class="invalid-feedback">Please Enter your post code.</div>
-                                    </div>
-                                    <div class="form-group">
-                                       <label for="r_password" class="font-weight-bolder">country</label>
-                                       <input type="text" class="form-control"  placeholder="Country"  required>
-                                       <div class="invalid-feedback">Please Enter your country.</div>
-                                    </div>
-                                    <div><button id="clearButton" type="reset" class=" f_13 btn btn-primary rese mt-3">reset</button><input type="submit" name="submit" class="f_13 btn btn-primary mt-3 float-right" value="save"></div>
-                                 </form>
-                              </div>
+                               <div id="c_address" class="page-content">
+                                   <form class="needs-validation" method="post" novalidate>
+                                       <div class="form-group">
+                                           <label for="f_name" class="font-weight-bolder">First Name</label>
+                                           <input type="text" class="form-control" id="f_name" name="name" required>
+                                           <div class="invalid-feedback">Please enter your name.</div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="address" class="font-weight-bolder">Address Line 1</label>
+                                           <input type="text" name="address" class="form-control" id="address" required>
+                                           <div class="invalid-feedback">Please enter your address.</div>
+                                       </div>
+                                       <div class="form-row">
+                                           <div class="form-group col-md-6">
+                                               <label for="city" class="font-weight-bolder">City</label>
+                                               <input type="text" name="city" class="form-control" id="city" required>
+                                               <div class="invalid-feedback">Please enter your city.</div>
+                                           </div>
+                                           <div class="form-group col-md-6">
+                                               <label for="state" class="font-weight-bolder">State</label>
+                                               <input type="text" id="state" name="state" class="form-control" required>
+                                               <div class="invalid-feedback">Please enter your state.</div>
+                                           </div>
+                                       </div>
+                                       <div class="form-row">
+                                           <div class="form-group col-md-6">
+                                               <label for="postcode" class="font-weight-bolder">Post Code</label>
+                                               <input type="number" name="postcode" id="postcode" class="form-control" required>
+                                               <div class="invalid-feedback">Please enter your post code.</div>
+                                           </div>
+                                           <div class="form-group col-md-6">
+                                               <label for="mobile" class="font-weight-bolder">Mobile Number</label>
+                                               <input type="number" name="mobile" id="mobile" class="form-control" required>
+                                               <div class="invalid-feedback">Please enter your mobile number.</div>
+                                           </div>
+                                       </div>
+                                       <div class="text-center">
+                                          <button type="submit" name="submit" class="btn btn-primary mt-3 ">Save</button>
+                                       </div>
+                                   </form>
+                               </div>
                            </div>
-                        </div>
+                       </div>
                      </div>
                      <!-- card -->
                      <div class="card rounded mb-2">
@@ -861,7 +860,7 @@
                      <!-- card -->
                   </div>
                </div>
-               <div class="col-lg-4 col-12 ">
+               <div class="col-lg-4 col-12">
                   <div class="border rounded bg-white final_payment">
                      <div class="card-body  border-bottom">
                         <p class="text-muted">5 items</p>
@@ -1198,6 +1197,9 @@
            }, false);
          })();
       </script>
+      <!-- bootstrap -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
    </body>
 
 <!-- Mirrored from dostguru.com/HTML/plantly/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->

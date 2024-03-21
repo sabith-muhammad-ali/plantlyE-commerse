@@ -50,7 +50,8 @@ user.post("/addTo-cart", auth.isLogin, cartController.getCart);
 user.post("/add-quantity",auth.isLogin,cartController.updateCartQuantity);
 user.delete("/remove-cart",auth.isLogin,cartController.removeCart);
 //order
-user.get('/checkOut',auth.isLogin,orderController.loadCheckOut);
+user.get('/checkOut',auth.isLogin,orderController.loadCheckout);
+
 
 
 

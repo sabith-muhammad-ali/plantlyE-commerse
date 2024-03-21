@@ -3,15 +3,25 @@ const addressModel = require("../models/addressModel");
 const orderModel = require("../models/orderModel");
 const productModel = require("../models/productModel");
 
+const loadCheckout = async (req, res) => {
+  try {
+    const addressData = await addressModel.findOne({
+      user: req.session.userId,
+    });
+    res.render("user/checkOut", { addressData });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-const loadCheckOut = async (req, res) => {
-    try {
-      res.render("user/checkOut");
-    } catch (error) {
-      console.log(error);
-    }
-}
+const editCheckOutAddress = async (req,res) => {
+  try {
+    
+  } catch (error) {
+    
+  }
+} 
 
 module.exports = {
-    loadCheckOut,
-}
+  loadCheckout,
+};
