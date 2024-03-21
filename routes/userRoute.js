@@ -9,8 +9,6 @@ const cartController = require("../controllers/cartController");
 const orderController = require("../controllers/orderController");
 const auth = require("../middelware/userAuth");
 
-
-
 user.use(
   session({
     secret: process.env.sessionSecret,
@@ -39,7 +37,11 @@ user.get("/change-password", auth.isLogin, userController.loadChangePassword);
 user.post("/change-password", auth.isLogin, userController.changePassword);
 user.get("/forget-password", auth.isLogout, userController.loadForgerPassword);
 user.post("/forget-password", auth.isLogout, userController.checkEmail);
-user.get("/reset-password/:token", auth.isLogout, userController.loadRestPassword);
+user.get(
+  "/reset-password/:token",
+  auth.isLogout,
+  userController.loadRestPassword
+);
 user.post("/reset-password", auth.isLogout, userController.resetPassword);
 //shop
 user.get("/shop", userController.loadshop);
@@ -47,13 +49,11 @@ user.get("/single-product", userController.singleproduct);
 //cart
 user.get("/cart", auth.isLogin, cartController.cartLoad);
 user.post("/addTo-cart", auth.isLogin, cartController.getCart);
-user.post("/add-quantity",auth.isLogin,cartController.updateCartQuantity);
-user.delete("/remove-cart",auth.isLogin,cartController.removeCart);
+user.post("/add-quantity", auth.isLogin, cartController.updateCartQuantity);
+user.delete("/remove-cart", auth.isLogin, cartController.removeCart);
 //order
-user.get('/checkOut',auth.isLogin,orderController.loadCheckout);
-
-
-
+user.get("/checkOut", auth.isLogin, orderController.loadCheckout);
+user.post("/checkOut", auth.isLogin, orderController.checkoutAddAddress);
 
 
 
