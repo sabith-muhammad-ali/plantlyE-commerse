@@ -763,7 +763,6 @@
                                  <% addressData.address.forEach(function(address, index) { %>
                                     <div class="card mb-2">
                                        <div class="card-body">
-                                          <input type="hidden" value="<%= address._id %>" name="id">
                                           <h6 class="card-title mb-1">
                                              <%= address.name %>
                                           </h6>
@@ -773,14 +772,16 @@
                                           </p>
                                           <p class="card-text mb-1">Mobile: <%= address.mobile %>
                                           </p>
-                                          <button class="btn btn-primary btn-sm select-address-btn"
-                                             data-address-id="<%= address._id %>">Select Address</button>
+                                          <!-- Add a button to select this address -->
+                                          <button type="button" class="btn btn-primary btn-sm select-address-btn"
+                                             data-address-id="<%= address._id %>" onclick="selectAddress(this)">Select
+                                             Address</button>
                                        </div>
                                     </div>
-                                 <% }) %>
-                              <% } else { %>
-                                    <p>No addresses found</p>
-                              <% } %>
+                                    <% }) %>
+                                       <% } else { %>
+                                          <p>No addresses found</p>
+                                          <% } %>
                            </div>
                         </div>
                      </div>
@@ -799,52 +800,56 @@
                            </button>
                         </h2>
                      </div>
-                     <div id="check_add" class="collapse" aria-labelledby="chechout_add" data-parent="#check_out_toggle">
+                     <div id="check_add" class="collapse" aria-labelledby="chechout_add"
+                        data-parent="#check_out_toggle">
                         <div class="card-body">
-                            <div id="c_address" class="page-content">
-                                <form class="needs-validation" method="post" novalidate>
-                                    <div class="form-group">
-                                        <label for="f_name" class="font-weight-bolder">First Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" required>
-                                        <div class="invalid-feedback">Please enter your name.</div>
+                           <div id="c_address" class="page-content">
+                              <form class="needs-validation" method="post" novalidate>
+                                 <div class="form-group">
+                                    <label for="f_name" class="font-weight-bolder">First Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                    <div class="invalid-feedback">Please enter your name.</div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="address" class="font-weight-bolder">Address Line 1</label>
+                                    <input type="text" name="address" class="form-control" id="address" required>
+                                    <div class="invalid-feedback">Please enter your address.</div>
+                                 </div>
+                                 <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                       <label for="city" class="font-weight-bolder">City</label>
+                                       <input type="text" name="city" class="form-control" id="city" required>
+                                       <div class="invalid-feedback">Please enter your city.</div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="address" class="font-weight-bolder">Address Line 1</label>
-                                        <input type="text" name="address" class="form-control" id="address" required>
-                                        <div class="invalid-feedback">Please enter your address.</div>
+                                    <div class="form-group col-md-6">
+                                       <label for="state" class="font-weight-bolder">State</label>
+                                       <input type="text" id="state" name="state" class="form-control" required>
+                                       <div class="invalid-feedback">Please enter your state.</div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="city" class="font-weight-bolder">City</label>
-                                            <input type="text" name="city" class="form-control" id="city" required>
-                                            <div class="invalid-feedback">Please enter your city.</div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="state" class="font-weight-bolder">State</label>
-                                            <input type="text" id="state" name="state" class="form-control" required>
-                                            <div class="invalid-feedback">Please enter your state.</div>
-                                        </div>
+                                 </div>
+                                 <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                       <label for="postcode" class="font-weight-bolder">Post Code</label>
+                                       <input type="number" name="postcode" id="postcode" class="form-control" required>
+                                       <div class="invalid-feedback">Please enter your post code.</div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="postcode" class="font-weight-bolder">Post Code</label>
-                                            <input type="number" name="postcode" id="postcode" class="form-control" required>
-                                            <div class="invalid-feedback">Please enter your post code.</div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="mobile" class="font-weight-bolder">Mobile Number</label>
-                                            <input type="number" name="mobile" id="mobile" class="form-control" required>
-                                            <div class="invalid-feedback">Please enter your mobile number.</div>
-                                        </div>
+                                    <div class="form-group col-md-6">
+                                       <label for="mobile" class="font-weight-bolder">Mobile Number</label>
+                                       <input type="number" name="mobile" id="mobile" class="form-control" required>
+                                       <div class="invalid-feedback">Please enter your mobile number.</div>
                                     </div>
-                                    <div class="text-center">
-                                        <button type="submit" name="submit" class="btn btn-primary mt-3 ">Save And Proceed</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <footer class="text-muted text-center mt-3" style="color: #6c757d;">Make Sure You Have The Right Address, You Can Edit It Only On the Profile After You Save And Proceed!!!!!!!!!</footer>
+                                 </div>
+                                 <div class="text-center">
+                                    <button type="submit" name="submit" class="btn btn-primary mt-3 ">Save And
+                                       Proceed</button>
+                                 </div>
+                              </form>
+                           </div>
+                           <footer class="text-muted text-center mt-3" style="color: #6c757d;">Make Sure You Have The
+                              Right Address, You Can Edit It Only On the Profile After You Save And Proceed!!!!!!!!!
+                           </footer>
                         </div>
-                    </div>
+                     </div>
                   </div>
                   <!-- card -->
                   <!-- <div class="card rounded mb-2">
@@ -902,20 +907,22 @@
                                  <div class="form-group text-left">
                                     <label class="font-weight-bolder">payment Method</label><br>
                                     <span class="form-check d-inline-block">
-                                       <input class="form-check-input" type="radio" name="gridRadios" id="pay_by_check"
-                                          checked>
+                                       <input class="form-check-input" type="radio" name="payment" id="pay_by_check"
+                                          value="cashOnDelivey" checked>
                                        <label class="form-check-label" for="pay_by_check">
                                           Cash On Delivery
                                        </label>
                                     </span>
                                     <span class="form-check d-inline-block ml-2">
-                                       <input class="form-check-input" type="radio" name="gridRadios" id="pay_by_bank">
+                                       <input class="form-check-input" type="radio" name="payment" id="pay_by_bank"
+                                          value="OnlinePayment">
                                        <label class="form-check-label" for="pay_by_bank">
                                           Online Payment
                                        </label>
                                     </span>
                                     <span class="form-check d-inline-block ml-2">
-                                       <input class="form-check-input" type="radio" name="gridRadios" id="pay_by_bank">
+                                       <input class="form-check-input" type="radio" name="payment" id="pay_by_bank"
+                                          value="wallet">
                                        <label class="form-check-label" for="pay_by_bank">
                                           wallet
                                        </label>
@@ -927,7 +934,7 @@
                                        Privacy Policy</label>
                                  </div>
                                  <div class="text-center">
-                                    <button type="submit" class="btn btn-primary f_13">
+                                    <button type="button" class="btn btn-primary f_13" onclick="placeOrder()">
                                        Place Order
                                     </button>
                                  </div>
@@ -939,33 +946,33 @@
                   <!-- card -->
                </div>
             </div>
-            
-            <div class="col-lg-4 col-12">
-               <div class="border rounded bg-white final_payment">
-                  <div class="card-body  border-bottom">
-                     <p class="text-muted">5 items</p>
-                     <p class="font-weight-bolderer">show details</p>
-                     <div>
-                        <span class="font-weight-bolder">subtotal</span>
-                        <span class="float-right font-weight-bolder">$94.00</span>
-                     </div>
-                     <div>
-                        <span class="font-weight-bolder">shipping</span>
-                        <span class="float-right font-weight-bolder">$9.00</span>
+
+            <% if (cartData) { %>
+                  <div class="col-lg-4 col-12">
+                     <div class="border rounded bg-white final_payment">
+                        <div class="card-body  border-bottom">
+                           <p class="text-muted">
+                              <%= cartData.items.length %> items
+                           </p>
+                           <p class="font-weight-bolderer">show details</p>
+                           <div>
+                              <span class="font-weight-bolder">subtotal</span>
+                              <span class="float-right font-weight-bolder">₹<%= subtotal %></span>
+                           </div>
+                        </div>
+                        <div class="card-body ">
+                           <div>
+                              <span class="font-weight-bolder">total</span>
+                              <span class="float-right font-weight-bolder" id="subtotal" >₹<%= subtotal %> </span>
+                           </div>
+                           <div>
+                              <!-- <span class="font-weight-bolder">taxes</span>
+                        <span class="float-right font-weight-bolder">$9.00</span> -->
+                           </div>
+                        </div>
                      </div>
                   </div>
-                  <div class="card-body ">
-                     <div>
-                        <span class="font-weight-bolder">total(tax excl.)</span>
-                        <span class="float-right font-weight-bolder">$94.00</span>
-                     </div>
-                     <div>
-                        <span class="font-weight-bolder">taxes</span>
-                        <span class="float-right font-weight-bolder">$9.00</span>
-                     </div>
-                  </div>
-               </div>
-            </div>
+                  <% } %>
          </div>
       </div>
    </div>
@@ -1320,6 +1327,89 @@
             });
          }, false);
       })();
+   </script>
+
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   <script>
+      function selectAddress(btn) {
+         var addressButtons = document.querySelectorAll('.select-address-btn');
+         addressButtons.forEach(function (addressBtn) {
+            addressBtn.classList.remove('active');
+         });
+         btn.classList.add('active');
+      }
+
+      function placeOrder() {
+         var addressId = null;
+         var selectedPaymentMethod = null;
+
+         const subtotalElement = document.getElementById("subtotal"); 
+         console.log(subtotalElement,'subtoatalelement')
+         const subtotalText = subtotalElement.textContent.trim();
+         const subtotal = parseFloat(subtotalText.replace(/[^\d.-]/g, '')); 
+         console.log(subtotal);
+
+         var selectedAddressBtn = document.querySelector('.select-address-btn.active');
+         if (selectedAddressBtn) {
+            addressId = selectedAddressBtn.getAttribute('data-address-id');
+         } else {
+            Swal.fire({
+            title: "No Address Selected!",
+            text: "Please select an address before placing the order.",
+            icon: "error"
+        });
+        return;
+    }
+
+         var paymentRadios = document.querySelectorAll('input[name="payment"]');
+         paymentRadios.forEach(function (radio) {
+            if (radio.checked) {
+               selectedPaymentMethod = radio.value;
+            }
+         });
+         console.log('Selected Address ID:', addressId);
+         console.log('Selected Payment Method:', selectedPaymentMethod);
+
+         var requestBody = {
+            addressId: addressId,
+            paymentMethod: selectedPaymentMethod,
+            subtotal:subtotal
+         };
+
+         fetch('/place-order', {
+            method: "POST",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(requestBody)
+         })
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('network response was not ok');
+               }
+               return response.json()
+            })
+            .then(data => {
+             Swal.fire({
+            title: "Added to Cart",
+            text: "You've successfully added this item to your cart.",
+            icon: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#4CAF50",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Show Cart!"
+            }).then((result) => {
+               if (result.isConfirmed) {
+                  window.location.href = '/show-order';
+                }
+            });
+         })
+            .catch(error => {
+               console.log(error);
+            })
+      }
    </script>
 
 

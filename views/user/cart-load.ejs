@@ -730,7 +730,7 @@
                                     <span>total:</span>
                                     <% var total=0; %>
                                        <% data.items.forEach(function(items) { %>
-                                          <% total +=items.productId.price * items.quantity %>
+                                          <% total += items.productId.price * items.quantity %>
                                              <% }) %>
                                                 <span>₹<%= total %></span>
                                  </div>
@@ -743,7 +743,7 @@
                      </div>
                      <% } else { %>
                         <p class="text-center cartempty1">Your Shopping cart is empty!</p>
-                        <% } %>
+                      <% } %>
                </div>
             </div>
             <!-- col-lg-8 -->

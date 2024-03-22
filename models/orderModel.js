@@ -17,10 +17,6 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      price: {
-        type: Number,
-        required: true,
-      },
       cancel: {
         status: { type: String },
         reason: { type: String },
@@ -69,18 +65,14 @@ const orderSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ["Pending", "Shipped", "Delivered", "Cancelled"],
+    enum: ["Pending", "Shipped", "Delivered", "Cancelled","Placed"],
     default: "Pending",
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  orginalTotal: {
-    type: Number,
-    required: true,
-  },
-  fainalTotal: {
+  subTotal: {
     type: Number,
     required: true,
   },
