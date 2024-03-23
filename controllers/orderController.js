@@ -54,21 +54,22 @@ const placeOrder = async (req, res) => {
     const requestBody = req.body;
     const addressId = requestBody.addressId;
     const paymentMethod = requestBody.paymentMethod;
-    const subtotal= requestBody.subtotal
+    const subtotal = requestBody.subtotal;
     console.log(subtotal);
 
     const addressDetails = await addressModel.findOne({ user: userId });
-    
+
     if (!addressDetails) {
       throw new Error("User's address not found");
     }
 
-    const orderAddress = addressDetails.address.find(a => a._id.toString() === addressId);
+    const orderAddress = addressDetails.address.find(
+      (a) => a._id.toString() === addressId
+    );
     console.log("orderAddress", orderAddress);
 
     const userCart = await cartModel.findOne({ user: userId });
     console.log(userCart, "cart");
-    
 
     const order = new orderModel({
       userId: userId,
@@ -77,48 +78,53 @@ const placeOrder = async (req, res) => {
         name: orderAddress.name,
         address: orderAddress.address,
         state: orderAddress.state,
-        city: orderAddress.city, 
+        city: orderAddress.city,
         postcode: orderAddress.postcode,
-        mobile: orderAddress.mobile
+        mobile: orderAddress.mobile,
       },
       paymentMethod: paymentMethod,
       paymentStatus: "Placed",
-      subTotal: subtotal
+      subTotal: subtotal,
     });
 
     await order.save();
+    await cartModel.deleteOne({ user: userId });
     res.status(200).json({ message: "Order received successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-}
+};
 
-const showCart = async (req,res) => {
+const showCart = async (req, res) => {
   try {
-    const userId = req.session.userId
-    orderDetails = await orderModel.find({userId:userId}).populate('product.productId');
-    res.render("user/viewOrder",{orderDetails});
+    const userId = req.session.userId;
+    orderDetails = await orderModel
+      .find({ userId: userId })
+      .populate("product.productId");
+    res.render("user/viewOrder", { orderDetails });
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 const cancelOrders = async (req, res) => {
   try {
     const { orderId, productId, status } = req.body;
-    const orderDetatils = await orderModel.updateOne({_id:orderId},
-    {$set:{paymentStatus:'cancelled'}})
-    console.log(orderDetatils); 
-    console.log(data);
+    const orderDetatils = await orderModel.updateOne(
+      { _id: orderId },
+      { $set: { paymentStatus: "cancelled" } }
+    );
+    console.log(orderDetatils);
+    res.json({ ok: true });
   } catch (error) {
-    
+    console.log(error);
   }
-}
+};
 module.exports = {
   loadCheckout,
   checkoutAddAddress,
   placeOrder,
   showCart,
-  cancelOrders
+  cancelOrders,
 };

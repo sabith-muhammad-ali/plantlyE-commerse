@@ -86,8 +86,6 @@ const deleteAddress = async (req, res) => {
   }
 };
 
-
-
 module.exports = {
   loadAddAddress,
   addAddress,

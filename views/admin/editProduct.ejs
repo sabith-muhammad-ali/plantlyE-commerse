@@ -221,6 +221,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputName1" class="text-white">Product Name</label>
                                         <input type="text" class="form-control text-white" id="name" name="name" placeholder="Product Name" value="<%= productData.name %>">
+                                        <p id="nameError" style="color: red;"></p>
                                     </div>
                                     <div class="form-group">
                                         <label class="text-white">Category</label>
@@ -229,10 +230,11 @@
                                                 <option value="<%= category[i]._id %>"><%= category[i].name %></option>
                                             <% } %>
                                         </select>
+                                        <p id="categoryError" style="color: red;"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleSelectGender" class="text-white">Price</label>
-                                        <input type="number" class="form-control text-white" name="price" id="price" placeholder="Price" value="<%= productData.price %>">
+                                        <input type="number" class="form-control text-white" name="price" id="price" placeholder="Price" value="<%= productData.price %>">                                        <p id="priceError" style="color: red;"></p>
                                     </div>
                                     <div class="form-group">
                                       <div class="form-group">
@@ -245,10 +247,12 @@
                                     <div class="form-group">
                                         <label for="exampleInputCity1" class="text-white">Stock</label>
                                         <input type="text" class="form-control text-white" id="stock" name="stock" placeholder="0" value="<%= productData.quantity %>">
+                                        <p id="stockError" style="color: red;"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleTextarea1" class="text-white">Description</label>
                                         <textarea class="form-control text-white" name="description" id="description" rows="6"><%= productData.description %></textarea>
+                                        
                                     </div>
                                     <div class="row">
                                       <% for (let i = 0; i < 4; i++) { %>
@@ -310,6 +314,60 @@
             console.log(error);
           })
       }
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      document.querySelector('.forms-sample').addEventListener('submit', function (event) {
+          const name = document.getElementById('name').value.trim();
+          const price = document.getElementById('price').value.trim();
+          const stock = document.getElementById('stock').value.trim();
+          const description = document.getElementById('description').value.trim();
+
+          const nameError = document.getElementById('nameError');
+          const priceError = document.getElementById('priceError');
+          const stockError = document.getElementById('stockError');
+
+          let isValid = true;
+
+          
+          nameError.textContent = '';
+          priceError.textContent = '';
+          stockError.textContent = '';
+
+         
+          if (name === '') {
+              nameError.textContent = 'Product name is required';
+              isValid = false;
+          }
+
+          
+          if (price === '') {
+              priceError.textContent = 'Price is required';
+              isValid = false;
+          } else if (isNaN(price) || Number(price) <= 0) {
+              priceError.textContent = 'Price must be a valid positive number';
+              isValid = false;
+          }
+
+          // Validate Stock
+          if (stock === '') {
+              stockError.textContent = 'Stock quantity is required';
+              isValid = false;
+          } else if (isNaN(stock) || Number(stock) < 0) {
+              stockError.textContent = 'Stock must be a valid non-negative number';
+              isValid = false;
+          }
+
+          
+
+          if (!isValid) {
+              event.preventDefault(); 
+          }
+      });
+  });
+</script>
+
 </script>
 
 

@@ -1,7 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
-const orderModel = require('../models/orderModel');
-
+const orderModel = require("../models/orderModel");
 
 const loadLogin = async (req, res) => {
   try {
@@ -10,7 +9,6 @@ const loadLogin = async (req, res) => {
     console.log(error);
   }
 };
-
 
 const verifyLogin = async (req, res) => {
   try {
@@ -40,7 +38,6 @@ const verifyLogin = async (req, res) => {
     console.log(error);
   }
 };
-
 
 const loadDashbord = async (req, res) => {
   try {
@@ -76,26 +73,23 @@ const blockUser = async (req, res) => {
   }
 };
 
-const logout = async (req,res) => {
+const logout = async (req, res) => {
   try {
-    req.session.admin_id = null ;
+    req.session.admin_id = null;
     res.redirect("/admin");
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-const ordersLoad = async (req,res) => {
+const ordersLoad = async (req, res) => {
   try {
-    const orderDetails = await orderModel.find().populate('product.productId')
-    console.log(orderDetails);
-    res.render("orderList",{orderDetails});
+    const orderDetails = await orderModel.find().populate("product.productId");
+    res.render("orderList", { orderDetails });
   } catch (error) {
     console.log(error);
   }
-}
-
-
+};
 
 module.exports = {
   loadLogin,
@@ -104,5 +98,5 @@ module.exports = {
   userManagement,
   blockUser,
   logout,
-  ordersLoad
+  ordersLoad,
 };

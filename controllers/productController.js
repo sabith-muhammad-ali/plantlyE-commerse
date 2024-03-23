@@ -46,7 +46,6 @@ const insertProduct = async (req, res) => {
         description,
       });
       await newProduct.save();
-
     }
     return res.redirect("/admin/product");
   } catch (error) {
@@ -86,7 +85,7 @@ const loadeditproduct = async (req, res) => {
 };
 
 const editProduct = async (req, res) => {
-  console.log('edit ');
+  console.log("edit ");
   try {
     const productId = req.body.productId;
     const { name, categoryId, price, stock, description } = req.body;
@@ -106,16 +105,16 @@ const editProduct = async (req, res) => {
           name,
           categoryId,
           price,
-          quantity: stock, 
+          quantity: stock,
           description,
         },
         $push: {
-          images: { $each: images }, 
+          images: { $each: images },
         },
       },
       { new: true }
     );
-    
+
     if (update) {
       res.redirect("/admin/product");
     }
@@ -128,17 +127,17 @@ const editProductImage = async (req, res) => {
   try {
     const product = req.body.productId;
     const imageName = req.body.imageName;
-    const findProduct = await productModel.findByIdAndUpdate({_id:product},{$pull:{images: imageName}})
-    if(findProduct){
-      res.json({message:'image is succesfully deleted'})
-    } 
+    const findProduct = await productModel.findByIdAndUpdate(
+      { _id: product },
+      { $pull: { images: imageName } }
+    );
+    if (findProduct) {
+      res.json({ message: "image is succesfully deleted" });
+    }
   } catch (error) {
     console.log(error);
   }
-        
 };
-
-
 
 module.exports = {
   loadproduct,
@@ -147,5 +146,5 @@ module.exports = {
   productblock,
   loadeditproduct,
   editProduct,
-  editProductImage
+  editProductImage,
 };

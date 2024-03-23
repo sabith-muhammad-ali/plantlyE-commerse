@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const productModel = require("../models/productModel");
 const crypto = require("crypto");
-const Cart  = require("../models/cartModel");
+const Cart = require("../models/cartModel");
 
 // tempHomePage
 const homePage = async (req, res) => {
@@ -246,7 +246,7 @@ const loadshop = async (req, res) => {
       product = await productModel.find({}).sort({ name: -1 });
     }
 
-    const cart = await Cart.find({}).populate('items.productId');
+    const cart = await Cart.find({}).populate("items.productId");
     console.log(cart);
     res.render("user/shop", { product, cart });
   } catch (error) {

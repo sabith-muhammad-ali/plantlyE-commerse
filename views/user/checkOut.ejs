@@ -1394,12 +1394,12 @@
             .then(data => {
              Swal.fire({
             title: "Added to Cart",
-            text: "You've successfully added this item to your cart.",
+            text: "You've successfully added this item to your order.",
             icon: "success",
             showCancelButton: true,
             confirmButtonColor: "#4CAF50",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Show Cart!"
+            confirmButtonText: "Show Order!"
             }).then((result) => {
                if (result.isConfirmed) {
                   window.location.href = '/show-order';

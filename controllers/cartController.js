@@ -5,7 +5,6 @@ const Product = require("../models/productModel");
 const Address = require("../models/addressModel");
 const product = require("../models/productModel");
 
-
 const getCart = async (req, res) => {
   try {
     if (req.session.userId) {
@@ -66,7 +65,6 @@ const updateCartQuantity = async (req, res) => {
     const cartData = await Cart.findOne({ user: userId });
     let currentQuantity;
 
-
     if (count === -1) {
       currentQuantity = cartData.items.find(
         (p) => p.productId == product_id
@@ -90,13 +88,12 @@ const updateCartQuantity = async (req, res) => {
 
     if (count === 1) {
       currentQuantity = cartData.items.find(
-        (p) => p.productId == product_id 
+        (p) => p.productId == product_id
       ).quantity;
-        if(currentQuantity + count > productCount.quantity ) {
-          return res.json({ response: false, message: "Stock limit reached" });
-        }
-    }    
-    
+      if (currentQuantity + count > productCount.quantity) {
+        return res.json({ response: false, message: "Stock limit reached" });
+      }
+    }
 
     await Cart.findOneAndUpdate(
       { user: userId, "items.productId": product_id },
@@ -139,10 +136,6 @@ const removeCart = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-
-
-
-
 
 module.exports = {
   cartLoad,

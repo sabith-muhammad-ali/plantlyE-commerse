@@ -37,19 +37,18 @@ passport.deserializeUser((user, done) => {
 
 const success = async (req, res) => {
   try {
-  
     const existingUser = await User.findOne({ email: req.user.email });
 
     if (existingUser) {
-        if(existingUser.is_block === true){
-          return res.redirect('/login-User')
-        }
+      if (existingUser.is_block === true) {
+        return res.redirect("/login-User");
+      }
       req.session.userId = existingUser._id;
       return res.redirect("/");
     } else {
       const sPassword = await securePassword(req.user.id);
       const newUser = new User({
-        name: req.user.displayName, 
+        name: req.user.displayName,
         email: req.user.email,
         mobile: 0,
         varified: true,
