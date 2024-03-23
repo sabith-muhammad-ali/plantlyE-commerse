@@ -214,7 +214,7 @@
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <form class="forms-sample" action="/admin/editproduct" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="productId" value="<%= productData._id %>">
                             <div class="row">
                                 <div class="col-md-6">
@@ -310,7 +310,11 @@
             console.log(error);
           })
       }
-  </script>
+</script>
+
+
+  
+  
 
 
 

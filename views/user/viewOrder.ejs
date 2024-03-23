@@ -633,54 +633,75 @@
             <!-- row -->
             <div class="row">
                <div class="col-12">
-                   <% if (orderDetails && orderDetails.length > 0) { %>
-                   <table class="table table-striped table-bordered green-theme">
-                       <thead>
-                           <tr>
-                               <th>Product</th>
-                               <th>Quantity</th>
-                              <!--  images -->
-                               <th>Price</th>
-                               <th>Total</th>
-                               <th>Status</th>
-                               <th>Payment Method</th>
-                               <th>Action</th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <% orderDetails.forEach(function(order) { %> 
-                           <% order.product.forEach(function(product) { %>
-                           <tr>
-                               <td>
-                                   <a href="#"><%= product.productId.name %></a>
-                               </td>
-                               <td>
-                                   <%= product.quantity %>
-                               </td>
-                               <!-- images -->
-                               <td>
-                                   <%= product.productId.price %>
-                               </td>
-                               <td>
-                                   <%= product.quantity * product.productId.price %>
-                               </td>
-                               <td>
-                                   <%= order.paymentStatus %>
-                               </td>
-                               <td>
-                                 <%= order.paymentMethod %>
-                               </td>
-                               <td>
-                                   <button class="btn btn-danger cancel-btn">Cancel</button>
-                               </td>
-                           </tr>
-                           <% }) %>
-                           <% }) %>
-                       </tbody>
-                   </table>
-                   <% } else { %>
-                   <p class="text-center cartempty1">Your Order is empty!</p>
-                   <% } %>
+                  <% if (orderDetails && orderDetails.length > 0) { %>
+                     <div class="table-responsive">
+                         <table class="table table-striped table-bordered green-theme table-lg">
+                             <thead>
+                                 <tr>
+                                     <th class="align-middle">Product</th>
+                                     <th class="align-middle">Quantity</th>
+                                     <!--  images -->
+                                     <th class="align-middle">Price</th>
+                                     <th class="align-middle">Total</th>
+                                     <th class="align-middle">Order Time</th>
+                                     <th class="align-middle">Status</th>
+                                     <th class="align-middle">Payment Method</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                              <% orderDetails.forEach(function(order) { %>
+                                  <% order.product.forEach(function(product, index) { %>
+                                      <tr>
+                                          <td class="align-middle">
+                                              <a href="#"><%= product.productId.name %></a>
+                                          </td>
+                                          <td class="align-middle">
+                                              <%= product.quantity %>
+                                          </td>
+                                          <!-- images -->
+                                          <td class="align-middle">
+                                              <%= product.productId.price %>
+                                          </td>
+                                          <td class="align-middle">
+                                              <%= product.quantity * product.productId.price %>
+                                          </td>
+                                          <td class="align-middle">
+                                              <%= order.createdAt.toLocaleString() %>
+                                          </td>
+                                          <td class="align-middle">
+                                              <%= order.paymentStatus %>
+                                          </td>
+                                          <td class="align-middle">
+                                              <%= order.paymentMethod %>
+                                          </td>
+                                      </tr>
+                                  <% }) %>
+                                  <% if (order.paymentStatus === "cancelled") { %>
+                                    <tr>
+                                        <td colspan="7" class="align-middle">
+                                            <a class="cancel" style="display: none;">
+                                                <button class="btn btn-lg btn-danger cancel-btn"  data-order-id="<%= order._id %>">Cancel</button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="7" class="align-middle">
+                                            <a class="cancel">
+                                                <button class="btn btn-lg btn-danger cancel-btn"  data-order-id="<%= order._id %>">Cancel</button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                              <% }) %>
+                          </tbody>
+                          
+                         </table>
+                     </div>
+                 <% } else { %>
+                     <p class="text-center cartempty1">Your Order is empty!</p>
+                 <% } %>
+              </div>
                </div>
            </div>
          </div>
@@ -974,6 +995,49 @@
       <script src="assets/js/custom.js"></script>
   
       </script>
+
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script>
+         console.log('hello');
+document.querySelectorAll('.cancel-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const orderId = button.getAttribute('data-order-id'); // Retrieve order ID from data attribute
+
+        Swal.fire({
+            title: 'Are you sure you want to cancel?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, cancel it!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                button.innerText = 'Canceled';
+                button.disabled = true;
+
+                fetch('/show-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        orderId: orderId, // Use orderId retrieved from data attribute
+                        status: "Cancelled"
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        button.innerText = 'Cancelled';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+    });
+});
+   </script>
+
    </body>
 
 <!-- Mirrored from dostguru.com/HTML/plantly/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->

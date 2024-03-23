@@ -38,10 +38,10 @@ admin.get("/", adminAuth.isLogout, adminController.loadLogin);
 admin.post("/", adminAuth.isLogout, adminController.verifyLogin);
 admin.get("/admindashbord", adminAuth.isLogin, adminController.loadDashbord);
 admin.get("/logout", adminController.logout);
-
+//userUpdate
 admin.get("/userprofile", adminAuth.isLogin, adminController.userManagement);
 admin.patch("/blockusers/:id", adminAuth.isLogin, adminController.blockUser);
-
+//category
 admin.get("/category", adminAuth.isLogin, categoryController.productCategory);
 admin.get("/categoryadd", adminAuth.isLogin, categoryController.addCategory);
 admin.post("/categoryadd",adminAuth.isLogin,categoryController.insertCategory);
@@ -56,4 +56,6 @@ admin.patch("/blockproduct/:id",adminAuth.isLogin,productController.productblock
 admin.get("/editproduct", adminAuth.isLogin, productController.loadeditproduct);
 admin.post("/editproduct",upload.array("image", 4),adminAuth.isLogin,productController.editProduct);
 admin.post("/deleteimage",productController.editProductImage);
+//orders
+admin.get("/orderlist",adminAuth.isLogin, adminController.ordersLoad)
 module.exports = admin;

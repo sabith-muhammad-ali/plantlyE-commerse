@@ -24,7 +24,6 @@ const insertProduct = async (req, res) => {
   try {
     const { name, categoryId, price, stock, description } = req.body;
     const images = req.files.map((file) => file.filename);
-    console.log(images);
     const regex = new RegExp("^" + name + "$", "i");
     const exisistingProduct = await productModel.findOne({ name: regex });
 
@@ -47,8 +46,7 @@ const insertProduct = async (req, res) => {
         description,
       });
       await newProduct.save();
-      console.log("category added successfully");
-      console.log(newProduct);
+
     }
     return res.redirect("/admin/product");
   } catch (error) {
@@ -90,28 +88,25 @@ const loadeditproduct = async (req, res) => {
 const editProduct = async (req, res) => {
   console.log('edit ');
   try {
-    const product = req.body.productId;
+    const productId = req.body.productId;
     const { name, categoryId, price, stock, description } = req.body;
     const images = req.files.map((file) => file.filename);
-    console.log(images);
-    if (images) {
-      for (let i = 0; i < images.length; i++) {
-        if (images[i]) {
-          await sharp(`public/assets/multer/${images[i]}`)
-            .resize(500, 500)
-            .toFile(`public/assets/sharp/${images[i]}`);
-        }
-      }
+
+    // Resize and store images using sharp
+    for (let i = 0; i < images.length; i++) {
+      await sharp(`public/assets/multer/${images[i]}`)
+        .resize(500, 500)
+        .toFile(`public/assets/sharp/${images[i]}`);
     }
-    
+
     const update = await productModel.findByIdAndUpdate(
-      { _id: product },
+      productId,
       {
         $set: {
           name,
           categoryId,
           price,
-          stock,
+          quantity: stock, 
           description,
         },
         $push: {
@@ -120,8 +115,8 @@ const editProduct = async (req, res) => {
       },
       { new: true }
     );
-    const data = update.save();
-    if (data) {
+    
+    if (update) {
       res.redirect("/admin/product");
     }
   } catch (error) {
@@ -130,7 +125,6 @@ const editProduct = async (req, res) => {
 };
 
 const editProductImage = async (req, res) => {
-  console.log('deltee');
   try {
     const product = req.body.productId;
     const imageName = req.body.imageName;

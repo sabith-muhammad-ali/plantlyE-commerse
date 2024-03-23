@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const orderModel = require('../models/orderModel');
 
 
 const loadLogin = async (req, res) => {
@@ -84,11 +85,24 @@ const logout = async (req,res) => {
   }
 }
 
+const ordersLoad = async (req,res) => {
+  try {
+    const orderDetails = await orderModel.find().populate('product.productId')
+    console.log(orderDetails);
+    res.render("orderList",{orderDetails});
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
 module.exports = {
   loadLogin,
   verifyLogin,
   loadDashbord,
   userManagement,
   blockUser,
-  logout
+  logout,
+  ordersLoad
 };

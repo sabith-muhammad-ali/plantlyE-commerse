@@ -104,9 +104,21 @@ const showCart = async (req,res) => {
   }
 }
 
+const cancelOrders = async (req, res) => {
+  try {
+    const { orderId, productId, status } = req.body;
+    const orderDetatils = await orderModel.updateOne({_id:orderId},
+    {$set:{paymentStatus:'cancelled'}})
+    console.log(orderDetatils); 
+    console.log(data);
+  } catch (error) {
+    
+  }
+}
 module.exports = {
   loadCheckout,
   checkoutAddAddress,
   placeOrder,
-  showCart
+  showCart,
+  cancelOrders
 };
