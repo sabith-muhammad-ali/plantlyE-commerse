@@ -55,8 +55,9 @@ user.delete("/remove-cart", auth.isLogin, cartController.removeCart);
 user.get("/checkOut", auth.isLogin, orderController.loadCheckout);
 user.post("/checkOut-addAddress", auth.isLogin, orderController.checkoutAddAddress);
 user.post("/place-order", auth.isLogin, orderController.placeOrder);
-user.get("/show-order", auth.isLogin, orderController.showCart);
+user.get("/show-order", auth.isLogin, orderController.showOrder);
 user.post("/show-order", auth.isLogin, orderController.cancelOrders);
+user.get("/order-success", auth.isLogin, orderController.successsPage);
 
 //gogole
 user.use(passport.initialize());

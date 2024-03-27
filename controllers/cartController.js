@@ -95,6 +95,7 @@ const updateCartQuantity = async (req, res) => {
       }
     }
 
+
     await Cart.findOneAndUpdate(
       { user: userId, "items.productId": product_id },
       {

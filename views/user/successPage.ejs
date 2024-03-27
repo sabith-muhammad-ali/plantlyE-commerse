@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html class="" lang="en">
    
-<!-- Mirrored from dostguru.com/HTML/plantly/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->
+<!-- Mirrored from dostguru.com/HTML/plantly/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:30:02 GMT -->
 <head>
-      <title>view order | Plantly</title>
+      <title>Order-Placed | Plantly</title>
       <meta charset="utf-8"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!-- Favicon -->
       <link rel="shortcut icon" type="image/x-icon" href="assets/img/Favicon.ico">
@@ -18,8 +17,6 @@
       <!-- OwlCarousel2 -->         
       <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.default.min.css">
       <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
-      <!-- daterangepicker --> 
-      <link rel="stylesheet" type="text/css" href="assets/css/daterangepicker.css" />
       <!-- fancybox -->
       <link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.css">
       <!-- animate -->
@@ -34,37 +31,13 @@
       <link rel="preconnect" href="https://fonts.gstatic.com/">
       <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"> 
    </head>
-   <style>
-      .green-theme {
-         background-color: #E8F5E9; 
-      }
-
-      .cancel-btn {
-      background-color: #EF5350; 
-      color: white; 
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      }
-
-      .cancel-btn:hover {
-          background-color: #F44336; 
-      }
-      .product-image {
-        max-width: 100px;
-        max-height: 100px; 
-        display: block;
-        margin: auto;
-    }      
-   </style>
    <body>
       <!-- cart-model -->
       <div class="modal fade" id="cart_model" tabindex="-1"  aria-hidden="true">
          <div class="modal-dialog">
             <div class="modal-content">
                <div class="modal-header">
-                  <div class="modal-title f_13 font-weight-bolder">Product successfully added to your shopping cart</div>
+                  <div class="modal-title f_13 font-weight-bold">Product successfully added to your shopping cart</div>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                   </button>
@@ -74,7 +47,42 @@
                      <div class="col-sm-4 col-xs-12 mb-3  ">
                         <img src="assets/img/product/product_13.jpg" class="fst-image mx-auto d-block img-fluid border rounded" alt="product_13">
                      </div>
+                     <div class="col-sm-8 col-xs-12 ">
+                        <h6 class="font-weight-bold">Hummingbird printed t-shirt</h6>
+                        <div class="font-weight-bold pb-1">$19.12</div>
+                        <span class="font-weight-bold f_13 pb-1">Size: S</span><br>
+                        <span class="font-weight-bold f_13 pb-1">Color: White</span><br>
+                        <span class="font-weight-bold f_13 pb-1">Qty: 2</span>
+                     </div>
                   </div>
+                  <div class="row">
+                     <div class=" col-12 ">
+                        <div class="border rounded final_payment">
+                           <div class="card-body  border-bottom">
+                              <p class="text-muted">5 items</p>
+                              <p class="font-weight-bolder">show details</p>
+                              <div>
+                                 <span class="font-weight-bold">subtotal</span>
+                                 <span class="float-right font-weight-bold">$94.00</span>
+                              </div>
+                              <div>
+                                 <span class="font-weight-bold">shipping</span>
+                                 <span class="float-right font-weight-bold">$9.00</span>
+                              </div>
+                           </div>
+                           <div class="card-body ">
+                              <div>
+                                 <span class="font-weight-bold">total(tax excl.)</span>
+                                 <span class="float-right font-weight-bold">$94.00</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <a class="btn btn-primary mt-2 f_13 px-3 py-2 rounded" data-dismiss="modal">close</a>
+                  <a href="checkout.html" class="btn btn-primary mt-2 f_13 px-3 py-2 rounded">continue</a>
                </div>
             </div>
          </div>
@@ -95,8 +103,8 @@
                         <img src="assets/img/product/product_13.jpg" class="fst-image mx-auto d-block img-fluid border rounded" alt="product_13">
                      </div>
                      <div class="col-sm-7 col-12">
-                        <h5 class="font-weight-bolder border-bottom me_name">Aliquam Top Erat Volutpat</h5>
-                        <div class="font-weight-bolder border-bottom me_price">$19.12</div>
+                        <h5 class="font-weight-bold border-bottom me_name">Aliquam Top Erat Volutpat</h5>
+                        <div class="font-weight-bold border-bottom me_price">$19.12</div>
                         <div class="my-2 border-bottom me_des">Fashion has been creating well-designed collections since 2010. </div>
                         <div class="me_quan">
                            <div class="sp_counter ">
@@ -137,8 +145,8 @@
                      </svg>
                   </p>
                   <h5>Compare list updated!</h5>
-                  <p class="text-muted font-weight-bolder">Product successfully removed from the product comparison!</p>
-                  <div class="text-danger font-weight-bolder">Go to Compare</div>
+                  <p class="text-muted font-weight-bold">Product successfully removed from the product comparison!</p>
+                  <div class="text-danger font-weight-bold">Go to Compare</div>
                </div>
             </div>
          </div>
@@ -159,8 +167,8 @@
                         <use xlink:href="#checked"></use>
                      </svg>
                   </p>
-                  <p class="text-muted font-weight-bolder">You must be logged in to manage your wishlist.</p>
-                  <div class="text-danger font-weight-bolder">Go to wishlist</div>
+                  <p class="text-muted font-weight-bold">You must be logged in to manage your wishlist.</p>
+                  <div class="text-danger font-weight-bold">Go to wishlist</div>
                </div>
             </div>
          </div>
@@ -372,8 +380,8 @@
                                              <span class="float-right">$230.00</span>
                                           </li>
                                           <li class="d-block font-weight-bolderer pt-2">
-                                             <span class="text-left"><a href="/cart">view cart</a></span>
-                                             <span class="float-right"><a href="/checkout">check out</a></span>
+                                             <span class="text-left"><a href="cart.html">view cart</a></span>
+                                             <span class="float-right"><a href="checkout.html">check out</a></span>
                                           </li>
                                     </ul>
                                     <p class="text-center cartempty">Your Shopping cart is empty!</p>
@@ -403,8 +411,10 @@
                   <ul class="main-menu navbar">
                      <li><a href="/">Home</a></li>
                      <li>
-                  <a class="dropdown-toggle" href="/shop">shop&nbsp;<span><i></i></span></a>
-                  <ul>
+                  <a class="dropdown-toggle" href="shop-left-sidebar.html"  role="button" data-toggle="dropdown" aria-expanded="false">shop&nbsp;<span class="float-right"><i class="fas fa-angle-down"></i></span></a>
+                  <ul class="dropdown-menu all-page-drop">
+                     <li><a class="dropdown-item font-weight-bolder" href="shop-left-sidebar.html">left sidebar</a></li>
+                     <li><a class="dropdown-item font-weight-bolder" href="shop-right-sidebar.html">right sidebar</a></li>
                   </ul>
                </li>
                </li>
@@ -495,9 +505,9 @@
       <!-- vertical menu and slider -->
       <div id="home_vertical_menu">
          <div class="row ">
-            <div class="col-lg-3 vertical_menu ">
+            <div class="col-lg-3 vertical_menu">
                <div class="v_menu bg-white rounded">
-                  <div class="cat_menu bg-warning rounded-top"><a href="#" class="pe-auto text-uppercase d-md-none d-sm-none d-none d-lg-block font-weight-bolder"><i class="fas fa-bars"></i>all categories</a></div>
+                  <div class="cat_menu bg-warning rounded-top"><a href="#" class="pe-auto text-uppercase d-md-none d-sm-none d-none d-lg-block font-weight-bold"><i class="fas fa-bars"></i>all categories</a></div>
                   <div class="navbar-header d-xl-none d-lg-none">
                      <button type="button" class="btn-navbar navbar-toggle" onclick="openNav()" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fas fa-bars"></i></button>
                   </div>
@@ -506,11 +516,13 @@
                         <span class="categories">Menu</span>
                         <a href="javascript:void(0)" class="closebtn pull-right" onclick="closeNav()"><i class="fas fa-times"></i></a>
                      </div>
-                     <ul class="vertical_main_menu h_menu navbar navbar-nav">
+                  <ul class="vertical_main_menu h_menu navbar navbar-nav">
                         <li><a href="/">Home</a></li>
                         <li class="">
-                           <a  href="/shop">shop&nbsp;<span><i></i></span></a>
-                           <ul>
+                           <a class="dropdown-toggle" href="shop-left-sidebar.html"  role="button" data-toggle="dropdown" aria-expanded="false">shop&nbsp;<span class="float-right"><i class="fas fa-angle-down"></i></span></a>
+                           <ul class="dropdown-menu">
+                              <li><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">left sidebar</a></li>
+                              <li><a class="dropdown-item font-weight-bolderer" href="shop-right-sidebar.html">right sidebar</a></li>
                            </ul>
                         </li>
                         <li class="dropdown mega_menu m1_menu level-1 font-weight-bolderer">
@@ -608,99 +620,31 @@
       </div>
       <!-- container  menu_slider mt-4 -->
       <!-- vertical menu and slider end -->
-      <!-- cart page -->
-      <div id="cart_page" class="cart-page animate__animated animate__fadeInUp">
-         <div class="sp_header bg-white p-2 ">
-            <div class="container custom_container ">
-               <div class="row ">
-                  <div class="col-12 ">
-                     <ul class="p-md-3 p-2 bg-light">
-                        <li class="d-inline-block font-weight-bolderer"><a href="/">home</a></li>
-                        <li class="d-inline-block  font-weight-bolderer"><a href="/show-order" class="hr_">Orders</a></li>
-                     </ul>
-                  </div>
-               </div>
+      <!-- forgot page -->
+      <div id="forgot_page" class="forgot-page animate__animated animate__fadeInUp">
+        <div class="sp_header bg-white p-3">
+            <div class="container custom_container">
+                <div class="row">
+                    <div class="col-12">
+                        <ul>
+                            <li class="d-inline-block font-weight-bolder"><a href="/">Home</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-         </div>
-         <div class="container custom_container ">
-            <div class="row">
-               <div class="col-12">
-                  <div class="title_outer">
-                     <h1 class="mb-3 d-inline-block pb-3 position-relative border-bottom h1_">Orders</h1>
-                  </div>
-                  <!-- title_outer -->
-               </div>
-               <!-- col-12 -->
+        </div>
+        <div class="container custom_container">
+            <div id="order-success" class="page-content card card-block p-3 p-sm-4">
+                <h3 class="text-center">Order Successfully Placed</h3>
+                <p class="text-muted text-center">Thank you for your purchase!</p>
+                <div class="text-center">
+                    <button class="btn btn-primary mt-3 mr-2" onclick="continueShopping()">Continue Shopping</button>
+                    <button class="btn btn-success mt-3" onclick="viewOrder()">View Order</button>
+                </div>
             </div>
-            <!-- row -->
-            <div class="row" id="viewOrder">
-               <div class="col-12">
-                  <% if (orderDetails && orderDetails.length > 0) { %>
-                  <div class="table-responsive">
-                      <table class="table table-striped table-bordered green-theme table-lg">
-                          <thead>
-                              <tr>
-                                  <th class="align-middle">Product</th>
-                                  <th class="align-middle">Image</th>
-                                  <th class="align-middle">Quantity</th>
-                                  <th class="align-middle">Price</th>
-                                  <th class="align-middle">Total</th>
-                                  <th class="align-middle">Order Time</th>
-                                  <th class="align-middle">Status</th>
-                                  <th class="align-middle">Payment Method</th>
-                                  <th class="align-middle">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <% orderDetails.forEach(function(order) { %>
-                              <% order.product.forEach(function(product, index) { %>
-                              <tr>
-                                  <td class="align-middle">
-                                      <a href="#"><%= product.productId.name %></a>
-                                  </td>
-                                  <td class="align-middle">
-                                      <img src="/assets/sharp/<%= product.productId.images[0] %>" alt="<%= product.productId.name %>" class="product-image">
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= product.quantity %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= product.productId.price %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= product.quantity * product.productId.price %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= order.createdAt.toLocaleString() %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= order.paymentStatus %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= order.paymentMethod %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <% if (order.paymentStatus !== "cancelled") { %>
-                                      <a class="cancel">
-                                          <button class="btn btn-lg btn-danger cancel-btn" data-order-id="<%= order._id %>">Cancel</button>
-                                      </a>
-                                      <% } %>
-                                  </td>
-                              </tr>
-                              <% }) %>
-                              <% }) %>
-                          </tbody>
-                      </table>
-                  </div>
-                  <% } else { %>
-                  <p class="text-center cartempty1">Your Order is empty!</p>
-                  <% } %>
-              </div>
-           </div>
-           
-           </div>
-         </div>
-      </div>
+        </div>
+      <!-- login_page -->
+      <!-- forgot page  -->
       <!-- footer -->
       <div class="footer animate__animated animate__fadeInUp">
          <div class="first_footer">
@@ -972,73 +916,36 @@
       <script src="assets/js/owl.carousel.js"></script>
       <!-- bootstrap.min -->
       <script src="assets/js/bootstrap.min.js"></script>
-      <!-- slick -->
-      <script  src="assets/js/slick.min.html"></script>
       <!-- popper.min -->
       <script src="assets/js/popper.min.js"></script>
-      <!-- moment js -->
-      <script src="assets/js/moment.min.js"></script>
-      <!-- daterangepicker js -->
-      <script src="assets/js/daterangepicker.min.js"></script>
       <!-- wow.js - v1.2.1 -->
       <script src="assets/js/wow.min.js"></script>
       <!-- Font Awesome Free 5.15.1 -->
       <script src="assets/js/all.min.js"></script>
-      <!--   fancybox -->
-      <script  src="assets/js/jquery.fancybox.min.js"></script>
       <!-- custom js -->
       <script src="assets/js/custom.js"></script>
-  
-      </script>
-
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script>
-         console.log('hello');
-document.querySelectorAll('.cancel-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const orderId = button.getAttribute('data-order-id'); // Retrieve order ID from data attribute
-
-        Swal.fire({
-            title: 'Are you sure you want to cancel?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, cancel it!',
-            cancelButtonText: 'No, keep it'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                button.innerText = 'Canceled';
-                button.disabled = true;
-
-                fetch('/show-order', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        orderId: orderId, 
-                        status: "Cancelled"
-                    })
-                })
-                .then(response => {
-                  console.log(response);
-                    if (response.ok) {
-                     
-                     location.reload()
-                        button.innerText = 'Cancelled';
-                        
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
-        });
-    });
-});
-   </script>
-
+         // Disable form submissions if there are invalid fields
+         (function() {
+           'use strict';
+           window.addEventListener('load', function() {
+             // Get the forms we want to add validation styles to
+             var forms = document.getElementsByClassName('needs-validation');
+             // Loop over them and prevent submission
+             var validation = Array.prototype.filter.call(forms, function(form) {
+               form.addEventListener('submit', function(event) {
+                 if (form.checkValidity() === false) {
+                   event.preventDefault();
+                   event.stopPropagation();
+                 }
+                 form.classList.add('was-validated');
+               }, false);
+             });
+           }, false);
+         })();
+      </script>
    </body>
 
-<!-- Mirrored from dostguru.com/HTML/plantly/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->
+<!-- Mirrored from dostguru.com/HTML/plantly/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:30:02 GMT -->
 </html>
 

@@ -759,7 +759,7 @@
                         <div class="card-body">
                            <!-- Address Cards -->
                            <div class="address-card mb-3">
-                              <% if (addressData.address.length> 0) { %>
+                              <% if (addressData && addressData.address && addressData.address.length> 0) { %>
                                  <% addressData.address.forEach(function(address, index) { %>
                                     <div class="card mb-2">
                                        <div class="card-body">
@@ -804,7 +804,7 @@
                         data-parent="#check_out_toggle">
                         <div class="card-body">
                            <div id="c_address" class="page-content">
-                              <form class="needs-validation" method="post" novalidate>
+                              <form class="needs-validation" action="/checkOut-addAddress" method="post" novalidate>
                                  <div class="form-group">
                                     <label for="f_name" class="font-weight-bolder">First Name</label>
                                     <input type="text" class="form-control" id="name" name="name" required>
@@ -948,31 +948,31 @@
             </div>
 
             <% if (cartData) { %>
-                  <div class="col-lg-4 col-12">
-                     <div class="border rounded bg-white final_payment">
-                        <div class="card-body  border-bottom">
-                           <p class="text-muted">
-                              <%= cartData.items.length %> items
-                           </p>
-                           <p class="font-weight-bolderer">show details</p>
-                           <div>
-                              <span class="font-weight-bolder">subtotal</span>
-                              <span class="float-right font-weight-bolder">₹<%= subtotal %></span>
-                           </div>
+               <div class="col-lg-4 col-12">
+                  <div class="border rounded bg-white final_payment">
+                     <div class="card-body  border-bottom">
+                        <p class="text-muted">
+                           <%= cartData.items.length %> items
+                        </p>
+                        <p class="font-weight-bolderer">show details</p>
+                        <div>
+                           <span class="font-weight-bolder">subtotal</span>
+                           <span class="float-right font-weight-bolder">₹<%= subtotal %></span>
                         </div>
-                        <div class="card-body ">
-                           <div>
-                              <span class="font-weight-bolder">total</span>
-                              <span class="float-right font-weight-bolder" id="subtotal" >₹<%= subtotal %> </span>
-                           </div>
-                           <div>
-                              <!-- <span class="font-weight-bolder">taxes</span>
+                     </div>
+                     <div class="card-body ">
+                        <div>
+                           <span class="font-weight-bolder">total</span>
+                           <span class="float-right font-weight-bolder" id="subtotal">₹<%= subtotal %> </span>
+                        </div>
+                        <div>
+                           <!-- <span class="font-weight-bolder">taxes</span>
                         <span class="float-right font-weight-bolder">$9.00</span> -->
-                           </div>
                         </div>
                      </div>
                   </div>
-                  <% } %>
+               </div>
+               <% } %>
          </div>
       </div>
    </div>
@@ -1344,10 +1344,10 @@
          var addressId = null;
          var selectedPaymentMethod = null;
 
-         const subtotalElement = document.getElementById("subtotal"); 
-         console.log(subtotalElement,'subtoatalelement')
+         const subtotalElement = document.getElementById("subtotal");
+         console.log(subtotalElement, 'subtoatalelement')
          const subtotalText = subtotalElement.textContent.trim();
-         const subtotal = parseFloat(subtotalText.replace(/[^\d.-]/g, '')); 
+         const subtotal = parseFloat(subtotalText.replace(/[^\d.-]/g, ''));
          console.log(subtotal);
 
          var selectedAddressBtn = document.querySelector('.select-address-btn.active');
@@ -1355,12 +1355,12 @@
             addressId = selectedAddressBtn.getAttribute('data-address-id');
          } else {
             Swal.fire({
-            title: "No Address Selected!",
-            text: "Please select an address before placing the order.",
-            icon: "error"
-        });
-        return;
-    }
+               title: "No Address Selected!",
+               text: "Please select an address before placing the order.",
+               icon: "error"
+            });
+            return;
+         }
 
          var paymentRadios = document.querySelectorAll('input[name="payment"]');
          paymentRadios.forEach(function (radio) {
@@ -1374,7 +1374,7 @@
          var requestBody = {
             addressId: addressId,
             paymentMethod: selectedPaymentMethod,
-            subtotal:subtotal
+            subtotal: subtotal
          };
 
          fetch('/place-order', {
@@ -1392,20 +1392,20 @@
                return response.json()
             })
             .then(data => {
-             Swal.fire({
-            title: "Added to Cart",
-            text: "You've successfully added this item to your order.",
-            icon: "success",
-            showCancelButton: true,
-            confirmButtonColor: "#4CAF50",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Show Order!"
-            }).then((result) => {
-               if (result.isConfirmed) {
-                  window.location.href = '/show-order';
-                }
-            });
-         })
+               Swal.fire({
+                  title: "Added to Cart",
+                  text: "You've successfully added this item to your order.",
+                  icon: "success",
+                  showCancelButton: true,
+                  confirmButtonColor: "#4CAF50",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Show Order!"
+               }).then((result) => {
+                  if (result.isConfirmed) {
+                     window.location.href = '/show-order';
+                  }
+               });
+            })
             .catch(error => {
                console.log(error);
             })

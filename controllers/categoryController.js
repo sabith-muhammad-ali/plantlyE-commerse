@@ -21,7 +21,7 @@ const addCategory = async (req, res) => {
 const insertCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
-    const regex = new RegExp("^" + name + "$", "i");
+    const regex = new RegExp("^" + name + "$");
     const existingCategory = await category.findOne({ name: regex });
     if (existingCategory) {
       return res.json({ exists: true, message: "Category already exists" });

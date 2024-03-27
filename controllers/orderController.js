@@ -18,6 +18,7 @@ const loadCheckout = async (req, res) => {
       (acc, val) => acc + val.productId.price * val.quantity,
       0
     );
+
     res.render("user/checkOut", { addressData, cartData, subtotal });
   } catch (error) {
     console.log(error);
@@ -28,7 +29,7 @@ const checkoutAddAddress = async (req, res) => {
   try {
     const { name, address, state, city, postcode, mobile } = req.body;
 
-    const Address = {
+    const newAddress = {
       name: name,
       address: address,
       state: state,
@@ -39,7 +40,7 @@ const checkoutAddAddress = async (req, res) => {
 
     await addressModel.findOneAndUpdate(
       { user: req.session.userId },
-      { $push: { address: Address } },
+      { $push: { address: newAddress } },
       { upsert: true, new: true }
     );
     res.redirect("/checkOut");
@@ -88,7 +89,18 @@ const placeOrder = async (req, res) => {
     });
 
     await order.save();
+
+    if (order.paymentStatus == 'Placed') {
+        for(const item of userCart.items) {
+          await productModel.findByIdAndUpdate(
+            item.productId,
+            {$inc: {quantity: -item.quantity}}
+          )
+        }
+    }
+
     await cartModel.deleteOne({ user: userId });
+    
     res.status(200).json({ message: "Order received successfully" });
   } catch (error) {
     console.log(error);
@@ -96,7 +108,7 @@ const placeOrder = async (req, res) => {
   }
 };
 
-const showCart = async (req, res) => {
+const showOrder = async (req, res) => {
   try {
     const userId = req.session.userId;
     orderDetails = await orderModel
@@ -121,10 +133,21 @@ const cancelOrders = async (req, res) => {
     console.log(error);
   }
 };
+
+
+const successsPage = async (req,res) => {
+  try {
+    res.render("user/successPage");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   loadCheckout,
   checkoutAddAddress,
   placeOrder,
-  showCart,
+  showOrder,
   cancelOrders,
+  successsPage ,
 };
