@@ -3,7 +3,7 @@ const isLogin = async (req, res, next) => {
     if (req.session.userId) {
       next();
     } else {
-      res.redirect("/loginUser");
+      res.redirect("/login-User");
     }
   } catch (error) {
     console.log(error.message);

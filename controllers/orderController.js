@@ -56,7 +56,6 @@ const placeOrder = async (req, res) => {
     const addressId = requestBody.addressId;
     const paymentMethod = requestBody.paymentMethod;
     const subtotal = requestBody.subtotal;
-    console.log(subtotal);
 
     const addressDetails = await addressModel.findOne({ user: userId });
 
@@ -67,14 +66,22 @@ const placeOrder = async (req, res) => {
     const orderAddress = addressDetails.address.find(
       (a) => a._id.toString() === addressId
     );
-    console.log("orderAddress", orderAddress);
 
     const userCart = await cartModel.findOne({ user: userId });
-    console.log(userCart, "cart");
+
+    const currentData = new Date();
+    const expectedDate = new Date(currentData);
+    expectedDate.setDate(expectedDate.getDate() + 6);
+
+    const orderProducts = userCart.items.map((item) => ({
+      productId: item.productId,
+      quantity: item.quantity,
+      productStatus: "Placed",
+    }));
 
     const order = new orderModel({
       userId: userId,
-      product: userCart.items,
+      product: orderProducts,
       shippingAddress: {
         name: orderAddress.name,
         address: orderAddress.address,
@@ -84,23 +91,21 @@ const placeOrder = async (req, res) => {
         mobile: orderAddress.mobile,
       },
       paymentMethod: paymentMethod,
-      paymentStatus: "Placed",
-      subTotal: subtotal,
+      expectedDate: expectedDate,
+      Total: subtotal,
     });
 
     await order.save();
 
-    if (order.paymentStatus == 'Placed') {
-        for(const item of userCart.items) {
-          await productModel.findByIdAndUpdate(
-            item.productId,
-            {$inc: {quantity: -item.quantity}}
-          )
-        }
+    // Update product quantities
+    for (const item of userCart.items) {
+      await productModel.findByIdAndUpdate(item.productId, {
+        $inc: { quantity: -item.quantity },
+      });
     }
 
     await cartModel.deleteOne({ user: userId });
-    
+
     res.status(200).json({ message: "Order received successfully" });
   } catch (error) {
     console.log(error);
@@ -111,7 +116,7 @@ const placeOrder = async (req, res) => {
 const showOrder = async (req, res) => {
   try {
     const userId = req.session.userId;
-    orderDetails = await orderModel
+    const orderDetails = await orderModel
       .find({ userId: userId })
       .populate("product.productId");
     res.render("user/viewOrder", { orderDetails });
@@ -123,25 +128,39 @@ const showOrder = async (req, res) => {
 const cancelOrders = async (req, res) => {
   try {
     const { orderId, productId, status } = req.body;
-    const orderDetatils = await orderModel.updateOne(
-      { _id: orderId },
-      { $set: { paymentStatus: "cancelled" } }
+
+    await orderModel.updateOne(
+      { _id: orderId, "product.productId": productId },
+      { $set: { "product.$.productStatus": "cancelled" } }
     );
-    console.log(orderDetatils);
+
     res.json({ ok: true });
   } catch (error) {
     console.log(error);
   }
 };
 
-
-const successsPage = async (req,res) => {
+const successsPage = async (req, res) => {
   try {
     res.render("user/successPage");
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+const viewOrderDetails = async (req, res) => {
+  try {
+    console.log("hello");
+    const userId = req.session.userId;
+    const orderId = req.params.orderId
+    const order = await orderModel
+      .findOne({ userId: userId, _id: orderId })
+      .populate("product.productId");
+    res.render("user/viewDetails", { order });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   loadCheckout,
@@ -149,5 +168,6 @@ module.exports = {
   placeOrder,
   showOrder,
   cancelOrders,
-  successsPage ,
+  successsPage,
+  viewOrderDetails,
 };

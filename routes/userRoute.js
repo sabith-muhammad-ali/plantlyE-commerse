@@ -58,6 +58,7 @@ user.post("/place-order", auth.isLogin, orderController.placeOrder);
 user.get("/show-order", auth.isLogin, orderController.showOrder);
 user.post("/show-order", auth.isLogin, orderController.cancelOrders);
 user.get("/order-success", auth.isLogin, orderController.successsPage);
+user.get("/product-details/:orderId", auth.isLogin, orderController.viewOrderDetails);
 
 //gogole
 user.use(passport.initialize());

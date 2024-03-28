@@ -33,6 +33,7 @@
       <!-- googleapis -->
       <link rel="preconnect" href="https://fonts.gstatic.com/">
       <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"> 
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-RTzjGCzKaJLUIh41wAipKGU7Ks2X+13RVXu0W7cpn6OM+gFKohA9yOnvg4KuooiC" crossorigin="anonymous">
    </head>
    <style>
       .green-theme {
@@ -636,66 +637,45 @@
             <div class="row" id="viewOrder">
                <div class="col-12">
                   <% if (orderDetails && orderDetails.length > 0) { %>
-                  <div class="table-responsive">
-                      <table class="table table-striped table-bordered green-theme table-lg">
-                          <thead>
-                              <tr>
-                                  <th class="align-middle">Product</th>
-                                  <th class="align-middle">Image</th>
-                                  <th class="align-middle">Quantity</th>
-                                  <th class="align-middle">Price</th>
-                                  <th class="align-middle">Total</th>
-                                  <th class="align-middle">Order Time</th>
-                                  <th class="align-middle">Status</th>
-                                  <th class="align-middle">Payment Method</th>
-                                  <th class="align-middle">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <% orderDetails.forEach(function(order) { %>
-                              <% order.product.forEach(function(product, index) { %>
-                              <tr>
-                                  <td class="align-middle">
-                                      <a href="#"><%= product.productId.name %></a>
-                                  </td>
-                                  <td class="align-middle">
-                                      <img src="/assets/sharp/<%= product.productId.images[0] %>" alt="<%= product.productId.name %>" class="product-image">
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= product.quantity %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= product.productId.price %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= product.quantity * product.productId.price %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= order.createdAt.toLocaleString() %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= order.paymentStatus %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <%= order.paymentMethod %>
-                                  </td>
-                                  <td class="align-middle">
-                                      <% if (order.paymentStatus !== "cancelled") { %>
-                                      <a class="cancel">
-                                          <button class="btn btn-lg btn-danger cancel-btn" data-order-id="<%= order._id %>">Cancel</button>
-                                      </a>
-                                      <% } %>
-                                  </td>
-                              </tr>
-                              <% }) %>
-                              <% }) %>
-                          </tbody>
-                      </table>
-                  </div>
-                  <% } else { %>
-                  <p class="text-center cartempty1">Your Order is empty!</p>
-                  <% } %>
-              </div>
+                     <div class="table-responsive">
+                         <table class="table table-striped table-bordered green-theme table-lg">
+                             <thead>
+                                 <tr>
+                                     <th class="align-middle">Order Number</th>
+                                     <th class="align-middle">Date</th>
+                                     <th class="align-middle">Amount</th>
+                                     <th class="align-middle">Payment Method</th>
+                                     <th class="align-middle">Invoice</th>
+                                     <th class="align-middle">Details</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <% orderDetails.forEach(function(order,index) { %>
+                                 <tr>
+                                     <td class="align-middle"><%= index + 1  %></td>
+                                     <td class="align-middle"><%= order.orderedData.toLocaleString() %></td>
+                                     <td class="align-middle"><%= order.Total %></td>
+                                     <td class="align-middle"><%= order.paymentMethod %></td>
+                                     <td class="align-middle">
+                                       <a href="<%=  %>">
+                                           <i class="fas fa-file-invoice"></i>
+                                           View Invoice
+                                       </a>
+                                   </td>
+                                   <td class="align-middle">
+                                    <a href="/product-details/<%= order.id %>">
+                                        <i class="fas fa-circle-info"></i>
+                                        View Details
+                                    </a>
+                                </td>
+                                 </tr>
+                                 <% }) %>
+                             </tbody>
+                         </table>
+                     </div>
+                 <% } else { %>
+                     <p class="text-center cartempty1">Your Order is empty!</p>
+                 <% } %>
            </div>
            
            </div>
@@ -993,49 +973,44 @@
 
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script>
-         console.log('hello');
-document.querySelectorAll('.cancel-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const orderId = button.getAttribute('data-order-id'); // Retrieve order ID from data attribute
-
-        Swal.fire({
-            title: 'Are you sure you want to cancel?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, cancel it!',
-            cancelButtonText: 'No, keep it'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                button.innerText = 'Canceled';
-                button.disabled = true;
-
-                fetch('/show-order', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        orderId: orderId, 
-                        status: "Cancelled"
-                    })
-                })
-                .then(response => {
-                  console.log(response);
-                    if (response.ok) {
-                     
-                     location.reload()
-                        button.innerText = 'Cancelled';
-                        
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
-        });
-    });
-});
-   </script>
+         document.querySelectorAll('.cancel-btn').forEach(button => {
+             button.addEventListener('click', () => {
+                 const orderId = button.getAttribute('data-order-id');
+                 const productId = button.getAttribute('data-product-id');
+     
+                 Swal.fire({
+                     title: 'Are you sure you want to cancel?',
+                     icon: 'warning',
+                     showCancelButton: true,
+                     confirmButtonText: 'Yes, cancel it!',
+                     cancelButtonText: 'No, keep it'
+                 }).then((result) => {
+                     if (result.isConfirmed) {
+                         fetch('/show-order', {
+                             method: 'POST',
+                             headers: {
+                                 'Content-Type': 'application/json'
+                             },
+                             body: JSON.stringify({
+                                 orderId: orderId, 
+                                 status: "Cancelled",
+                                 productId: productId
+                             })
+                         })
+                         .then(response => {
+                             if (response.ok) {
+                                 button.innerText = 'Cancelled';
+                                 button.disabled = true;
+                             }
+                         })
+                         .catch(error => {
+                             console.error('Error:', error);
+                         });
+                     }
+                 });
+             });
+         });
+     </script>
 
    </body>
 

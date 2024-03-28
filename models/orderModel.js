@@ -19,8 +19,8 @@ const orderSchema = new mongoose.Schema({
       },
       productStatus:{
         type:String,
-        default:'pending',
-        enum:['pending', 'placed', 'delivered', 'cancelled', 'shipped', 'out-for-delivery', 'returned']
+        enum:["Pending","Placed","shipped","Delivered","Cancelled","Returned"],
+        default: "Pending"
       },
       cancel: {
         status: { type: String },
@@ -64,23 +64,21 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  paymentStatus: {
-    type: String,
-    required: true,
-  },
-  paymentStatus: {
-    type: String,
-    enum: ["Pending", "Shipped", "Delivered", "Cancelled","Placed"],
-    default: "Pending",
-  },
-  createdAt: {
+  orderedData: {
     type: Date,
     default: Date.now,
   },
-  subTotal: {
+  expectedDate: {
+    type:Date,
+    required: true
+  },
+  Total: {
     type: Number,
     required: true,
   },
+  coupon:{
+    type:Number
+  }
 });
 
 module.exports = mongoose.model("Order", orderSchema);
