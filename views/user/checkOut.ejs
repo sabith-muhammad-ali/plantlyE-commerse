@@ -915,7 +915,7 @@
                                     </span>
                                     <span class="form-check d-inline-block ml-2">
                                        <input class="form-check-input" type="radio" name="payment" id="pay_by_bank"
-                                          value="OnlinePayment">
+                                          value="razorPay">
                                        <label class="form-check-label" for="pay_by_bank">
                                           Online Payment
                                        </label>
@@ -1403,7 +1403,9 @@
                }).then((result) => {
                   if (result.isConfirmed) {
                      window.location.href = '/show-order';
-                  }
+                  } else {
+                     
+                  } 
                });
             })
             .catch(error => {

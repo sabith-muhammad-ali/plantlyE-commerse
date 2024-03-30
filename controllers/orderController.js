@@ -4,6 +4,12 @@ const orderModel = require("../models/orderModel");
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 const cartModel = require("../models/cartModel");
+const Razorpay = require("razorpay");
+
+const razorPay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SCRET,
+});
 
 const loadCheckout = async (req, res) => {
   try {
@@ -57,6 +63,11 @@ const placeOrder = async (req, res) => {
     const paymentMethod = requestBody.paymentMethod;
     const subtotal = requestBody.subtotal;
 
+    let status =
+      paymentMethod == "cash On Delivey" || paymentMethod == "wallet"
+        ? "Placed"
+        : "Pending";
+
     const addressDetails = await addressModel.findOne({ user: userId });
 
     if (!addressDetails) {
@@ -76,7 +87,7 @@ const placeOrder = async (req, res) => {
     const orderProducts = userCart.items.map((item) => ({
       productId: item.productId,
       quantity: item.quantity,
-      productStatus: "Placed",
+      productStatus: status,
     }));
 
     const order = new orderModel({
@@ -96,6 +107,8 @@ const placeOrder = async (req, res) => {
     });
 
     await order.save();
+    const orderId = order._id
+    req.session.orderId = orderId
 
     // Update product quantities
     for (const item of userCart.items) {
@@ -105,6 +118,17 @@ const placeOrder = async (req, res) => {
     }
 
     await cartModel.deleteOne({ user: userId });
+
+
+    let options = {
+      amount:subtotal,
+      currency:'INR',
+      receipt:orderId
+    };
+      razorPay.orders.create(options, function(err,order) {
+        console.log("razorpay order:",order);
+        res.json({})
+      })
 
     res.status(200).json({ message: "Order received successfully" });
   } catch (error) {
@@ -127,11 +151,22 @@ const showOrder = async (req, res) => {
 
 const cancelOrders = async (req, res) => {
   try {
-    const { orderId, productId, status } = req.body;
-
+    const { orderId, productId } = req.body;
     await orderModel.updateOne(
       { _id: orderId, "product.productId": productId },
       { $set: { "product.$.productStatus": "cancelled" } }
+    );
+
+    const order = await orderModel.findById({ _id: orderId });
+    const cancelledOrder = order.product.find(
+      (p) => p.productId == productId
+    ).quantity;
+    console.log("cancelledOrder", cancelledOrder);
+
+    //update quantity after cancell
+    await productModel.findByIdAndUpdate(
+      { _id: productId },
+      { $inc: { quantity: cancelledOrder } }
     );
 
     res.json({ ok: true });
@@ -150,9 +185,8 @@ const successsPage = async (req, res) => {
 
 const viewOrderDetails = async (req, res) => {
   try {
-    console.log("hello");
     const userId = req.session.userId;
-    const orderId = req.params.orderId
+    const orderId = req.params.orderId;
     const order = await orderModel
       .findOne({ userId: userId, _id: orderId })
       .populate("product.productId");

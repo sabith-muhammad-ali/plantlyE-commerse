@@ -247,7 +247,6 @@ const loadshop = async (req, res) => {
     }
 
     const cart = await Cart.find({}).populate("items.productId");
-    console.log(cart);
     res.render("user/shop", { product, cart });
   } catch (error) {
     console.log(error);
@@ -298,7 +297,6 @@ const loadChangePassword = async (req, res) => {
 const changePassword = async (req, res) => {
   try {
     const { currPass, changePass } = req.body;
-    console.log(req.body);
     const id = req.session.userId;
     const user = await User.findById(id);
     if (!user) {
@@ -313,7 +311,6 @@ const changePassword = async (req, res) => {
       });
     }
     const hashedPassword = await bcrypt.hash(changePass, 10);
-    console.log(hashedPassword);
     await User.findOneAndUpdate(
       { _id: id },
       { $set: { password: hashedPassword } },

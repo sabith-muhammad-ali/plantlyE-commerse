@@ -113,7 +113,6 @@ const updateCartQuantity = async (req, res) => {
 
 const removeCart = async (req, res) => {
   try {
-    console.log("hello");
     const userId = req.session.userId;
     const product_id = req.body.productId;
 
@@ -126,7 +125,6 @@ const removeCart = async (req, res) => {
       { $pull: { items: { productId: product_id } } },
       { new: true }
     );
-    console.log(cartData);
     if (cartData) {
       res.json({ response: true });
     } else {

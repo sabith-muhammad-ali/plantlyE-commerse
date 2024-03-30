@@ -85,7 +85,6 @@ const loadeditproduct = async (req, res) => {
 };
 
 const editProduct = async (req, res) => {
-  console.log("edit ");
   try {
     const productId = req.body.productId;
     const { name, categoryId, price, stock, description } = req.body;
