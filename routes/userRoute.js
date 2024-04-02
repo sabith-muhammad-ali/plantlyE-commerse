@@ -59,7 +59,7 @@ user.get("/show-order", auth.isLogin, orderController.showOrder);
 user.post("/show-order", auth.isLogin, orderController.cancelOrders);
 user.get("/order-success", auth.isLogin, orderController.successsPage);
 user.get("/product-details/:orderId", auth.isLogin, orderController.viewOrderDetails);
-
+user.post("/verify-payment", auth.isLogin, orderController.verifyPayment);//razorpay
 //gogole
 user.use(passport.initialize());
 user.use(passport.session());

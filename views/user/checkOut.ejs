@@ -1330,6 +1330,8 @@
    </script>
 
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
    <script>
       function selectAddress(btn) {
@@ -1392,26 +1394,78 @@
                return response.json()
             })
             .then(data => {
-               Swal.fire({
-                  title: "Added to Cart",
-                  text: "You've successfully added this item to your order.",
-                  icon: "success",
-                  showCancelButton: true,
-                  confirmButtonColor: "#4CAF50",
-                  cancelButtonColor: "#d33",
-                  confirmButtonText: "Show Order!"
-               }).then((result) => {
-                  if (result.isConfirmed) {
-                     window.location.href = '/show-order';
-                  } else {
-                     
-                  } 
-               });
+               console.log("sabith");
+               if(data.response === 'razorpay'){
+                  console.log('reached', data.response);
+                  razorpayPayment(data.order)
+               } else if (data.response !== 'false') {
+                  Swal.fire({
+                     title: "Added to Cart",
+                     text: "You've successfully added this item to your order.",
+                     icon: "success",
+                     showCancelButton: true,
+                     confirmButtonColor: "#4CAF50",
+                     cancelButtonColor: "#d33",
+                     confirmButtonText: "Proceed to Payment"
+                  }).then((result) => {
+                     if (result.isConfirmed) {
+                        window.location.href = '/show-order';
+                     }
+                  });
+               }
             })
             .catch(error => {
                console.log(error);
             })
       }
+      
+     function razorpayPayment(order) {
+      console.log('function called');
+      var options = {
+            "key": 'rzp_test_o7r1ebXkKkik6D', 
+            "amount": order.amount, 
+            "currency": "INR",
+            "name": "Plantly", 
+            "description": "Test Transaction",
+            "image": "",
+            "order_id": order.id,
+            "handler": function (response){
+               verifyPayment(response,order)
+            },
+            "prefill": { 
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com", 
+                "contact": "9000090000"  
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+      }
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+      function verifyPayment(response,order) {
+         fetch("/verify-payment",{
+            method:"POST",
+            headers:{
+               'content-type':"application/json;charset=utf-8"
+            },
+            body:JSON.stringify({
+               response,
+               order
+            })
+         })
+         .then((res) => res.json())
+         .then((data) => {
+            if(data.statusChanged){
+               window.location.href = '/order-success'
+            }
+         })
+      }
+
+   }  
    </script>
 
 

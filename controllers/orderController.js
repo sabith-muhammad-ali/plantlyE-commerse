@@ -5,6 +5,7 @@ const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 const cartModel = require("../models/cartModel");
 const Razorpay = require("razorpay");
+const crypto = require("crypto");
 
 const razorPay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -107,33 +108,93 @@ const placeOrder = async (req, res) => {
     });
 
     await order.save();
-    const orderId = order._id
-    req.session.orderId = orderId
+    const orderId = order._id;
+    req.session.orderId = orderId;
 
     // Update product quantities
-    for (const item of userCart.items) {
-      await productModel.findByIdAndUpdate(item.productId, {
-        $inc: { quantity: -item.quantity },
-      });
+    if (paymentMethod === "cash On Delivey") {
+      for (const item of userCart.items) {
+        await productModel.findByIdAndUpdate(item.productId, {
+          $inc: { quantity: -item.quantity },
+        });
+      }
+      await cartModel.deleteOne({ user: userId });
     }
 
-    await cartModel.deleteOne({ user: userId });
-
-
-    let options = {
-      amount:subtotal,
-      currency:'INR',
-      receipt:orderId
-    };
-      razorPay.orders.create(options, function(err,order) {
-        console.log("razorpay order:",order);
-        res.json({})
-      })
-
-    res.status(200).json({ message: "Order received successfully" });
+    if (paymentMethod === "razorPay") {
+      let options = {
+        amount: subtotal * 100,
+        currency: "INR",
+        receipt: orderId,
+      };
+      razorPay.orders.create(options, function (err, order) {
+        if (err) {
+          console.log("err:", err);
+          res.status(500).json({ error: "Error creating Razorpay order" });
+        } else {
+          return res.json({ success: true, response: "razorpay", order });
+        }
+      });
+    } else {
+      return res.json({
+        success: true,
+        message: "Order received successfully",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const verifyPayment = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const { response, order } = req.body;
+
+    const cartData = await cartModel
+      .findOne({ user: userId })
+      .populate("items.productId");
+
+    const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SCRET);
+
+    hmac.update(
+      response.razorpay_order_id + "|" + response.razorpay_payment_id
+    );
+    const hmacValue = hmac.digest("hex");
+
+    const orderId = order.receipt;
+
+    const orderData = await orderModel.findById({ _id: orderId });
+
+    const productStatusChange = [];
+    orderData.product.forEach((item) => {
+      productStatusChange.push({
+        productId: item.productId,
+        quantity: item.quantity,
+        productStatus: "placed",
+      });
+    });
+
+    await orderModel.findByIdAndUpdate(
+      { _id: orderId },
+      { $set: { product: productStatusChange } }
+    );
+
+    // decreasing ordered products quantiy
+    if (hmacValue == response.razorpay_signature) {
+      for (const data of cartData.items) {
+        const { productId, quantity } = data;
+        await productModel.findByIdAndUpdate(productId, {
+          $inc: { quantity: -quantity },
+        });
+      }
+      res.json({ statusChanged: true, orderId });
+    }
+
+    await cartData.deleteOne({ user: userId });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -200,6 +261,7 @@ module.exports = {
   loadCheckout,
   checkoutAddAddress,
   placeOrder,
+  verifyPayment,
   showOrder,
   cancelOrders,
   successsPage,
