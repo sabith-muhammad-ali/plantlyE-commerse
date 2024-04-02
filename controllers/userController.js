@@ -5,12 +5,14 @@ const nodemailer = require("nodemailer");
 const productModel = require("../models/productModel");
 const crypto = require("crypto");
 const Cart = require("../models/cartModel");
+const bannerModel = require("../models/bannerModel");
 
 // tempHomePage
 const homePage = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req.session.userId });
-    res.render("user/home", { userData });
+    const banner = await bannerModel.find({})
+    res.render("user/home", { userData,banner });
   } catch (error) {
     console.log(error.message);
   }
