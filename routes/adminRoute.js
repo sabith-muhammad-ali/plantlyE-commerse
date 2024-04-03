@@ -63,4 +63,5 @@ admin.get("/add-banner", adminAuth.isLogin, bannerController.loadAddBanner);
 admin.post("/add-banner", adminAuth.isLogin, upload.array('Image',1), bannerController.addBanner);
 admin.get("/edit-banner", adminAuth.isLogin, bannerController.loadEditBanner);
 admin.post("/edit-banner", upload.array("image",1), bannerController.editBanner);
+admin.patch("/list-banner/:id", adminAuth.isLogin, bannerController.blockBanner);
 module.exports = admin;

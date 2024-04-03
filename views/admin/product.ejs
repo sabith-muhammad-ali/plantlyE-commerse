@@ -442,16 +442,16 @@
               const productId = element.getAttribute('data-product-id');
               const action = element.classList.contains('block-product') ? 'block': 'unblock';
               console.log(productId,'productId');
-              fetch(`/admin/blockproduct/${productId}`, { // Note the added slash before ${productId}
-    method: 'PATCH'
-})
+              fetch(`/admin/blockproduct/${productId}`, {
+                method: 'PATCH'
+                })
               .then(Response => Response.json())
               .then(data => {
                   if(data.block === true) {
                       // updating the button and color
                       element.querySelector('span').classList.toggle('btn-success');
                       element.querySelector('span').classList.toggle('btn-warning');
-                      element.querySelector('span').innerText = action === 'block' ? 'Unblock' : 'Block'; // Use querySelector for single element
+                      element.querySelector('span').innerText = action === 'block' ? 'Unblock' : 'Block'; 
                       //replace button class
                       element.classList.remove(action === 'block' ? 'block-user' : 'unblock-user');
                       element.classList.add(action === 'block' ? 'unblock-user' : 'block-user');

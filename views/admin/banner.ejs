@@ -381,6 +381,7 @@
                             <th class="text text-white"> description </th>
                             <th class="text text-white"> Link </th>
                             <th class="text text-white"> Action </th>
+                            <th class="text text-white"> Edit </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -392,7 +393,13 @@
                             <td class="text text-white"> <%= banner[i].name %> </td>
                             <td class="text text-white"> <%= banner[i].description %> </td>
                             <td class="text text-white"> <%= banner[i].link %> </td>
-                            <td class="text text-white"> <%= banner[i].is_listed %> </td>
+                            <td class="text-end">
+                              <% if (banner[i].is_list) { %>
+                                <a class="Unblock-product" data-banner-id="<%= banner[i]._id %>"><span class="btn btn-success border-0 px-4 py-2">Unblock</span></a>
+                              <% } else { %>
+                                <a class="block-product" data-banner-id="<%= banner[i]._id %>"><span class="btn btn-warning border-0 px-4 py-2">Block</span></a>
+                             <% } %>
+                            </td>
                             <td>
                               <a href="/admin/edit-banner?id=<%= banner[i]._id %>" class="btn btn-primary" >Edit</a>
                             </td>
@@ -435,5 +442,34 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script>
+      document.querySelectorAll('.Unblock-product, .block-product').forEach(function(element){
+          element.addEventListener('click', function(event){
+              event.preventDefault();
+              console.log('sssssAAAAAsssssssssss');
+              const bannerId = element.getAttribute('data-banner-id');
+              const action = element.classList.contains('block-product') ? 'block': 'unblock';
+              console.log("bannerId:",bannerId);
+              fetch(`/admin//list-banner/${bannerId}`, { 
+                method: 'PATCH'
+                })
+              .then(Response => Response.json())
+              .then(data => {
+                  if(data.block === true) {
+                      // updating the button and color
+                      element.querySelector('span').classList.toggle('btn-success');
+                      element.querySelector('span').classList.toggle('btn-warning');
+                      element.querySelector('span').innerText = action === 'block' ? 'Unblock' : 'Block'; 
+                      //replace button class
+                      element.classList.remove(action === 'block' ? 'block-user' : 'unblock-user');
+                      element.classList.add(action === 'block' ? 'unblock-user' : 'block-user');
+                  }
+              })
+              .catch((error) => {
+                  console.log(error);
+              });
+          });
+      });
+      </script>
   </body>
 </html>
