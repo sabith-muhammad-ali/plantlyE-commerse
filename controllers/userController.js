@@ -12,7 +12,7 @@ const homePage = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req.session.userId });
     const banner = await bannerModel.find({})
-    res.render("user/home", { userData,banner });
+    res.render("user/home", { userData, banner });
   } catch (error) {
     console.log(error.message);
   }

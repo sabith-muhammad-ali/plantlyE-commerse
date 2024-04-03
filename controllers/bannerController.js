@@ -54,31 +54,35 @@ const loadEditBanner = async (req,res) => {
   }
 }
 
-const editBanner = async (req,res) => {
+const editBanner = async (req, res) => {
   try {
-    const bannerId = req.body.bannerId
+    const bannerId = req.body.bannerId;
     const { name, description, link } = req.body;
     const images = req.files.map((file) => file.filename);
 
-    const updateBanner = await bannerModel.findById(bannerId);
-    
-    updateBanner.image = []//remove exisisting image
-    updateBanner.image = images;// add new image
+    // First, update the banner by its ID
+    const updateBanner = await bannerModel.findByIdAndUpdate(
+      bannerId,
+      {
+        $set: {
+          name,
+          description,
+          link,
+          image: images 
+        }
+      },
+      { new: true }
+    );
 
-    updateBanner.name = name;
-    updateBanner.description = description;
-    updateBanner.link = link 
-
-    const updatedBanner  = await updateBanner.save();
-
-    if(updatedBanner){
-      res.redirect("/admin/banner")
+    if (updateBanner) {
+      return res.redirect("/admin/banner");
     }
 
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
-}
+};
 
 module.exports = {
   loadBanner,
