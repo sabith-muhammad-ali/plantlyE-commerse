@@ -373,7 +373,8 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
-                        <form class="forms-sample" id="myForm">
+
+                      <form class="forms-sample" id="myForm" enctype="multipart/form-data" method="post">
                             <div class="form-group">
                                 <label for="exampleInputName1">Name</label>
                                 <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name">
@@ -388,7 +389,7 @@
                             </div>
                             <div class="form-group">
                                 <label>File upload</label>
-                                <input type="file" name="image" id="image" class="file-upload-default" multiple>
+                                <input type="file" name="Image" id="image" class="file-upload-default">
                                 <div class="input-group col-xs-12">
                                     <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                                     <span class="input-group-append">
@@ -399,8 +400,9 @@
                                 <div id="imagePreviews" class="mt-2 row"></div>
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-dark" type="button">Cancel</button>
+                            <button class="btn btn-dark" type="menu">Cancel</button>
                         </form>
+
                     </div>
                   </div>
                 </div>
@@ -456,5 +458,6 @@
             });
         });
     </script>
+
   </body>
 </html>

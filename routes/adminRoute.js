@@ -60,5 +60,7 @@ admin.get("/orderlist", adminAuth.isLogin, adminController.ordersLoad);
 //banner
 admin.get("/banner", adminAuth.isLogin, bannerController.loadBanner);
 admin.get("/add-banner", adminAuth.isLogin, bannerController.loadAddBanner);
-admin.post("/add-banner", adminAuth.isLogin, upload.single('Image'), bannerController.addBanner);
+admin.post("/add-banner", adminAuth.isLogin, upload.array('Image',1), bannerController.addBanner);
+admin.get("/edit-banner", adminAuth.isLogin, bannerController.loadEditBanner);
+admin.post("/edit-banner", upload.array("image",1), bannerController.editBanner);
 module.exports = admin;

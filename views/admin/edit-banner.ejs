@@ -363,50 +363,52 @@
           <div class="content-wrapper">
             <div class="page-header">
               <div class="col text-center">
-                <h3 class="page-title "> Banner </h3>
+                <h3 class="page-title "> Edit Banner </h3>
               </div>
             </div>
              <div class="row"> 
                
               <!--  -->
+              
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th class="text text-white"> Image </th>
-                            <th class="text text-white"> Name </th>
-                            <th class="text text-white"> description </th>
-                            <th class="text text-white"> Link </th>
-                            <th class="text text-white"> Action </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                         <% for (let i = 0; i < banner.length; i++) { %>
-                          <tr>
-                            <td class="py-1">
-                              <img src="assets/multer/<%= banner[i].image[0] %>" alt="Banner Image" />
-                            </td>
-                            <td class="text text-white"> <%= banner[i].name %> </td>
-                            <td class="text text-white"> <%= banner[i].description %> </td>
-                            <td class="text text-white"> <%= banner[i].link %> </td>
-                            <td class="text text-white"> <%= banner[i].is_listed %> </td>
-                            <td>
-                              <a href="/admin/edit-banner?id=<%= banner[i]._id %>" class="btn btn-primary" >Edit</a>
-                            </td>
-                          </tr>
-                         </tbody>
-                        <% } %>
-                      </table><br>
-                      <div class="container d-flex justify-content-center align-items-center">
-                        <a href="/admin/add-banner" type="button" class="btn btn-primary">Add Banner</a>
-                      </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <form class="forms-sample" id="myForm" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name="bannerId" value="<%= bannerData._id %>">
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Name</label>
+                                    <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name" value="<%= bannerData.name %>" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword4">Description</label>
+                                    <input type="text" name="description" class="form-control" id="exampleInputPassword4" placeholder="Description" value="<%= bannerData.description %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword4">Link</label>
+                                    <input type="text" name="link" class="form-control" id="exampleInputPassword4" placeholder="Link" value="<%= bannerData.link %>">
+                                </div>
+                                <div class="form-group">
+                                    <label>File upload</label>
+                                    <input type="file" name="image" id="image" class="file-upload-default">
+                                    <div class="input-group col-xs-12">
+                                        <input type="text"  class="form-control file-upload-info" disabled placeholder="Upload Image" id="imagePreview" value="<%= bannerData.image %>">
+                                        <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                        </span>
+                                    </div>
+                                    <!-- Image previews container -->
+                                    <div id="imagePreviews" class="mt-2 row"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                <a href="/admin/banner" class="btn btn-dark" >Cancel</a>
+                            </form>
+
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
               <!--  -->
             </div>
           </div> 
@@ -435,5 +437,30 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.file-upload-browse').on('click', function() {
+                $('#image').click();
+            });
+    
+            $('#image').on('change', function() {
+                var input = this;
+                var imagePreviews = $('#imagePreviews');
+                imagePreviews.empty();
+                if (input.files && input.files.length) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var preview = $('<img>').addClass('img-thumbnail').attr('src', e.target.result);
+                        preview.css({'max-width': '200px', 'max-height': '200px'}); // Set maximum width and height
+                        imagePreviews.append(preview);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        });
+    </script>
+
+
   </body>
 </html>

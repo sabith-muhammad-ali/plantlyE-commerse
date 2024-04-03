@@ -378,22 +378,22 @@
                       <table id="dataTable" class="table table-striped">
                         <thead>
                           <tr>
-                            <th>#Id</th>
-                            <th>First name</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                            <th>Edit</th>
+                            <th class="text text-white" >#Id</th>
+                            <th class="text text-white" >First name</th>
+                            <th class="text text-white" >Description</th>
+                            <th class="text text-white" >Action</th>
+                            <th class="text text-white" >Edit</th>
                           </tr>
                         </thead>
                         <tbody>
                           <% if (categories)  { %>
                             <% for(let i = 0; i < categories.length; i++) { %>
                               <tr>
-                                <td><%= i + 1 %></td> <!-- Adding 1 to index to make it 1-based -->
-                                <td><%= categories[i].name %></td> <!-- Accessing name property of each category item -->
-                                <td><%= categories[i].description %></td> <!-- Accessing description property of each category item -->
-                                <td class="text-end">
-                                  <% if(categories[i].is_block) { %> <!-- Access is_block property of each category -->
+                                <td class="text text-white" ><%= i + 1 %></td> 
+                                <td class="text text-white" ><%= categories[i].name %></td> 
+                                <td class="text text-white" ><%= categories[i].description %></td> 
+                                <td class="text-end " >
+                                  <% if(categories[i].is_block) { %> 
                                     <a class="Unblock-user" data-categories-id="<%= categories[i]._id %>"><span class="btn btn-success border-0 px-4 py-2">Unblok</span></a>
                                   <% } else { %>
                                     <a class="block-user" data-categories-id="<%= categories[i]._id %>"><span class="btn btn-warning border-0 px-4 py-2">Block</span></a>
