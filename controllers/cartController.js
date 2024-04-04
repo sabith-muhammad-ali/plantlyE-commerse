@@ -1,9 +1,6 @@
 const Cart = require("../models/cartModel");
-const Category = require("../models/categoryModel");
-const User = require("../models/userModel");
 const Product = require("../models/productModel");
-const Address = require("../models/addressModel");
-const product = require("../models/productModel");
+const wishlistModel = require("../models/wishlistModel");
 
 const getCart = async (req, res) => {
   try {
@@ -95,7 +92,6 @@ const updateCartQuantity = async (req, res) => {
       }
     }
 
-
     await Cart.findOneAndUpdate(
       { user: userId, "items.productId": product_id },
       {
@@ -136,9 +132,77 @@ const removeCart = async (req, res) => {
   }
 };
 
+//wishlist
+const addToWishlist = async (req, res) => {
+  try {
+    if (req.session.userId) {
+      const product_id = req.body.product;
+      const userId = req.session.userId;
+      const wishlistProduct = await wishlistModel.findOne({
+        user: userId,
+        "product.productId": product_id,
+      });
+
+      if (wishlistProduct) {
+        await wishlistModel.findOneAndUpdate(
+          { user: userId, "product.productId": product_id },
+          { $pull: { product: { productId: product_id } } }
+        );
+
+        res.json({ remove: true, productId: product_id });
+      } else {
+        const data = { productId: product_id };
+
+        await wishlistModel.findOneAndUpdate(
+          { user: userId },
+          { $addToSet: { product: data } },
+          { upsert: true, new: true }
+        );
+
+        res.json({ create: true, productId: product_id });
+      }
+    } else {
+      res.json({ user: true });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const loadWishlist = async (req, res) => {
+  try {
+    const wishlistData = await wishlistModel
+      .findOne({ user: req.session.userId })
+      .populate("product.productId");
+    res.render("user/wishlist", { wishlistData });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeWishlist = async (req, res) => {
+  try {
+    const productId = req.body.product;
+    const userId = req.session.userId;
+    const removeWishlist = await wishlistModel.findOneAndUpdate(
+      { user: userId },
+      { $pull: { product: { productId: productId } } },
+      { new: true }
+    );
+    if (removeWishlist) {
+      res.json({ remove: true });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   cartLoad,
   getCart,
   updateCartQuantity,
   removeCart,
+  addToWishlist,
+  loadWishlist,
+  removeWishlist,
 };

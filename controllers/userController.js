@@ -11,7 +11,7 @@ const bannerModel = require("../models/bannerModel");
 const homePage = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req.session.userId });
-    const banner = await bannerModel.find({})
+    const banner = await bannerModel.find({ is_listed: false })
     res.render("user/home", { userData, banner });
   } catch (error) {
     console.log(error.message);

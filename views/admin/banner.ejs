@@ -388,16 +388,16 @@
                          <% for (let i = 0; i < banner.length; i++) { %>
                           <tr>
                             <td class="py-1">
-                              <img src="assets/multer/<%= banner[i].image[0] %>" alt="Banner Image" />
+                              <img src="assets/multer/<%= banner[i].image %>" alt="Banner Image" />
                             </td>
                             <td class="text text-white"> <%= banner[i].name %> </td>
                             <td class="text text-white"> <%= banner[i].description %> </td>
                             <td class="text text-white"> <%= banner[i].link %> </td>
                             <td class="text-end">
-                              <% if (banner[i].is_list) { %>
-                                <a class="Unblock-product" data-banner-id="<%= banner[i]._id %>"><span class="btn btn-success border-0 px-4 py-2">Unblock</span></a>
+                              <% if (banner[i].is_listed ) { %>
+                                <a class="Unblock-banner" data-banner-id="<%= banner[i]._id %>"><span class="btn btn-success border-0 px-4 py-2">Unblock</span></a>
                               <% } else { %>
-                                <a class="block-product" data-banner-id="<%= banner[i]._id %>"><span class="btn btn-warning border-0 px-4 py-2">Block</span></a>
+                                <a class="block-banner" data-banner-id="<%= banner[i]._id %>"><span class="btn btn-warning border-0 px-4 py-2">Block</span></a>
                              <% } %>
                             </td>
                             <td>
@@ -443,19 +443,18 @@
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
     <script>
-      document.querySelectorAll('.Unblock-product, .block-product').forEach(function(element){
-          element.addEventListener('click', function(event){
+      document.querySelectorAll('.Unblock-banner, .block-banner').forEach(function(element) {
+          element.addEventListener('click', function(event) {
               event.preventDefault();
-              console.log('sssssAAAAAsssssssssss');
               const bannerId = element.getAttribute('data-banner-id');
-              const action = element.classList.contains('block-product') ? 'block': 'unblock';
-              console.log("bannerId:",bannerId);
-              fetch(`/admin//list-banner/${bannerId}`, { 
-                method: 'PATCH'
-                })
-              .then(Response => Response.json())
+              const action = element.classList.contains('block-banner') ? 'block' : 'unblock';
+      
+              fetch(`/admin/list-banner/${bannerId}`, {
+                  method: 'PATCH'
+              })
+              .then(response => response.json())
               .then(data => {
-                  if(data.block === true) {
+                  if (data.block === true) {
                       // updating the button and color
                       element.querySelector('span').classList.toggle('btn-success');
                       element.querySelector('span').classList.toggle('btn-warning');
@@ -465,8 +464,8 @@
                       element.classList.add(action === 'block' ? 'unblock-user' : 'block-user');
                   }
               })
-              .catch((error) => {
-                  console.log(error);
+              .catch(error => {
+                  console.error('Error:', error);
               });
           });
       });

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="" lang="en">
 
-<!-- Mirrored from dostguru.com/HTML/plantly/single-product.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->
+<!-- Mirrored from dostguru.com/HTML/plantly/wishlist.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->
 
 <head>
-   <title>Single-Product | Plantly</title>
+   <title>Plantly | Wishlist </title>
    <meta charset="utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <!-- Favicon -->
@@ -18,8 +18,6 @@
    <!-- OwlCarousel2 -->
    <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.default.min.css">
    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
-   <!--  magnific-popup -->
-   <link rel="stylesheet" type="text/css" href="assets/css/magnific-popup.css">
    <!-- fancybox -->
    <link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.css">
    <!-- animate -->
@@ -34,17 +32,6 @@
    <link rel="preconnect" href="https://fonts.gstatic.com/">
    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap"
       rel="stylesheet">
-   <script></script>
-   <style>
-      .button-container {
-         display: flex;
-         flex-direction: row;
-      }
-
-      .button-container button {
-          margin-right: 10px; 
-      }
-   </style>
 </head>
 
 <body>
@@ -54,6 +41,7 @@
          <div class="modal-content">
             <div class="modal-header">
                <div class="modal-title f_13 font-weight-bold">Product successfully added to your shopping cart</div>
+
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                </button>
@@ -65,7 +53,7 @@
                         class="fst-image mx-auto d-block img-fluid border rounded" alt="product_13">
                   </div>
                   <div class="col-sm-8 col-xs-12 ">
-                     <h6 class="font-weight-bold">Set of 3 Good Luck Plants</h6>
+                     <h6 class="font-weight-bold">Hummingbird printed t-shirt</h6>
                      <div class="font-weight-bold pb-1">$19.12</div>
                      <span class="font-weight-bold f_13 pb-1">Size: S</span><br>
                      <span class="font-weight-bold f_13 pb-1">Color: White</span><br>
@@ -141,7 +129,7 @@
                            </div>
                         </div>
                         <span>
-                           <a href="/cart.html" class="btn btn-primary primary mt-3">add to cart</a>
+                           <a href="cart.html" class="btn btn-primary primary mt-3">add to cart</a>
                         </span>
                      </div>
                   </div>
@@ -161,10 +149,14 @@
                </button>
             </div>
             <div class="modal-body text-center">
-               <p class="checked"></p>
+               <p>
+                  <svg width="30px" height="30px">
+                     <use xlink:href="#checked"></use>
+                  </svg>
+               </p>
                <h5>Compare list updated!</h5>
                <p class="text-muted font-weight-bold">Product successfully removed from the product comparison!</p>
-               <div class="text-danger font-weight-bold"><a href="compare.html">Go to Compare</a></div>
+               <div class="text-danger font-weight-bold">Go to Compare</div>
             </div>
          </div>
       </div>
@@ -180,9 +172,13 @@
                </button>
             </div>
             <div class="modal-body text-center">
-               <p class="checked"></p>
+               <p>
+                  <svg width="30px" height="30px">
+                     <use xlink:href="#checked"></use>
+                  </svg>
+               </p>
                <p class="text-muted font-weight-bold">You must be logged in to manage your wishlist.</p>
-               <div class="text-danger font-weight-bold"><a href="wishlist.html">Go to wishlist</a></div>
+               <div class="text-danger font-weight-bold">Go to wishlist</div>
             </div>
          </div>
       </div>
@@ -199,6 +195,7 @@
             </div>
             <div class="modal-body">
                <ul>
+                  <li>Fashion has been creating well-designed collections since 2010. </li>
                   <li>The brand offers feminine designs delivering stylish separates and statement dresses which have
                      since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's
                      wardrobe. </li>
@@ -343,6 +340,19 @@
                      </div>
                      <div class="col-xl-4 col-lg-5 head-right text-right">
                         <ul class="top_cart">
+                           <li class="dropdown right1 md_acc md_acco">
+                              <span class="account-block">
+                              </span>
+                              <span class="dropdown-toggle my_account" role="menu" data-toggle="dropdown"
+                                 aria-haspopup="true" aria-expanded="false">My account
+                                 <a href="#">
+                                 </a>
+                              </span>
+                              <span class="dropdown-menu r_menu dropdown-menu-right">
+                                 <a class="dropdown-item font-weight-bolderer" href="login.html">log in</a>
+                                 <a class="dropdown-item font-weight-bolderer" href="registration.html">register</a>
+                              </span>
+                           </li>
                            <!--  <li class="d-lg-none d-md-inline-block user">
                                  <div class="head_ border rounded bg-white text-left">
                                     <a class=" md_login" href="#"></a>
@@ -396,7 +406,7 @@
                                        <span class="float-right">$230.00</span>
                                     </li>
                                     <li class="d-block font-weight-bolderer pt-2">
-                                       <span class="text-left"><a href="/cart">view cart</a></span>
+                                       <span class="text-left"><a href="cart.html">view cart</a></span>
                                        <span class="float-right"><a href="checkout.html">check out</a></span>
                                     </li>
                                  </ul>
@@ -427,7 +437,7 @@
                   <ul class="main-menu navbar">
                      <li><a href="/">Home</a></li>
                      <li>
-                        <a href="/shop">shop&nbsp;<span class="float-right"><i></i></span></a>
+                        <a class="dropdown-toggle" href="/shop" role="button">shop&nbsp;</a>
                      </li>
                      </li>
                      <li class="dropdown mega_menu m1 level-1 font-weight-bolderer">
@@ -570,43 +580,48 @@
                            class="fas fa-times"></i></a>
                   </div>
                   <ul class="vertical_main_menu h_menu navbar navbar-nav">
-                     <li class="dropdown mega_menu m1_menu level-1 font-weight-bolder">
+                     <li><a href="/">Home</a></li>
+                     <li class="">
+                        <a class="dropdown-toggle" href="/shop" role="button">shop&nbsp;</a>
+                     </li>
+                     <li class="dropdown mega_menu m1_menu level-1 font-weight-bolderer">
                         <a class="dropdown-toggle" href="single-product.html" role="button" data-toggle="dropdown"
-                           aria-expanded="false">portfolio&nbsp;<span class="float-right mt-1"><i
+                           aria-expanded="false">portfolio&nbsp;<span class="float-right"><i
                                  class="fas fa-angle-down"></i></span></a>
                         <ul class="dropdown-menu">
                            <li>
                               <ul class="row mx-0">
                                  <li class="mg_menu col-lg-6 col-md-12 ">
                                     <ul>
-                                       <li class="h_title text-uppercase font-weight-bold border-bottom">portfolio grid
-                                          2</li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li class="h_title text-uppercase font-weight-bolder border-bottom">portfolio
+                                          grid 2</li>
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="portfolio-grid-2.html">portfolio grid 2</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="portfolio-grid-3.html">portfolio grid 3</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="portfolio-grid-4.html">portfolio grid 4</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="mesonary-grid-2.html">mesonary grid 2</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="mesonary-grid-3.html">mesonary grid 3</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="mesonary-grid-4.html">mesonary grid 4</a></li>
                                     </ul>
                                  </li>
                                  <li class="mg_menu col-lg-6 col-md-12">
                                     <ul>
-                                       <li class="h_title text-uppercase font-weight-bold border-bottom">theme elements
+                                       <li class="h_title text-uppercase font-weight-bolder border-bottom">theme
+                                          elements</li>
+                                       <li><a class="dropdown-item font-weight-bolderer" href="title.html">title</a>
                                        </li>
-                                       <li><a class="dropdown-item font-weight-bolder" href="title.html">title</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="category-style.html">category</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder" href="services.html">services</a>
-                                       </li>
-                                       <li><a class="dropdown-item font-weight-bolder" href="product-tab.html">product
+                                       <li><a class="dropdown-item font-weight-bolderer"
+                                             href="services.html">services</a></li>
+                                       <li><a class="dropdown-item font-weight-bolderer" href="product-tab.html">product
                                              tab</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="multi-slider-product.html">multi slider product</a></li>
                                     </ul>
                                  </li>
@@ -614,30 +629,19 @@
                            </li>
                         </ul>
                      </li>
-                     <li class="dropdown level-1 font-weight-bolder">
+                     <li>
                         <a class="dropdown-toggle" href="blog.html" role="button" data-toggle="dropdown"
                            aria-expanded="false">
                            blog&nbsp;<span class="float-right mt-1"><i class="fas fa-angle-down"></i></span></a>
                         <ul class="dropdown-menu">
-                           <li><a class="dropdown-item font-weight-bolder" href="blog.html">blog</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="blog-left-sidebar.html">left
+                           <li><a class="dropdown-item font-weight-bolderer" href="blog.html">blog</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="blog-left-sidebar.html">left
                                  sidebar</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="blog-right-sidebar.html">right
-                                 sidebar</a></li>
-                        </ul>
-                     </li>
-                     <li class="dropdown level-1 font-weight-bolder">
-                        <a class="dropdown-toggle" href="shop-left-sidebar.html" role="button" data-toggle="dropdown"
-                           aria-expanded="false">shop&nbsp;<span class="float-right mt-1"><i
-                                 class="fas fa-angle-down"></i></span></a>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item font-weight-bolder" href="shop-left-sidebar.html">left
-                                 sidebar</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="shop-right-sidebar.html">right
+                           <li><a class="dropdown-item font-weight-bolderer" href="blog-right-sidebar.html">right
                                  sidebar</a></li>
                         </ul>
                      </li>
-                     <li class="dropdown mega_menu level-1 font-weight-bolder">
+                     <li class="dropdown mega_menu level-1 font-weight-bolderer">
                         <a class="dropdown-toggle" href="single-product.html" role="button" data-toggle="dropdown"
                            aria-expanded="false">Category&nbsp;<span class="float-right mt-1"><i
                                  class="fas fa-angle-down"></i></span></a>
@@ -646,64 +650,59 @@
                               <ul class="row mx-0">
                                  <li class="mg_menu col-lg-4 col-md-12 ">
                                     <ul>
-                                       <li class="h_title text-uppercase font-weight-bold border-bottom">Pot</li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li class="h_title text-uppercase font-weight-bolder border-bottom">Pot</li>
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Pigmyweeds</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Indoor Plants</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">outdoor Plants</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Flamingo plant</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Succulent Plant</a></li>
                                     </ul>
                                  </li>
                                  <li class="mg_menu col-lg-4 col-md-12">
                                     <ul>
-                                       <li class="h_title text-uppercase font-weight-bold border-bottom">Plants</li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li class="h_title text-uppercase font-weight-bolder border-bottom">Plants</li>
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Nerve Plant</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Flowering Plants</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Plant Seed</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Luck Plants</a></li>
-                                       <li><a class="dropdown-item font-weight-bolder"
+                                       <li><a class="dropdown-item font-weight-bolderer"
                                              href="shop-left-sidebar.html">Plant House</a></li>
-                                    </ul>
-                                 </li>
-                                 <li class="mg_menu col-lg-4 col-md-12">
-                                    <ul>
-                                       <li><a href="single-product.html"><img src="assets/img/product/m_menu.html"
-                                                class="fst-image mx-auto d-block mb-1 img-fluid" alt="m_menu"></a></li>
                                     </ul>
                                  </li>
                               </ul>
                            </li>
                         </ul>
                      </li>
-                     <li class="dropdown level-1 font-weight-bolder">
+                     <li class="dropdown level-1 font-weight-bolderer">
                         <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                            aria-expanded="false">pages&nbsp;<span class="float-right mt-1"><i
                                  class="fas fa-angle-down"></i></span></a>
                         <ul class="dropdown-menu">
-                           <li><a class="dropdown-item font-weight-bolder" href="about-us.html">about us</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="login.html">login</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="registration.html">registration</a>
+                           <li><a class="dropdown-item font-weight-bolderer" href="about-us.html">about us</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="login.html">login</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="registration.html">registration</a>
                            </li>
-                           <li><a class="dropdown-item font-weight-bolder" href="single-product.html">single product</a>
+                           <li><a class="dropdown-item font-weight-bolderer" href="single-product.html">single
+                                 product</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="single-blog.html">single blog</a>
                            </li>
-                           <li><a class="dropdown-item font-weight-bolder" href="single-blog.html">single blog</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="cart.html">cart</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="compare.html">compare</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="wishlist.html">wishlist</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="checkout.html">check out</a></li>
-                           <li><a class="dropdown-item font-weight-bolder" href="forgot.html">forgot password</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="cart.html">cart</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="compare.html">compare</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="wishlist.html">wishlist</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="checkout.html">check out</a></li>
+                           <li><a class="dropdown-item font-weight-bolderer" href="forgot.html">forgot password</a></li>
                         </ul>
                      </li>
-                     <li class="level-1 font-weight-bolder"><a href="contact-us.html">contact-us</a></li>
+                     <li class="level-1 font-weight-bolderer"><a href="contact-us.html">contact-us</a></li>
                   </ul>
                </div>
             </div>
@@ -714,729 +713,66 @@
    </div>
    <!-- container  menu_slider mt-4 -->
    <!-- vertical menu and slider end -->
-   <!-- single product header area -->
-   <div id="single_product" class="single_product_page animate__animated animate__fadeInUp">
-      <div class="sp_header bg-white p-3">
-         <div class="container custom_container">
-            <div class="row">
-               <div class="col-12">
+   <!-- wishlist page -->
+   <div id="wishlist_page" class="wishlist-page animate__animated animate__fadeInUp">
+      <div class="sp_header bg-white p-3 ">
+         <div class="container custom_container ">
+            <div class="row ">
+               <div class="col-12 ">
                   <ul>
                      <li class="d-inline-block font-weight-bolder"><a href="/">home</a></li>
-                     <li class="d-inline-block hr_ font-weight-bolder"><a href="/shop">shop</a></li>
+                     <li class="d-inline-block hr_ font-weight-bolder"><a href="/load-wishlist">wishlist</a></li>
                   </ul>
                </div>
             </div>
          </div>
       </div>
-      <!-- single product header area -->
-      <!-- single product img and detail -->
-
-      <div class="container sp_pro_container pt-2">
-         <div class="row sh_page bg-white rounded border py-2">
-            <div class="col-xl-4 col-lg-6 col-md-6 col-12 sp_left_product px-2">
-               <div id="content" class="page-content">
-
-                  <div class="row">
-                     <div class="col-lg-12 col-md-12 col-sm-12 col-12 sp_zoom_pro mb-5">
-                        <img id="zoom_03" src="/assets/sharp/<%= product.images[0] %>"
-                           class="rounded img-fluid js-product-cover"
-                           data-zoom-image="/assets/sharp/<%= product.images[0] %>" />
-                     </div>
-                     <div class="col-lg-12 col-md-12 col-sm-12 col-12 sp_muti_pro">
-                        <div id="gallery_02" class="row owl-carousel owl-theme">
-                           <div class="col-12 px-1">
-                              <a href="#" class="elevatezoom-gallery"
-                                 data-image="/assets/sharp/<%= product.images[0] %>"
-                                 data-zoom-image="/assets/sharp/<%= product.images[0] %>">
-                                 <img src="/assets/sharp/<%= product.images[0] %>" class="border rounded img-fluid"
-                                    width="100" /></a>
-                           </div>
-                           <div class="col-12 px-1">
-                              <a href="#" class="elevatezoom-gallery"
-                                 data-image="/assets/sharp/<%= product.images[1] %>"
-                                 data-zoom-image="/assets/sharp/<%= product.images[1] %>">
-                                 <img src="/assets/sharp/<%= product.images[1] %>" class="border rounded img-fluid"
-                                    width="100" /></a>
-                           </div>
-                           <div class="col-12 px-1">
-                              <a href="#" class="elevatezoom-gallery"
-                                 data-image="/assets/sharp/<%= product.images[2] %>"
-                                 data-zoom-image="/assets/sharp/<%= product.images[2] %>">
-                                 <img src="/assets/sharp/<%= product.images[2] %>" class="border rounded img-fluid"
-                                    width="100" /></a>
-                           </div>
-                           <div class="col-12 px-1">
-                              <a href="#" class="elevatezoom-gallery"
-                                 data-image="/assets/sharp/<%= product.images[3] %>"
-                                 data-zoom-image="/assets/sharp/<%= product.images[3] %>">
-                                 <img src="/assets/sharp/<%= product.images[3] %>" class="border rounded img-fluid"
-                                    width="100" /></a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-12 text-center">
+               <h2 class="font-weight-bold">Wishlist</h2><br>
             </div>
-            <div class="col-xl-8 col-lg-6 col-md-6 col-12 sp_right_product pl-lg-3 pl-2 pr-2">
-               <div class="sp_ri_leftpart">
-                  <div class="sp_product_detail">
-                     <h1 class=""><a href="#">
-                           <%= product.name %>
-                        </a></h1>
-                     <span class="sp_price font-weight-bold">
-                        <%= product.price %>
-                     </span>
-                     <div class="text-secondary sp_tax">Tax included.</div>
-                     <div class="sp_add_info my-3">
-                        <ul>
-                           <li class="availability my-2">
-                              <span class="font-weight-bolder tags-title">
-                                 <%= product.quantity %>
-                              </span>
-                              <span class="p_quantity"></span>
-                              <span>in stock</span>
-                           </li>
-                        </ul>
-                     </div>
-                     <div class="sp_text">
-                        <ul>
-                           <li class="my-2" style="color: #505050;"> </li>
-                           <li class="my-2">
-                              <%= product.description %>
-                           </li>
-                        </ul>
-                     </div>
-                     <div class="sp_rating">
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                     </div>
-                     <div class="sp_color my-4">
-                        <ul>
-                        </ul>
-                     </div>
-
-                     <div class="sp_about my-3">
-                        <span class="sp_comn1"><a href="#" class="font-weight-bolder" data-toggle="modal"
-                              data-target="#shippingModal"><i class="fas fa-box-open"></i>shipping</a></span>
-                        <span class="sp_comn2"><a href="#" class="font-weight-bolder" data-toggle="modal"
-                              data-target="#question_Modal"><i class="far fa-envelope"></i>ask about this
-                              product</a></span>
-                     </div>
-                     <div class="button-container">
-                        <button type="button" id="wishlistButton" class="btn btn-primary primary" onclick="addTowishlist('<%= product.id %>')">Add To Wishlist</button>
-                        <button type="button" class="btn btn-primary primary" onclick="addToCart('<%= product._id %>')">Add to Cart</button>
-                    </div>
-                     <% if (product.quantity <= 0) { %>
-                        <p style="color: red; font-size: 16px; font-weight: bold;">Out of Stock</p>
-                    <% } %>
-                     <div class="form-check sp_check my-3">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">I agree with the terms and conditions
-                        </label>
-                     </div>
-                     <div class="sp_collapse_block my-4">
-                        <div class="accordion" id="collapse_block">
-                           <div class="card">
-                              <div class="card-header" id="heading_One">
-                                 <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left tags-title" type="button"
-                                       data-toggle="collapse" data-target="#collapse_One" aria-expanded="true"
-                                       aria-controls="collapse_One">
-                                       DESCRIPTION<span class="float-right"><i class="fas fa-angle-down"></i></span>
-                                    </button>
-                                 </h2>
-                              </div>
-                              <div id="collapse_One" class="collapse show" aria-labelledby="heading_One"
-                                 data-parent="#collapse_block">
-                                 <div class="card-body">
-                                    <p class="mb-2">Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                       single-origin coffee nulla assumenda shoreditch et. </p>
-                                    <p class="mb-2"> Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                       nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.</p>
-                                    <p class="mb-2"> Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-                                       synth nesciunt you probably haven't heard of them accusamus labore sustainable
-                                       VHS.</p>
-                                 </div>
-                              </div>
+         </div>
+         <div class="row">
+            <% if(wishlistData && wishlistData.product && wishlistData.product.length> 0){ %>
+               <% for(let i=0; i < wishlistData.product.length; i++ ) { %>
+                  <div class="col-md-6 mb-3">
+                     <div class="card">
+                        <div class="row no-gutters">
+                           <div class="col-md-4">
+                              <img src="/assets/sharp/<%= wishlistData.product[i].productId.images[1] %>"
+                                 class="card-img" alt="product">
                            </div>
-                           <div class="card">
-                              <div class="card-header" id="heading_Two">
-                                 <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                       data-toggle="collapse" data-target="#collapse_Two" aria-expanded="false"
-                                       aria-controls="collapse_Two">
-                                       ADDITIONAL INFORMATION<span class="float-right"><i
-                                             class="fas fa-angle-down"></i></span>
-                                    </button>
-                                 </h2>
-                              </div>
-                              <div id="collapse_Two" class="collapse" aria-labelledby="heading_Two"
-                                 data-parent="#collapse_block">
-                                 <div class="card-body">
-                                    <table>
-                                       <tbody>
-                                          <tr>
-                                             <td class="pr-5">color:</td>
-                                             <td>pink</td>
-                                          </tr>
-                                          <tr>
-                                             <td>size:</td>
-                                             <td>large</td>
-                                          </tr>
-                                          <tr>
-                                             <td>material:</td>
-                                             <td>faberics</td>
-                                          </tr>
-                                       </tbody>
-                                    </table>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="card">
-                              <div class="card-header" id="heading_Three">
-                                 <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left collapsed " type="button"
-                                       data-toggle="collapse" data-target="#collapse_Three" aria-expanded="false"
-                                       aria-controls="collapse_Three">
-                                       REVIEW<span class="float-right"><i class="fas fa-angle-down"></i></span>
-                                    </button>
-                                 </h2>
-                              </div>
-                              <div id="collapse_Three" class="collapse" aria-labelledby="heading_Three"
-                                 data-parent="#collapse_block">
-                                 <div class="card-body">
-                                    <form>
-                                       <div class="">
-                                          <div class="col-12 sp_form pl-0">
-                                             <label class="font-weight-bolder">name:</label>
-                                             <input type="text" class="form-control" placeholder="First name">
-                                          </div>
-                                          <div class="col-12 sp_form pl-0">
-                                             <label class="font-weight-bolder">email:</label>
-                                             <input type="email" class="form-control" placeholder="Enter Your Mail">
-                                          </div>
-                                          <div class="col-12 sp_form pl-0">
-                                             <label class="font-weight-bolder">title:</label>
-                                             <input type="text" class="form-control" placeholder="Review Title">
-                                          </div>
-                                          <div class="col-12 sp_form pl-0">
-                                             <label class="font-weight-bolder">review:</label>
-                                             <textarea class="form-control sp_text_area"
-                                                id="exampleFormControlTextarea1" rows="3"
-                                                placeholder="Your Review"></textarea>
-                                          </div>
-                                          <div class="col-12 sp_form pl-0">
-                                             <button type="submit" class="btn btn-primary font-weight-bolder">submit
-                                                review</button>
-                                          </div>
-                                       </div>
-                                    </form>
+                           <div class="col-md-8">
+                              <div class="card-body"><br>
+                                 <h5 class="card-title"><a
+                                       href="/single-product?id=<%= wishlistData.product[i].productId._id %>">
+                                       <%= wishlistData.product[i].productId.name %>
+                                    </a></h5>
+                                 <p class="card-text">Price: <%= wishlistData.product[i].productId.price %>
+                                 </p>
+                                 <p class="card-text">Availability: <%= wishlistData.product[i].productId.quantity %> in
+                                       stock</p>
+                                 <div class="wishlist-buttons">
+                                    <button class="btn btn-danger remove-from-wishlist"
+                                       onclick="removeWishlist('<%=wishlistData.product[i].productId._id %>')">Remove</button>
+                                    <button class="btn btn-primary add-to-cart"
+                                       data-product-id="<%= wishlistData.product[i].productId._id %>">Add to
+                                       Cart</button>
                                  </div>
                               </div>
                            </div>
                         </div>
                      </div>
                   </div>
-               </div>
-            </div>
+                  <% } %>
+                     <% } %>
          </div>
       </div>
-
-
-      <!-- single product img and detail -->
-      <!-- related product -->
-      <div class="container custom_container t_pro_container fadeInUp">
-         <div class="row">
-            <div class="col-12">
-               <div class="title_outer">
-                  <h5 class="font-weight-bolder mb-4 d-inline-block">related products</h5>
-               </div>
-               <!-- title_outer -->
-            </div>
-            <!-- col-12 -->
-         </div>
-         <!-- row -->
-         <div class="row">
-            <div id="related_product_carousel" class="srelated_product_carousel owl-carousel owl-theme pro_thumb">
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_1.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_1"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_2.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_2"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">Set of 3 Good Luck Plants</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_5.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_5"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_6.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_6"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">2 Layer Bamboo Plant With FNP Sleeve</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_9.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_9"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_10.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_10"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">amboo Plant Live Indoor Yellow Plastic Pot</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_27.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_27"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_28.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_28"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">Ferns 'N' Petals 2 Layer Bamboo Plant </a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_17.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_17"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_18.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_18"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">VishNature Two Layer Lucky Bamboo Plant</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_21.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_21"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_22.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_22"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder"> Bougainvillea FLOWER</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-            </div>
-            <!-- product_carousel2 -->
-         </div>
-      </div>
-      <!-- related product end -->
-      <!-- custom product -->
-      <div class="container custom_container t_pro_container">
-         <div class="row">
-            <div class="col-12">
-               <div class="title_outer">
-                  <h5 class="font-weight-bolder mb-4 d-inline-block">custom products</h5>
-               </div>
-               <!-- title_outer -->
-            </div>
-            <!-- col-12 -->
-         </div>
-         <!-- row -->
-         <div class="row">
-            <div id="custom_product_carousel" class="owl-carousel owl-theme pro_thumb">
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_21.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_21"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_22.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_22"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">Set of 3 Good Luck Plants</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_5.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_5"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_1.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_1"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">2 Layer Bamboo Plant With FNP Sleeve</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_5.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_5"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_16.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_16"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">amboo Plant Live Indoor Yellow Plastic Pot</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_1.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_1"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_6.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_6"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">VishNature Two Layer Lucky Bamboo Plant</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_22.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_22"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_21.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_21"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder"> Bamboo Plant For Happy Birthday</a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                              <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-               <div class="item">
-                  <div class="col-12">
-                     <div class="product_thumb bg-white rounded">
-                        <div class="pro_image">
-                           <a href="single-product.html"><img src="assets/img/product/product_9.jpg"
-                                 class="fst-image mx-auto d-block img-fluid" alt="product_9"></a>
-                           <a href="single-product.html"><img src="assets/img/product/product_11.jpg"
-                                 class="second-img mx-auto d-block img-fluid" alt="product_11"></a>
-                        </div>
-                        <div class="text-center">
-                           <div class="button-group">
-                              <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                              <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
-                              <a href="#" class="symbol pro_compare" data-toggle="modal"
-                                 data-target="#compare_model "></a>
-                           </div>
-
-                           <div class="main_text">
-                              <h2 class="text-center pro-heading my-2"><a href="single-product.html"
-                                    class="font-weight-bolder">Ferns 'N' Petals 2 Layer Bamboo Plant </a></h2>
-                              <div class="star">
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                 <i class="fa fa-star" aria-hidden="true"></i>
-                              </div>
-                              <span class="text-center prices"><span class="font-weight-bolder price">$69.00 </span>
-                                 <del class="text-muted">$100.00</del></span>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- item -->
-            </div>
-            <!-- product_carousel2 -->
-         </div>
-      </div>
+      <!-- container custom_container -->
    </div>
-   <!-- single_product_page -->
-   <!-- custom product end -->
+   <!-- portfolio_2_page -->
+   <!-- wishlist page end -->
    <!-- footer -->
    <div class="footer animate__animated animate__fadeInUp">
       <div class="first_footer">
@@ -1490,9 +826,9 @@
                      <div class="snd_col">
                         <div class="footer_title">
                            <h5 class="text-uppercase">payment<button class="toggle collapsed" data-toggle="collapse"
-                                 data-target="#fproduct"></button></h5>
+                                 data-target="#payment"></button></h5>
                         </div>
-                        <div class="categorie collapse " id="fproduct">
+                        <div class="categorie collapse " id="payment">
                            <ul class="foo_pay">
                               <li>
                                  <a href="#"><i class="fab fa-cc-mastercard"></i></a>
@@ -1706,7 +1042,7 @@
       <div class="fifth_footer">
          <div class="container ">
             <div class="">
-               <div class="text-center demo_link d-block">2021 @ All rights reserved Powered by <a href="#">demo.com</a>
+               <div class="text-center demo_link d-block">2020 @ All rights reserved Powered by <a href="#">demo.com</a>
                </div>
                <div class="footer_bottom text-center">
                   <div class="d-flex justify-content-center">
@@ -1754,8 +1090,6 @@
    <script src="assets/js/bootstrap.min.js"></script>
    <!-- popper.min -->
    <script src="assets/js/popper.min.js"></script>
-   <!-- jquery.magnific-popup -->
-   <script src="assets/js/jquery.magnific-popup.js"></script>
    <!-- wow.js - v1.2.1 -->
    <script src="assets/js/wow.min.js"></script>
    <!-- Font Awesome Free 5.15.1 -->
@@ -1763,291 +1097,65 @@
    <!-- custom js -->
    <script src="assets/js/custom.js"></script>
 
-
-
-   <script src="assets/js/jquery.magnific-popup.js"></script>
-   <script src="assets/js/all.min.js"></script>
-   <script src="assets/js/jquery.elevatezoom.js"></script>
-   <script src="assets/js/slick.js"></script>
    <script>
-
-
-
-      //gallery  sm-product
+      //wishlist
       $(document).ready(function () {
-         $("#gallery_02").owlCarousel({
-            itemsCustom: [
-               [0, 3],
-               [375, 2],
-               [600, 5],
-               [768, 5],
-               [1199, 4],
-               [1599, 5]
-            ],
-            autoPlay: 4000,
-            loop: true,
-            navigationText: ['<i class="fas fa-long-arrow-alt-left"></i>', '<i class="fas fa-long-arrow-alt-right"></i>'],
-            navigation: false,
-            pagination: false
-         });
-      });
-
-      if (jQuery(window).width() >= 992) {
-         $(document).ready(function () {
-            $("#zoom_03").elevateZoom({
-               gallery: 'gallery_02',
-               cursor: 'pointer',
-               easing: true,
-               galleryActiveClass: 'active',
-               imageCrossfade: true,
-               loadingIcon: 'https://www.elevateweb.co.uk/spinner.gif'
+         $(".wishlist-p-dlt").click(function () {
+            $(this).fadeOut("slow", function () {
+               // After animation completed:
+               $(this).parent().remove();
             });
-            //pass the images to Fancybox
-            $("#zoom_03").bind("click", function (e) {
-               var ez = $('#zoom_03').data('elevateZoom');
-               $.fancybox(ez.getGalleryList());
-               return false;
+            $(this).fadeOut("slow", function () {
+               // After animation completed:
+               $(this).remove();
             });
          });
-      };
-      if (jQuery(window).width() <= 991) {
-         $(document).ready(function () {
-            $('#gallery_02 img').click(function () {
-               var src = $(this).attr('src');
-               ($(this).closest(".sp_pro_container .page-content").find('.js-product-cover').attr('src', src));
-            });
-         });
-      };
-
-
-
-
-      //getTimeRemaining	
-      function getTimeRemaining(endtime) {
-         var t = Date.parse(endtime) - Date.now();
-         var seconds = Math.floor((t / 1000) % 60);
-         var minutes = Math.floor((t / 1000 / 60) % 60);
-         var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-         var days = Math.floor(t / (1000 * 60 * 60 * 24));
-         return {
-            'total': t,
-            'days': days,
-            'hours': hours,
-            'minutes': minutes,
-            'seconds': seconds
-         };
-      }
-
-      function initializeClock(id, endtime) {
-         var clock = document.getElementById(id);
-         var daysSpan = clock.querySelector('.days');
-         var hoursSpan = clock.querySelector('.hours');
-         var minutesSpan = clock.querySelector('.minutes');
-         var secondsSpan = clock.querySelector('.seconds');
-
-         function updateClock() {
-            var t = getTimeRemaining(endtime);
-
-            if (t.total <= 0) {
-               document.getElementById("clockdiv").className = "hidden-div";
-               document.getElementById("timeIsNow").className = "visible-div";
-               clearInterval(timeinterval);
-               return true;
-            }
-
-            daysSpan.innerHTML = t.days;
-            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-         }
-
-         updateClock();
-         var timeinterval = setInterval(updateClock, 1000);
-      }
-
-
-      var deadline = '2022-12-14T20:14:00+02:00';
-
-      initializeClock('clockdiv', deadline);
-
-
-
-
-      window.onload = function () {
-         // load thumbnails
-         photo = document.querySelectorAll('.photo-item');
-         photoLength = photo.length;
-         for (i = 0; i < photoLength; i++) {
-            photoW = photo[i].naturalWidth;
-            photoH = photo[i].naturalHeight;
-            if (photoW >= photoH) {
-               photo[i].style.height = '100px';
-            }
-            else {
-               photo[i].style.width = '100px';
-            }
-         }
-         conentW = photoLength * 115;
-         document.getElementById('photo-container').style.width = conentW + '';
-
-         // load first photo
-         firstPhoto = document.querySelectorAll('.photo-item');
-         firstPhoto = firstPhoto[0];
-         firstPhotoUrl = firstPhoto.src;
-         firstPhotoAlt = firstPhoto.alt;
-         document.getElementById('photo-display').innerHTML = '<a href="' + firstPhotoUrl + '" id="selected-photo"><img src="' + firstPhotoUrl + '" id="selected-photo" alt=""></a>';
-      }
-
-
-      marginL = 0;
-      function leftRight(obj) {
-         spaceLeft = document.getElementById('photo-container').style.marginLeft;
-         spaceLeft = spaceLeft.replace('px', null);
-         spaceLeft = parseInt(spaceLeft);
-         step = 300;
-         totalLength = document.querySelectorAll('.photo-item').length;
-         totalLength *= -115;
-         objId = obj.id;
-         if (objId == 'left') {
-            if (spaceLeft >= -step) {
-               marginL = 0;
-            }
-            else {
-               marginL += step;
-            }
-         }
-         if (objId == 'right') {
-            if (spaceLeft <= totalLength + 500 + step) {
-               marginL = totalLength + 500;
-            }
-            else {
-               marginL -= step;
-            }
-         }
-         document.getElementById('photo-container').style.marginLeft = marginL + 'px';
-      }
-      function viewPhoto(obj) {
-         objUrl = obj.src;
-         objAlt = obj.alt;
-         document.getElementById('photo-display').innerHTML = '<a href="' + objUrl + '" id="selected-photo"><img src="' + objUrl + '" id="selected-photo" alt=""></a>';
-      }
-
+      });	
    </script>
-
+   <!-- remove wishlist -->
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <!-- add to cart -->
    <script>
-   async function addToCart(id) {
-      console.log('adding product with ID:', id);
-      try {
-        const response = await fetch("/addTo-cart", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            product: id,
-          }),
-        });
-        const data = await response.json();
-        if (data.success) {
-          if (data.message === "Out of Stock") {
-            Swal.fire({
-              title: "Out of Stock",
-              text: "This product is currently out of stock.",
-              icon: "warning",
-              confirmButtonColor: "#d33",
-            });
-          } else {
-            Swal.fire({
-              title: "Added to Cart",
-              text: "You've successfully added this item to your cart.",
-              icon: "success",
-              showCancelButton: true,
-              confirmButtonColor: "#4CAF50",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Show Cart!"
-            }).then((result) => {
-              if (result.isConfirmed) {
-                window.location.href = '/cart'
-              }
-            });
-          }
-        } else if (data.stock === true) {
-          Swal.fire({
-            title: "Out of Stock",
-            text: "This product is currently out of stock.",
-            icon: "warning",
-            confirmButtonColor: "#d33",
-          });
-        } else {
-          Swal.fire({
-            title: "Already in Cart",
-            text: "This product is already in cart",
-            icon: "info",
-            confirmButtonColor: "#4CAF50",
-          });
-        }
-      } catch (error) {
-        console.log('An error occurred:', error);
-        Swal.fire({
-          title: "Error",
-          text: "An error occurred while adding the item to your cart.",
-          icon: "error",
-          confirmButtonColor: "#d33",
-        });
-      }
-   }
-   </script>
-   <!-- for wishlist -->
-   <script>
-      async function addTowishlist(id) {
-         console.log('wishlist product id:', id);
+      async function removeWishlist(id) {
+         console.log('remove wishlist from db:', id);
          try {
-           const response = await fetch("/add-wishlist", {
-            method: "POST",
-            headers: {
-               'Content-type': 'application/json',
-            },
-            body: JSON.stringify({
-               product: id,
-            }),
-           });
-           if (response.ok) {
-             const data = await response.json();
-               if (data.remove === true ) {
-                 Swal.fire({
-                  title: "Removed from Wishlist",
-                  text: "This item has been removed from your wishlist.",
-                  icon: "success",
-                 });
-                 document.getElementById('wishlistButton').innerText = "Add To Wishlist";
-               } else if (data.create === true) {
-                 Swal.fire({
-                  title: "Added to Wishlist",
-                  text: "You've successfully added this item to your wishlist.",
-                  icon: "success",
-                  showCancelButton: true,
-                  confirmButtonColor: "#4CAF50",
-                  cancelButtonColor: "#d33",
-                  confirmButtonText: "Show wishlist!"
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    window.location.href = '/load-wishlist'
+            const result = await Swal.fire({
+               title: "Are you sure?",
+               text: "You won't be able to revert this!",
+               icon: "warning",
+               showCancelButton: true,
+               confirmButtonColor: "#3085d6",
+               cancelButtonColor: "#d33",
+               confirmButtonText: "Yes, delete it!"
+            });
+            if (result.isConfirmed) {
+               const response = await fetch("/remove-wishlist", {
+                  method: "POST",
+                  headers: {
+                     'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                     product: id,
+                  }),
+               });
+               if (response.ok) {
+                  const data = await response.json();
+                  if (data.remove === true) {
+                     Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                     });
                   }
-                });
-                document.getElementById('wishlistButton').innerText = "Remove from Wishlist";
-             }
-           } 
+               }
+            }
          } catch (error) {
-            console.log('wishlist error:', error);
+            console.log('remove wishlist error:', error);
          }
       }
-    </script>
+   </script>
 
 </body>
 
-<!-- Mirrored from dostguru.com/HTML/plantly/single-product.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:53 GMT -->
+<!-- Mirrored from dostguru.com/HTML/plantly/wishlist.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->
 
 </html>
