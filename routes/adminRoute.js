@@ -1,10 +1,10 @@
 const express = require("express");
-const session = require("express-session");
-
 const adminController = require("../controllers/adminController");
 const categoryController = require("../controllers/categoryController");
 const productController = require("../controllers/productController");
 const bannerController = require("../controllers/bannerController");
+const couponController = require("../controllers/couponController");
+
 const admin = express();
 const path = require("path");
 const adminAuth = require("../middelware/adminAuth");
@@ -64,4 +64,7 @@ admin.post("/add-banner", adminAuth.isLogin, upload.array('Image',1), bannerCont
 admin.get("/edit-banner", adminAuth.isLogin, bannerController.loadEditBanner);
 admin.post("/edit-banner", upload.array("image",1), bannerController.editBanner);
 admin.patch("/list-banner/:id", adminAuth.isLogin, bannerController.blockBanner);
+//coupen
+admin.get("/coupon", adminAuth.isLogin,couponController.loadCoupon)
+admin.get('/load-add-coupons', adminAuth.isLogin, couponController.loadAddCoupon);
 module.exports = admin;
