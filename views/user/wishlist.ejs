@@ -727,13 +727,13 @@
             </div>
          </div>
       </div>
-      <div class="container">
+      <div class="container" id="wishlist-load">
          <div class="row justify-content-center">
             <div class="col-12 text-center">
                <h2 class="font-weight-bold">Wishlist</h2><br>
             </div>
          </div>
-         <div class="row">
+         <div class="row" >
             <% if(wishlistData && wishlistData.product && wishlistData.product.length> 0){ %>
                <% for(let i=0; i < wishlistData.product.length; i++ ) { %>
                   <div class="col-md-6 mb-3">
@@ -756,9 +756,7 @@
                                  <div class="wishlist-buttons">
                                     <button class="btn btn-danger remove-from-wishlist"
                                        onclick="removeWishlist('<%=wishlistData.product[i].productId._id %>')">Remove</button>
-                                    <button class="btn btn-primary add-to-cart"
-                                       data-product-id="<%= wishlistData.product[i].productId._id %>">Add to
-                                       Cart</button>
+                                    <button class="btn btn-primary add-to-cart" onclick="addToCart('<%=wishlistData.product[i].productId._id %>')">Add toCart</button>
                                  </div>
                               </div>
                            </div>
@@ -766,7 +764,7 @@
                      </div>
                   </div>
                   <% } %>
-                     <% } %>
+            <% } %>
          </div>
       </div>
       <!-- container custom_container -->
@@ -1145,6 +1143,8 @@
                         text: "Your file has been deleted.",
                         icon: "success"
                      });
+                     $("#wishlist-load").load("/load-wishlist #wishlist-load");
+   
                   }
                }
             }

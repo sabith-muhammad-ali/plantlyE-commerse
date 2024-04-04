@@ -943,6 +943,68 @@ $('#ab_team').owlCarousel({
   }
 })
 
+// ...................................................................... add to cart ......................................................................... 
+async function addToCart(id) {
+  console.log('adding product with ID:', id);
+  try {
+    const response = await fetch("/addTo-cart", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        product: id,
+      }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      if (data.message === "Out of Stock") {
+        Swal.fire({
+          title: "Out of Stock",
+          text: "This product is currently out of stock.",
+          icon: "warning",
+          confirmButtonColor: "#d33",
+        });
+      } else {
+        Swal.fire({
+          title: "Added to Cart",
+          text: "You've successfully added this item to your cart.",
+          icon: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#4CAF50",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Show Cart!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '/cart'
+          }
+        });
+      }
+    } else if (data.stock === true) {
+      Swal.fire({
+        title: "Out of Stock",
+        text: "This product is currently out of stock.",
+        icon: "warning",
+        confirmButtonColor: "#d33",
+      });
+    } else {
+      Swal.fire({
+        title: "Already in Cart",
+        text: "This product is already in cart",
+        icon: "info",
+        confirmButtonColor: "#4CAF50",
+      });
+    }
+  } catch (error) {
+    console.log('An error occurred:', error);
+    Swal.fire({
+      title: "Error",
+      text: "An error occurred while adding the item to your cart.",
+      icon: "error",
+      confirmButtonColor: "#d33",
+    });
+  }
+}
 //........................................................................ANIMATION.........................................................................
 
 
