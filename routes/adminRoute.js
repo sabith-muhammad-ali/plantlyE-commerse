@@ -32,10 +32,10 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
-
+//Dashboard
 admin.get("/", adminAuth.isLogout, adminController.loadLogin);
 admin.post("/", adminAuth.isLogout, adminController.verifyLogin);
-admin.get("/admindashbord", adminAuth.isLogin, adminController.loadDashbord);
+admin.get("/admindashbord", adminAuth.isLogin, adminController.loadDashboard);
 admin.get("/logout", adminController.logout);
 //userUpdate
 admin.get("/userprofile", adminAuth.isLogin, adminController.userManagement);
@@ -65,6 +65,9 @@ admin.get("/edit-banner", adminAuth.isLogin, bannerController.loadEditBanner);
 admin.post("/edit-banner", upload.array("image",1), bannerController.editBanner);
 admin.patch("/list-banner/:id", adminAuth.isLogin, bannerController.blockBanner);
 //coupen
-admin.get("/coupon", adminAuth.isLogin,couponController.loadCoupon)
-admin.get('/load-add-coupons', adminAuth.isLogin, couponController.loadAddCoupon);
+admin.get("/coupon", adminAuth.isLogin,couponController.loadCoupon);
+admin.get("/load-add-coupons", adminAuth.isLogin, couponController.loadAddCoupon);
+admin.post("/load-add-coupons", adminAuth.isLogin, couponController.addCoupon);
+admin.get("/edit-coupon", adminAuth.isLogin, couponController.loadEditCoupon);
+admin.post("/edit-coupon", adminAuth.isLogin, couponController.editCoupon)
 module.exports = admin;

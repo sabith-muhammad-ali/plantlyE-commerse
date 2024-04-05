@@ -39,7 +39,7 @@ const verifyLogin = async (req, res) => {
   }
 };
 
-const loadDashbord = async (req, res) => {
+const loadDashboard = async (req, res) => {
   try {
     res.render("adminDashbord");
   } catch (error) {
@@ -95,7 +95,7 @@ const ordersLoad = async (req, res) => {
 module.exports = {
   loadLogin,
   verifyLogin,
-  loadDashbord,
+  loadDashboard,
   userManagement,
   blockUser,
   logout,
