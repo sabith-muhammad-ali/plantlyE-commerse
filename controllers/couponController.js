@@ -48,22 +48,38 @@ const addCoupon = async (req, res) => {
 };
 
 const loadEditCoupon = async (req, res) => {
-    try {
-        const id = req.query.couponId;
-        const coupon = await couponModel.findById(id);
-        res.render("edit-coupon", { coupon });
-    } catch (error) {
-        console.log(error);
-    }
-}
+  try {
+    const id = req.query.couponId;
+    const coupon = await couponModel.findById(id);
+    res.render("edit-coupon", { coupon });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-const editCoupon = async (req,res) => {
-    try {
-        
-    } catch (error) {
-        console.log(error)
+const editCoupon = async (req, res) => {
+  try {
+    const couponId = req.body.couponId;
+    const { name, discountAmount, criteriaAmount, expiryDate } = req.body;
+    const update = await couponModel.findByIdAndUpdate(
+      couponId,
+      {
+        $set: {
+          name,
+          discountAmount,
+          criteriaAmount,
+          expiryDate,
+        },
+      },
+      { new: true }
+    );
+    if (update) {
+        res.redirect("/admin/coupon")
     }
-}
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   loadCoupon,
