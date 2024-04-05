@@ -22,7 +22,7 @@ const loadAddCoupon = async (req, res) => {
 const addCoupon = async (req, res) => {
   try {
     const { name, discountAmount, criteriaAmount, expiryDate } = req.body;
-
+    const regex = new RegExp("^" + name + "$", "i");
     // Generate a random coupon code
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let couponCode = "";
@@ -32,16 +32,23 @@ const addCoupon = async (req, res) => {
         Math.floor(Math.random() * characters.length)
       );
     }
-
-    const newCoupon = new couponModel({
-      name,
-      discountAmount,
-      criteriaAmount,
-      expiryDate,
-      couponCode,
-    });
-    await newCoupon.save();
-    res.redirect("/admin/coupon");
+    const existingCoupon = await couponModel.findOne({ name: regex });
+    if (existingCoupon) {
+      return res.json({ exists: true, message: "Coupon already exists" });
+    } else {
+      const newCoupon = new couponModel({
+        name,
+        discountAmount,
+        criteriaAmount,
+        expiryDate,
+        couponCode,
+      });
+      await newCoupon.save();
+      return res.json({
+        success: true,
+        message: "Coupon addedd successfully",
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -74,7 +81,7 @@ const editCoupon = async (req, res) => {
       { new: true }
     );
     if (update) {
-        res.redirect("/admin/coupon")
+      res.redirect("/admin/coupon");
     }
   } catch (error) {
     console.log(error);
