@@ -523,11 +523,10 @@
               body: JSON.stringify(formData)
             });
             const responseData = await response.json();
-            console.log('responseData:', responseData);
             if (responseData.success) {
               window.location.href = '/admin/coupon';
             } else if (responseData.exists) {
-              nameError.textContent = responseData.message;
+              // nameError.textContent = responseData.message;
             }
           } catch (error) {
             console.log('error:', error)

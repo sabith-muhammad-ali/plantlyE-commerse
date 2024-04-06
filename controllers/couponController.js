@@ -1,4 +1,3 @@
-const bannerModel = require("../models/bannerModel");
 const cartModel = require("../models/cartModel");
 const couponModel = require("../models/couponModel");
 
@@ -88,10 +87,79 @@ const editCoupon = async (req, res) => {
   }
 };
 
+const removeCoupon = async (req, res) => {
+  try {
+    console.log("looosssss");
+    const couponId = req.body.coupon;
+    console.log("couponId", couponId);
+    await couponModel.deleteOne({ _id: couponId });
+    res.json({ remove: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const redeemCoupon = async (req, res) => {
+  try {
+    const { couponId } = req.body;
+    const userId = req.session.userId;
+    const currentData = new Date();
+
+    const couponData = await couponModel.findOne({
+      _id: couponId,
+      expiryDate: { $gte: currentData },
+      isBlocked: false,
+    });
+
+    const iscouponUsed = couponData.usedUsers.includes(userId);
+
+    if (!iscouponUsed) {
+      const existingCart = await cartModel.findOne({ user: userId });
+      if (existingCart && existingCart.couponDiscount == null) {
+        await couponModel.findOneAndUpdate(
+          { _id: couponId },
+          { $push: { usedUsers: userId } }
+        );
+
+        await cartModel.findOneAndUpdate(
+          { user: userId },
+          { $set: { couponDiscount: couponData._id } }
+        );
+
+        res.json({ coupon: true });
+      } else {
+        res.json({ coupon: "alreadyApplied" });
+      }
+    } else {
+      res.json({ coupon: "alreadyUsed" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const revokeCoupon = async (req, res) => {
+  try {
+    const { couponId } = req.body;
+    const userId = req.session.userId;
+    await cartModel.findOne({ user: userId });
+    await couponModel.findByIdAndUpdate(
+      { _id: couponId },
+      { $pull: { usedUsers: userId } }
+    );
+    res.json({ coupone: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   loadCoupon,
   loadAddCoupon,
   addCoupon,
   loadEditCoupon,
   editCoupon,
+  removeCoupon,
+  redeemCoupon,
+  revokeCoupon,
 };

@@ -7,6 +7,7 @@ const googleauthController = require("../controllers/authController");
 const addressController = require("../controllers/addressController");
 const cartController = require("../controllers/cartController");
 const orderController = require("../controllers/orderController");
+const couponController = require("../controllers/couponController");
 const auth = require("../middelware/userAuth");
 
 user.use(
@@ -64,6 +65,10 @@ user.post("/verify-payment", auth.isLogin, orderController.verifyPayment);//razo
 user.post("/add-wishlist", auth.isLogin, cartController.addToWishlist);
 user.get("/load-wishlist", auth.isLogin, cartController.loadWishlist);
 user.post("/remove-wishlist", auth.isLogin, cartController.removeWishlist);
+//coupen
+user.post("/select-coupon", auth.isLogin, couponController.redeemCoupon);
+user.post("/remove-coupon", auth.isLogin, couponController.revokeCoupon);
+
 
 //gogole
 user.use(passport.initialize());

@@ -69,5 +69,7 @@ admin.get("/coupon", adminAuth.isLogin,couponController.loadCoupon);
 admin.get("/load-add-coupons", adminAuth.isLogin, couponController.loadAddCoupon);
 admin.post("/load-add-coupons", adminAuth.isLogin, couponController.addCoupon);
 admin.get("/edit-coupon", adminAuth.isLogin, couponController.loadEditCoupon);
-admin.post("/edit-coupon", adminAuth.isLogin, couponController.editCoupon)
+admin.post("/edit-coupon", adminAuth.isLogin, couponController.editCoupon);
+admin.post("/delete-coupon", adminAuth.isLogin, couponController.removeCoupon);
+
 module.exports = admin;

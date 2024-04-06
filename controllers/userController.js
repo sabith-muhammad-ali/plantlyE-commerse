@@ -6,6 +6,7 @@ const productModel = require("../models/productModel");
 const crypto = require("crypto");
 const Cart = require("../models/cartModel");
 const bannerModel = require("../models/bannerModel");
+const couponModel = require("../models/couponModel");
 
 // tempHomePage
 const homePage = async (req, res) => {

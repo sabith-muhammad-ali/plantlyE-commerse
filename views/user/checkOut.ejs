@@ -45,6 +45,51 @@
          border: 1px solid #ced4da;
          border-radius: 0.25rem;
       }
+
+      .coupon-container {
+         border: 1px solid #ccc;
+         padding: 20px;
+         margin-bottom: 20px;
+         background-image: url('/assets/coupons/coupon2.jpeg');
+         background-size: cover;
+         background-position: center;
+      }
+
+      .coupon-details {
+         margin-bottom: 10px;
+      }
+
+      .coupon-details {
+         font-family: Arial, sans-serif;
+      }
+
+      .coupon-discount,
+      .coupon-code,
+      .coupon-criteria,
+      .coupon-expiry {
+         font-size: 14px;
+         color: #666;
+         margin-bottom: 3px;
+      }
+
+      .coupon-expiry {
+         font-style: italic;
+      }
+
+      .select-coupon-btn {
+         /* background-color: #007bff; */
+         color: #fff;
+         border: none;
+         padding: 10px 20px;
+         border-radius: 5px;
+         cursor: pointer;
+         transition: background-color 0.3s;
+      }
+
+      .select-coupon-btn,
+      .btn-danger {
+         margin-top: 10px;
+      }
    </style>
 
 </head>
@@ -851,43 +896,60 @@
                         </div>
                      </div>
                   </div>
-                  <!-- card -->
-                  <!-- <div class="card rounded mb-2">
+                  <!-- card  Coupons-->
+                  <div class="card rounded mb-2">
                      <div class="card-header bg-white" id="checkout_shipping">
                         <h2 class="mb-0">
                            <button class="btn btn-link btn-block text-left collapsed text-body p-0 font-weight-bolder"
                               type="button" data-toggle="collapse" data-target="#check_ship" aria-expanded="false"
                               aria-controls="check_ship">
-                              Shipping Method<span class="float-right"><i class="fas fa-angle-down"></i></span>
+                              Explore Exclusive Deals and Coupons Just for You!<span class="float-right"><i
+                                    class="fas fa-angle-down"></i></span>
                            </button>
                         </h2>
                      </div>
-                     <div id="check_ship" class="collapse" aria-labelledby="checkout_shipping"
-                        data-parent="#check_out_toggle">
+                     <div id="check_ship" class="collapse" aria-labelledby="checkout_shipping" data-parent="#check_out_toggle">
                         <div class="card-body">
-                           <div id="ship_check" class="page-content">
-                              <form>
-                                 <div class="form-group text-left">
-                                    <label class="font-weight-bolder">Shipping Method</label><br>
-                                    <span class="form-check d-inline-block">
-                                       <input class="form-check-input" type="radio" name="gridRadios" id="free_ship"
-                                          checked>
-                                       <label class="form-check-label" for="free_ship">
-                                          Free shipping
-                                       </label>
-                                    </span>
-                                    <span class="form-check d-inline-block ml-2">
-                                       <input class="form-check-input" type="radio" name="gridRadios" id="with_ship">
-                                       <label class="form-check-label" for="with_ship">
-                                          shipping
-                                       </label>
-                                    </span>
-                                 </div>
-                              </form>
-                           </div>
+                            <div id="ship_check" class="page-content" id="coupon">
+                                <% if (couponData && couponData.length > 0) { %>
+                                    <% for (let i=0; i < couponData.length; i++) { %>
+                                        <div class="coupon-container">
+                                            <div class="coupon-details">
+                                                <h3 class="coupon-name">
+                                                    <%= couponData[i].name %>
+                                                </h3>
+                                                <p class="coupon-code">Coupon Code: <%= couponData[i].couponCode %></p>
+                                                <p class="coupon-discount">Discount: <%= couponData[i].discountAmount %></p>
+                                                <p class="coupon-criteria">Minimum Spend: <%= couponData[i].criteriaAmount %></p>
+                                                <p class="coupon-expiry">Expires: <%= couponData[i].expiryDate.toDateString() %></p>
+                                                <% if (subtotal > couponData[i].criteriaAmount) { %>
+                                                    <% console.log("coupon ID:", couponData[i]._id, 'Applied Coupon ID:' ,
+                                                        cartData.couponDiscount ? cartData.couponDiscount.id : "no coupon Applied"
+                                                    ) %>
+                                                    <% if (couponData[i].discountAmount && couponData[i]._id.toString() !== (cartData.couponDiscount ? cartData.couponDiscount._id.toString() : null)) { %>
+                                                        <button type="button" class="select-coupon-btn btn-primary"
+                                                            data-coupon-id="<%= couponData[i]._id %>"
+                                                            onclick="selectCoupon(this.getAttribute('data-coupon-id'))">Select Coupon
+                                                        </button>
+                                                    <% } else if (cartData.couponDiscount && couponData[i]._id.toString() === (cartData.couponDiscount._id ? cartData.couponDiscount._id.toString() : null)) { %>
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-coupon-id="<%= couponData[i]._id %>"
+                                                            onclick="removeCoupon(this.getAttribute('data-coupon-id'))">Remove
+                                                        </button>
+                                                    <% } %>
+                                                <% } else { %>
+                                                    <p style="color: #f70308;">not apply</p>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                <% } else { %>
+                                    <p style="color: #6c757d;" >No coupons available at the moment. Check back later for exciting offers!</p>
+                                <% } %>
+                            </div>
                         </div>
-                     </div>
-                  </div> -->
+                    </div>
+                  </div>
                   <!-- card -->
                   <div class="card rounded mb-2">
                      <div class="card-header bg-white" id="checkout_payment">
@@ -947,7 +1009,7 @@
                </div>
             </div>
 
-            <% if (cartData) { %>
+            <% if (cartData,couponData) { %>
                <div class="col-lg-4 col-12">
                   <div class="border rounded bg-white final_payment">
                      <div class="card-body  border-bottom">
@@ -958,6 +1020,10 @@
                         <div>
                            <span class="font-weight-bolder">subtotal</span>
                            <span class="float-right font-weight-bolder">₹<%= subtotal %></span>
+                        </div><br>
+                        <div>
+                           <span class="font-weight-bolder">Discount</span>
+                           <span class="float-right font-weight-bolder">₹<%= %></span>
                         </div>
                      </div>
                      <div class="card-body ">
@@ -1330,10 +1396,13 @@
    </script>
 
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>  
+   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
    <script>
+      // palace order
       function selectAddress(btn) {
          var addressButtons = document.querySelectorAll('.select-address-btn');
          addressButtons.forEach(function (addressBtn) {
@@ -1395,7 +1464,7 @@
             })
             .then(data => {
                console.log("sabith");
-               if(data.response === 'razorpay'){
+               if (data.response === 'razorpay') {
                   console.log('reached', data.response);
                   razorpayPayment(data.order)
                } else if (data.response !== 'false') {
@@ -1418,55 +1487,146 @@
                console.log(error);
             })
       }
-      
-     function razorpayPayment(order) {
-      console.log('function called');
-      var options = {
-            "key": 'rzp_test_o7r1ebXkKkik6D', 
-            "amount": order.amount, 
+      // razorPay
+      function razorpayPayment(order) {
+         console.log('function called');
+         var options = {
+            "key": 'rzp_test_o7r1ebXkKkik6D',
+            "amount": order.amount,
             "currency": "INR",
-            "name": "Plantly", 
+            "name": "Plantly",
             "description": "Test Transaction",
             "image": "",
             "order_id": order.id,
-            "handler": function (response){
-               verifyPayment(response,order)
+            "handler": function (response) {
+               verifyPayment(response, order)
             },
-            "prefill": { 
-                "name": "Gaurav Kumar",
-                "email": "gaurav.kumar@example.com", 
-                "contact": "9000090000"  
+            "prefill": {
+               "name": "Gaurav Kumar",
+               "email": "gaurav.kumar@example.com",
+               "contact": "9000090000"
             },
             "notes": {
-                "address": "Razorpay Corporate Office"
+               "address": "Razorpay Corporate Office"
             },
             "theme": {
-                "color": "#3399cc"
+               "color": "#3399cc"
             }
+         }
+         var rzp1 = new Razorpay(options);
+         rzp1.open();
+         function verifyPayment(response, order) {
+            fetch("/verify-payment", {
+               method: "POST",
+               headers: {
+                  'content-type': "application/json;charset=utf-8"
+               },
+               body: JSON.stringify({
+                  response,
+                  order
+               })
+            })
+               .then((res) => res.json())
+               .then((data) => {
+                  if (data.statusChanged) {
+                     window.location.href = '/order-success'
+                  }
+               })
+         }
+
       }
-      var rzp1 = new Razorpay(options);
-      rzp1.open();
-      function verifyPayment(response,order) {
-         fetch("/verify-payment",{
-            method:"POST",
-            headers:{
-               'content-type':"application/json;charset=utf-8"
+   </script>
+   <!-- coupon -->
+   <script>
+      function selectCoupon(couponId) {
+         console.log("Selected coupon ID:", couponId);
+         fetch('/select-coupon', {
+            method: "POST",
+            headers: {
+               'Content-Type': 'application/json'
             },
-            body:JSON.stringify({
-               response,
-               order
+            body: JSON.stringify({
+               couponId
             })
          })
-         .then((res) => res.json())
-         .then((data) => {
-            if(data.statusChanged){
-               window.location.href = '/order-success'
-            }
-         })
-      }
+            .then(response => {
+               if (response.ok) {
+                  return response.json();
+               } else {
+                  throw new Error('Network response was not ok.');
+               }
+            })
+            .then(data => {
+               console.log('Response from backend:', data);
+               if (data.coupon === true) {
+                  // Coupon selected successfully
+                  Swal.fire({
+                     title: "Good job!",
+                     text: "Coupon selected successfully",
+                     icon: "success"
+                  });
+               } else if (data.coupon === "alreadyApplied") {
+                  // Coupon already applied
+                  Swal.fire({
+                     title: "Oops!",
+                     text: "Coupon is already applied",
+                     icon: "info"
+                  });
+               } else if (data.coupon === "alreadyUsed") {
+                  // Coupon already used
+                  Swal.fire({
+                     title: "Oops!!",
+                     text: "coupon is already used!",
+                     icon: "info"
+                  });
+               } else {
+                  console.log('Unknown response from server:', data);
+               }
+            })
+            .catch(error => {
+               console.error('Error during fetch:', error);
 
-   }  
+            });
+      }
    </script>
+   <!-- remove Coupon  -->
+   <script>
+      function removeCoupon(couponId) {
+        console.log("remove CouponId:", couponId);
+        fetch("/remove-coupon", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            couponId
+          })
+        })
+        .then(response => {
+          if (response.ok) {
+            return response.json(); 
+          } else {
+            throw new Error('Failed to remove coupon');
+          }
+        })
+        .then(data => {
+         console.log('resonse for remove coupon:',data)
+          if (data.coupon === true) {
+            Swal.fire({
+            title: "Coupon Removed !",
+            text: "Coupon successfully removed.",
+            icon: "success"
+          });            
+          }
+          setTimeout(() => {
+            $("#coupon").load("/remove-coupon #coupon");
+          }, 1000); // Adjust the delay as needed
+        })
+        .catch(error => {
+          console.error("Error removing coupon:", error);
+        });
+      }
+    </script>
 
 
 

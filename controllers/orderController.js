@@ -1,9 +1,8 @@
-const userModel = require("../models/userModel");
 const addressModel = require("../models/addressModel");
 const orderModel = require("../models/orderModel");
 const productModel = require("../models/productModel");
-const categoryModel = require("../models/categoryModel");
 const cartModel = require("../models/cartModel");
+const couponModel = require("../models/couponModel");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 
@@ -15,18 +14,24 @@ const razorPay = new Razorpay({
 const loadCheckout = async (req, res) => {
   try {
     const userId = req.session.userId;
+    const currentData = new Date()
     const cartData = await cartModel
       .findOne({ user: userId })
-      .populate("items.productId");
+      .populate("items.productId")
+      .populate("couponDiscount");
+      
     const addressData = await addressModel.findOne({
       user: req.session.userId,
     });
+  
     const subtotal = cartData.items.reduce(
       (acc, val) => acc + val.productId.price * val.quantity,
       0
     );
 
-    res.render("user/checkOut", { addressData, cartData, subtotal });
+    const couponData = await couponModel.find({expiryDate:{$gte:currentData}, isBlocked:false })
+
+    res.render("user/checkOut", { addressData, cartData, subtotal, couponData, });
   } catch (error) {
     console.log(error);
   }
