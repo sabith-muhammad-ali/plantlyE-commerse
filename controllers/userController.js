@@ -7,6 +7,8 @@ const crypto = require("crypto");
 const Cart = require("../models/cartModel");
 const bannerModel = require("../models/bannerModel");
 const couponModel = require("../models/couponModel");
+const WalletModel = require('../models/walletModel');
+const categoryModel = require("../models/categoryModel");
 
 // tempHomePage
 const homePage = async (req, res) => {
@@ -170,6 +172,12 @@ const verifyOTP = async (req, res) => {
             await UserOTPVerfication.deleteMany({ userId });
             req.session.userId = userId;
 
+            const wallet = new WalletModel (
+              {userId: userId}
+            )
+
+            await wallet.save();
+
             res.redirect(`/`);
           }
         }
@@ -249,8 +257,20 @@ const loadshop = async (req, res) => {
       product = await productModel.find({}).sort({ name: -1 });
     }
 
+    
+     
+    if(req.query.category ) {
+      let category = req.query.category
+      let product = await productModel.find({categoryId : category})
+       console.log("ssssss",product);
+       const categoryData = await categoryModel.find({})
+       const cart = await Cart.find({}).populate("items.productId");
+       res.render("user/shop", { product, cart, categoryData });
+    }
+
+    const categoryData = await categoryModel.find({})
     const cart = await Cart.find({}).populate("items.productId");
-    res.render("user/shop", { product, cart });
+    res.render("user/shop", { product, cart, categoryData });
   } catch (error) {
     console.log(error);
   }

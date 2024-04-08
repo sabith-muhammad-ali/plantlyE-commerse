@@ -897,7 +897,7 @@
                      </div>
                   </div>
                   <!-- card  Coupons-->
-                  <div class="card rounded mb-2">
+                  <div class="card rounded mb-2" id="coupon">
                      <div class="card-header bg-white" id="checkout_shipping">
                         <h2 class="mb-0">
                            <button class="btn btn-link btn-block text-left collapsed text-body p-0 font-weight-bolder"
@@ -908,9 +908,9 @@
                            </button>
                         </h2>
                      </div>
-                     <div id="check_ship" class="collapse" aria-labelledby="checkout_shipping" data-parent="#check_out_toggle">
-                        <div class="card-body">
-                            <div id="ship_check" class="page-content" id="coupon">
+                     <div id="check_ship" class="collapse" aria-labelledby="checkout_shipping" data-parent="#check_out_toggle" >
+                        <div class="card-body" id="coupon">
+                            <div id="ship_check" class="page-content" >
                                 <% if (couponData && couponData.length > 0) { %>
                                     <% for (let i=0; i < couponData.length; i++) { %>
                                         <div class="coupon-container">
@@ -931,7 +931,7 @@
                                                             data-coupon-id="<%= couponData[i]._id %>"
                                                             onclick="selectCoupon(this.getAttribute('data-coupon-id'))">Select Coupon
                                                         </button>
-                                                    <% } else if (cartData.couponDiscount && couponData[i]._id.toString() === (cartData.couponDiscount._id ? cartData.couponDiscount._id.toString() : null)) { %>
+                                                    <% } else if (cartData.couponDiscount && couponData[i]._id.toString() === (cartData.couponDiscount._id ?  cartData.couponDiscount._id.toString() : null)) { %>
                                                         <button type="button" class="btn btn-danger"
                                                             data-coupon-id="<%= couponData[i]._id %>"
                                                             onclick="removeCoupon(this.getAttribute('data-coupon-id'))">Remove
@@ -941,8 +941,8 @@
                                                     <p style="color: #f70308;">not apply</p>
                                                 <% } %>
                                             </div>
-                                        </div>
-                                    <% } %>
+                                          </div>
+                                       <% } %>                 
                                 <% } else { %>
                                     <p style="color: #6c757d;" >No coupons available at the moment. Check back later for exciting offers!</p>
                                 <% } %>
@@ -982,13 +982,20 @@
                                           Online Payment
                                        </label>
                                     </span>
-                                    <span class="form-check d-inline-block ml-2">
-                                       <input class="form-check-input" type="radio" name="payment" id="pay_by_bank"
-                                          value="wallet">
-                                       <label class="form-check-label" for="pay_by_bank">
-                                          wallet
-                                       </label>
-                                    </span>
+                                       <% console.log("wallet",walletData) %>
+                                       <% if (walletData.amount < subtotal) { %>
+                                          <span class="form-check d-inline-block ml-2">
+                                              <input class="form-check-input" type="radio" name="payment" id="pay_by_bank" value="wallet" disabled>
+                                              <label class="form-check-label" for="pay_by_bank">wallet</label>
+                                          </span>
+                                          <p class=" text text-danger">Wallet Balance: ₹<%= walletData.amount %> (Not enough balance)</p>
+                                      <% } else { %>
+                                          <span class="form-check d-inline-block ml-2">
+                                              <input class="form-check-input" type="radio" name="payment" id="pay_by_bank" value="wallet">
+                                              <label class="form-check-label" for="pay_by_bank">wallet</label>
+                                          </span>
+                                          <p>Wallet Balance: ₹<%= walletData.amount %></p>
+                                      <% } %>%>
                                  </div>
                                  <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="user_pay_check">
@@ -1009,7 +1016,32 @@
                </div>
             </div>
 
-            <% if (cartData,couponData) { %>
+            <% if (cartData && cartData.couponDiscount && cartData.couponDiscount.discountAmount !== null) { %>
+               <div class="col-lg-4 col-12">
+                  <div class="border rounded bg-white final_payment">
+                     <div class="card-body  border-bottom">
+                        <p class="text-muted">
+                           <%= cartData.items.length %> items
+                        </p>
+                        <p class="font-weight-bolderer">show details</p>
+                        <div>
+                           <span class="font-weight-bolder">subtotal</span>
+                           <span class="float-right font-weight-bolder">₹<%= subtotal %></span>
+                        </div><br>
+                        <div>
+                           <span class="font-weight-bolder">Discount (<%= cartData.couponDiscount.name %>)</span>
+                           <span class="float-right font-weight-bolder text-success">₹<%= cartData.couponDiscount.discountAmount %></span>
+                        </div>
+                     </div>
+                     <div class="card-body ">
+                        <div>
+                           <span class="font-weight-bolder">total</span>
+                           <span class="float-right font-weight-bolder" id="subtotal">₹<%= subtotal - cartData.couponDiscount.discountAmount %> </span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            <% } else { %>
                <div class="col-lg-4 col-12">
                   <div class="border rounded bg-white final_payment">
                      <div class="card-body  border-bottom">
@@ -1023,7 +1055,7 @@
                         </div><br>
                         <div>
                            <span class="font-weight-bolder">Discount</span>
-                           <span class="float-right font-weight-bolder">₹<%= %></span>
+                           <span class="float-right font-weight-bolder">₹0</span>
                         </div>
                      </div>
                      <div class="card-body ">
@@ -1031,14 +1063,10 @@
                            <span class="font-weight-bolder">total</span>
                            <span class="float-right font-weight-bolder" id="subtotal">₹<%= subtotal %> </span>
                         </div>
-                        <div>
-                           <!-- <span class="font-weight-bolder">taxes</span>
-                        <span class="float-right font-weight-bolder">$9.00</span> -->
-                        </div>
                      </div>
                   </div>
                </div>
-               <% } %>
+            <% } %>
          </div>
       </div>
    </div>
@@ -1463,13 +1491,12 @@
                return response.json()
             })
             .then(data => {
-               console.log("sabith");
                if (data.response === 'razorpay') {
                   console.log('reached', data.response);
                   razorpayPayment(data.order)
                } else if (data.response !== 'false') {
                   Swal.fire({
-                     title: "Added to Cart",
+                     title: "Order Proceeded Successfully",
                      text: "You've successfully added this item to your order.",
                      icon: "success",
                      showCancelButton: true,
@@ -1478,7 +1505,7 @@
                      confirmButtonText: "Proceed to Payment"
                   }).then((result) => {
                      if (result.isConfirmed) {
-                        window.location.href = '/show-order';
+                        window.location.href = '/order-success'
                      }
                   });
                }
@@ -1538,61 +1565,46 @@
    </script>
    <!-- coupon -->
    <script>
-      function selectCoupon(couponId) {
-         console.log("Selected coupon ID:", couponId);
-         fetch('/select-coupon', {
-            method: "POST",
-            headers: {
-               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-               couponId
-            })
-         })
-            .then(response => {
-               if (response.ok) {
-                  return response.json();
-               } else {
-                  throw new Error('Network response was not ok.');
-               }
-            })
-            .then(data => {
-               console.log('Response from backend:', data);
-               if (data.coupon === true) {
-                  // Coupon selected successfully
-                  Swal.fire({
-                     title: "Good job!",
-                     text: "Coupon selected successfully",
-                     icon: "success"
-                  });
-               } else if (data.coupon === "alreadyApplied") {
-                  // Coupon already applied
-                  Swal.fire({
-                     title: "Oops!",
-                     text: "Coupon is already applied",
-                     icon: "info"
-                  });
-               } else if (data.coupon === "alreadyUsed") {
-                  // Coupon already used
-                  Swal.fire({
-                     title: "Oops!!",
-                     text: "coupon is already used!",
-                     icon: "info"
-                  });
-               } else {
-                  console.log('Unknown response from server:', data);
-               }
-            })
-            .catch(error => {
-               console.error('Error during fetch:', error);
-
-            });
+function selectCoupon(couponId) {
+   console.log("Selected coupon ID:", couponId);
+   fetch('/select-coupon', {
+      method: "POST",
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+         couponId: couponId
+      })
+   })
+   .then(response => {
+      if (response.ok) {
+         return response.json();
+      } else {
+         throw new Error('Network response was not ok.');
       }
+   })
+   .then(data => {
+      console.log('Response from backend:', data);
+      if (data.coupon === true) {
+         // Coupon selected successfully
+         Swal.fire({
+            title: "Good job!",
+            text: "Coupon selected successfully",
+            icon: "success"
+         }).then(() => {
+               location.reload()            
+         })
+      }
+   })
+   .catch(error => {
+      console.error('Error during fetch:', error);
+   });
+}
    </script>
    <!-- remove Coupon  -->
    <script>
       function removeCoupon(couponId) {
-        console.log("remove CouponId:", couponId);
+        console.log("Removing CouponId:", couponId); 
         fetch("/remove-coupon", {
           method: "POST",
           headers: {
@@ -1610,18 +1622,17 @@
           }
         })
         .then(data => {
-         console.log('resonse for remove coupon:',data)
-          if (data.coupon === true) {
-            Swal.fire({
-            title: "Coupon Removed !",
-            text: "Coupon successfully removed.",
-            icon: "success"
-          });            
-          }
-          setTimeout(() => {
-            $("#coupon").load("/remove-coupon #coupon");
-          }, 1000); // Adjust the delay as needed
-        })
+           console.log('Response for remove coupon:', data); 
+           if (data.coupon === true) {
+             Swal.fire({
+               title: "Coupon Removed !",
+               text: "Coupon successfully removed.",
+               icon: "success"
+             }).then(() => {
+               location.reload()
+             })
+           }
+         })
         .catch(error => {
           console.error("Error removing coupon:", error);
         });

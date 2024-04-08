@@ -1,3 +1,4 @@
+const { isNonNullObject } = require("razorpay/dist/utils/razorpay-utils");
 const cartModel = require("../models/cartModel");
 const couponModel = require("../models/couponModel");
 
@@ -111,11 +112,10 @@ const redeemCoupon = async (req, res) => {
       isBlocked: false,
     });
 
-    const iscouponUsed = couponData.usedUsers.includes(userId);
 
-    if (!iscouponUsed) {
+    if (couponData) {
       const existingCart = await cartModel.findOne({ user: userId });
-      if (existingCart && existingCart.couponDiscount == null) {
+      if (existingCart ) {
         await couponModel.findOneAndUpdate(
           { _id: couponId },
           { $push: { usedUsers: userId } }
@@ -127,11 +127,9 @@ const redeemCoupon = async (req, res) => {
         );
 
         res.json({ coupon: true });
-      } else {
-        res.json({ coupon: "alreadyApplied" });
-      }
+      } 
     } else {
-      res.json({ coupon: "alreadyUsed" });
+     
     }
   } catch (error) {
     console.error(error);
@@ -142,12 +140,16 @@ const revokeCoupon = async (req, res) => {
   try {
     const { couponId } = req.body;
     const userId = req.session.userId;
-    await cartModel.findOne({ user: userId });
-    await couponModel.findByIdAndUpdate(
+    const cartData = await cartModel.findOne({ user: userId });
+    const couponData = await couponModel.findOneAndUpdate(
       { _id: couponId },
       { $pull: { usedUsers: userId } }
     );
-    res.json({ coupone: true });
+    const updateCart = await cartModel.findOneAndUpdate(
+      { user: userId },
+      { $set: { couponDiscount: null } }
+    );
+    res.json({ coupon: true });
   } catch (error) {
     console.log(error);
   }

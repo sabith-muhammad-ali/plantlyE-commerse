@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const orderModel = require("../models/orderModel");
+const product = require("../models/productModel");
 
 const loadLogin = async (req, res) => {
   try {
@@ -91,6 +92,26 @@ const ordersLoad = async (req, res) => {
   }
 };
 
+const orderStatus = async (req, res) => {
+  try {
+    const { orderId, productId, newStatus } = req.body;
+
+    const updatedOrder = await orderModel.findOneAndUpdate(
+      { _id: orderId, "product._id": productId },
+      { $set: { "product.$.productStatus": newStatus } },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ error: "Order or product not found" });
+    }
+
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 module.exports = {
   loadLogin,
@@ -100,4 +121,5 @@ module.exports = {
   blockUser,
   logout,
   ordersLoad,
+  orderStatus,
 };

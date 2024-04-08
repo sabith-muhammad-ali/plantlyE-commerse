@@ -39,34 +39,35 @@
         integrity="sha384-RTzjGCzKaJLUIh41wAipKGU7Ks2X+13RVXu0W7cpn6OM+gFKohA9yOnvg4KuooiC" crossorigin="anonymous">
 </head>
 <style>
-    .green-theme {
-        background-color: #E8F5E9;
-    }
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-    .cancel-btn {
-        background-color: #EF5350;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.cancel-btn:hover {
+    background-color: #c82333;
+}
 
-    .cancel-btn:hover {
-        background-color: #F44336;
-    }
+.return-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-    .product-image {
-        max-width: 100px;
-        max-height: 100px;
-        display: block;
-        margin: auto;
-    }
-    .cancelled-btn {
-    background-color: #ff6666; 
-    color: white; 
-    }
+.return-btn:hover {
+    background-color: #28a745;
+}
 </style>
+
 
 <body>
     <!-- cart-model -->
@@ -765,38 +766,40 @@
             <!-- row -->
             <div class="row" id="viewOrder">
                 <div class="col-12">
-                    <% if (order && order.product && order.product.length> 0) { %>
+                    <% if (order && order.product && order.product.length > 0) { %>
                         <div class="row">
                             <% order.product.forEach(function(item) { %>
                                 <div class="col-md-4 mb-4">
                                     <div class="card">
-                                        <img src="/assets/sharp/<%= item.productId.images[0] %>" class="card-img-top"
-                                            alt="Product Image">
+                                        <img src="/assets/sharp/<%= item.productId.images[0] %>" class="card-img-top" alt="Product Image">
                                         <div class="card-body">
                                             <h5 class="card-title">
                                                 <%= item.productId.name %>
                                             </h5>
-                                            <p class="card-text">Price: <%= item.productId.price * item.quantity %>
-                                            </p>
-                                            <p class="card-text">Quantity: <%= item.quantity %>
-                                            </p>
-                                            <p class="card-text">Name: <%= order.shippingAddress.name %>
-                                            </p>
+                                            <p class="card-text">Price: <%= item.productId.price * item.quantity %></p>
+                                            <p class="card-text">Quantity: <%= item.quantity %></p>
+                                            <p class="card-text">Name: <%= order.shippingAddress.name %></p>
                                             <p class="card-text">Address: <%= order.shippingAddress.address %>, <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>, <%= order.shippingAddress.postcode %></p>
                                             <p class="card-text">Mobile: <%= order.shippingAddress.mobile %></p>
-                                            <button class="btn  cancel-btn"
-                                            data-product-id="<%= item.productId._id %>"
-                                            data-order-id="<%= order._id %>"
-                                            <% if (item.productStatus === 'cancelled') { %> disabled <% } %>
-                                        >
-                                            <% if (item.productStatus === 'cancelled') { %> Cancelled <% } else { %> Cancel <% } %>
-                                        </button>
+                                            <% if (item.productStatus === 'Placed' || item.productStatus === 'shipped') { %>
+                                                <button class="btn cancel-btn"
+                                                    data-product-id="<%= item.productId._id %>"
+                                                    data-order-id="<%= order._id %>">
+                                                    Cancel
+                                                </button>
+                                            <% } else if (item.productStatus === 'Delivered') { %>
+                                                <button class="btn return-btn"
+                                                    data-product-id="<%= item.productId._id %>"
+                                                    data-order-id="<%= order._id %>">
+                                                    Return
+                                                </button>
+                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
-                                <% }) %>
+                            <% }) %>
                         </div>
-                        <% } %>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -1180,7 +1183,51 @@
             });
         });
     </script>
+    
+    <script>
+        document.querySelectorAll('.return-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                button.disabled = true
+                var orderId = button.getAttribute('data-order-id');
+                var productId = button.getAttribute('data-product-id');
+                console.log("productId",productId);
+                console.log("orderId", orderId);
 
+                Swal.fire({
+                    title: 'Are you sure you want to return?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, return it!',
+                    cancelButtonText: 'No, keep it'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch('/return-order', {
+                            method:'POST',
+                            headers:{
+                                'content-Type':'application/json'
+                            },
+                            body:JSON.stringify({
+                                orderId:orderId,
+                                status:'Returned',
+                                productId:productId
+                            })
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                button.innerText = 'Returned';
+                                button.disabled = true;
+                                button.style.backgroundColor = '#ccc'; 
+                                button.style.color = '#666'; 
+                            }
+                        }).catch(error => {
+                            console.log(error);
+                        })
+                    }
+                })
+
+            })
+        })
+    </script>
 </body>
 
 <!-- Mirrored from dostguru.com/HTML/plantly/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Feb 2024 11:29:51 GMT -->

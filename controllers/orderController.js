@@ -3,8 +3,11 @@ const orderModel = require("../models/orderModel");
 const productModel = require("../models/productModel");
 const cartModel = require("../models/cartModel");
 const couponModel = require("../models/couponModel");
+const walletModel = require("../models/walletModel");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
+const { find } = require("../models/OTPModel");
+const userModel = require("../models/userModel");
 
 const razorPay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -14,24 +17,35 @@ const razorPay = new Razorpay({
 const loadCheckout = async (req, res) => {
   try {
     const userId = req.session.userId;
-    const currentData = new Date()
+    const currentData = new Date();
     const cartData = await cartModel
       .findOne({ user: userId })
       .populate("items.productId")
       .populate("couponDiscount");
-      
+
     const addressData = await addressModel.findOne({
       user: req.session.userId,
     });
-  
+
     const subtotal = cartData.items.reduce(
       (acc, val) => acc + val.productId.price * val.quantity,
       0
     );
 
-    const couponData = await couponModel.find({expiryDate:{$gte:currentData}, isBlocked:false })
+    const couponData = await couponModel.find({
+      expiryDate: { $gte: currentData },
+      isBlocked: false,
+    });
 
-    res.render("user/checkOut", { addressData, cartData, subtotal, couponData, });
+    const walletData = await walletModel.findOne({ userId: userId });
+
+    res.render("user/checkOut", {
+      addressData,
+      cartData,
+      subtotal,
+      couponData,
+      walletData,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -90,11 +104,20 @@ const placeOrder = async (req, res) => {
     const expectedDate = new Date(currentData);
     expectedDate.setDate(expectedDate.getDate() + 6);
 
-    const orderProducts = userCart.items.map((item) => ({
-      productId: item.productId,
-      quantity: item.quantity,
-      productStatus: status,
-    }));
+    const orderProducts = [];
+    for (const item of userCart.items) {
+      const product = await productModel.findById(item.productId);
+      if (!product) {
+        throw new Error(`Product with ID ${item.productId} not found`);
+      }
+      orderProducts.push({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: product.price * item.quantity,
+        productStatus: status,
+      });
+    }
+    console.log("orderProduct:", orderProducts);
 
     const order = new orderModel({
       userId: userId,
@@ -118,6 +141,31 @@ const placeOrder = async (req, res) => {
 
     // Update product quantities
     if (paymentMethod === "cash On Delivey") {
+      for (const item of userCart.items) {
+        await productModel.findByIdAndUpdate(item.productId, {
+          $inc: { quantity: -item.quantity },
+        });
+      }
+      await cartModel.deleteOne({ user: userId });
+    } else if (paymentMethod === "wallet") {
+      console.log("order placed wallet");
+      const data = {
+        amount: subtotal,
+        reason: "Order Placed",
+        transaction: "Debit",
+      };
+      console.log("data", data);
+
+      const walletData = await walletModel.findOne({ userId: userId });
+      walletData.history.push(data);
+      walletData.amount -= subtotal;
+      await walletData.save();
+
+      await orderModel.findOneAndUpdate(
+        { _id: orderId },
+        { $set: { productStatus: "Placed" } }
+      );
+
       for (const item of userCart.items) {
         await productModel.findByIdAndUpdate(item.productId, {
           $inc: { quantity: -item.quantity },
@@ -170,16 +218,23 @@ const verifyPayment = async (req, res) => {
 
     const orderId = order.receipt;
 
-    const orderData = await orderModel.findById({ _id: orderId });
+    const orderData = await orderModel.findById(orderId);
 
     const productStatusChange = [];
-    orderData.product.forEach((item) => {
+    for (const item of orderData.product) {
+      const product = await productModel.findById(item.productId);
+      if (!product) {
+        throw new Error(`Product with ID ${item.productId} not found`);
+      }
       productStatusChange.push({
         productId: item.productId,
         quantity: item.quantity,
-        productStatus: "placed",
+        price: product.price * item.quantity,
+        productStatus: "Placed",
       });
-    });
+    }
+
+    console.log("productStatusChangeRazorpay:", productStatusChange);
 
     await orderModel.findByIdAndUpdate(
       { _id: orderId },
@@ -217,10 +272,11 @@ const showOrder = async (req, res) => {
 
 const cancelOrders = async (req, res) => {
   try {
-    const { orderId, productId } = req.body;
+    const { orderId, productId, status } = req.body;
+    const userId = req.session.userId
     await orderModel.updateOne(
       { _id: orderId, "product.productId": productId },
-      { $set: { "product.$.productStatus": "cancelled" } }
+      { $set: { "product.$.productStatus": status } }
     );
 
     const order = await orderModel.findById({ _id: orderId });
@@ -234,6 +290,34 @@ const cancelOrders = async (req, res) => {
       { _id: productId },
       { $inc: { quantity: cancelledOrder } }
     );
+
+    if (order.paymentMethod === "razorPay" || order.payment === "wallet") {
+      const orderDetails = await orderModel.findOne({ _id: orderId });
+      console.log("product:", orderDetails);
+      const productPrice = orderDetails.product.find(
+        (p) => p.productId == productId
+      ).price;
+      console.log("productPrice123:", productPrice);
+
+      await walletModel.updateOne(
+        { userId: userId },
+        { $inc: { amount: productPrice } }
+      );
+
+      await walletModel.updateOne(
+        { userId: userId },
+        {
+          $push: {
+            history: {
+              Reason: "For Proudct Cancelled",
+              amount: productPrice,
+              transaction: "Credited",
+              date: new Date(),
+            },
+          },
+        }
+      );
+    }
 
     res.json({ ok: true });
   } catch (error) {
@@ -262,6 +346,75 @@ const viewOrderDetails = async (req, res) => {
   }
 };
 
+const returnOrder = async (req, res) => {
+  try {
+    const { orderId, status, productId } = req.body;
+    const userId = req.session.userId;
+    console.log("orderId:", orderId);
+    console.log("productId:", productId);
+    console.log("status:", status);
+    await orderModel.updateOne(
+      { _id: orderId, "product.productId": productId },
+      { $set: { "product.$.productStatus": status } }
+    );
+    const order = await orderModel.findById({ _id: orderId });
+    const returnedOrder = order.product.find(
+      (p) => p.productId == productId
+    ).quantity;
+    console.log("returnedOrder:", returnedOrder);
+
+    // update quantity after returned product
+    await productModel.findByIdAndUpdate(
+      { _id: productId },
+      { $inc: { quantity: returnedOrder } }
+    );
+
+    if (order.paymentMethod === "razorPay" || order.payment === "wallet") {
+      const product = await orderModel.findOne({ _id: orderId });
+      console.log("product:", product);
+      const productPrice = product.product.find(
+        (p) => p.productId == productId
+      ).price;
+      console.log("productPrice123:", productPrice);
+
+      await walletModel.updateOne(
+        { userId: userId },
+        { $inc: { amount: productPrice } }
+      );
+
+      await walletModel.updateOne(
+        { userId: userId },
+        {
+          $push: {
+            history: {
+              Reason: "For Proudct Returned",
+              amount: productPrice,
+              transaction: "Credited",
+              date: new Date(),
+            },
+          },
+        }
+      );
+    }
+
+    res.json({ ok: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const loadWallet = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const walletData = await walletModel
+      .findOne({ userId: userId })
+      .populate("userId");
+    res.render("user/wallet", { walletData });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   loadCheckout,
   checkoutAddAddress,
@@ -271,4 +424,6 @@ module.exports = {
   cancelOrders,
   successsPage,
   viewOrderDetails,
+  returnOrder,
+  loadWallet,
 };

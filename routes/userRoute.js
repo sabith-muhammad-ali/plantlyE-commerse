@@ -61,6 +61,8 @@ user.post("/show-order", auth.isLogin, orderController.cancelOrders);
 user.get("/order-success", auth.isLogin, orderController.successsPage);
 user.get("/product-details/:orderId", auth.isLogin, orderController.viewOrderDetails);
 user.post("/verify-payment", auth.isLogin, orderController.verifyPayment);//razorpay
+user.post("/return-order", auth.isLogin, orderController.returnOrder);
+user.get("/load-wallet", auth.isLogin, orderController.loadWallet);
 //wishlist
 user.post("/add-wishlist", auth.isLogin, cartController.addToWishlist);
 user.get("/load-wishlist", auth.isLogin, cartController.loadWishlist);
