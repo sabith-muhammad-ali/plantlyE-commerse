@@ -7,14 +7,14 @@ const crypto = require("crypto");
 const Cart = require("../models/cartModel");
 const bannerModel = require("../models/bannerModel");
 const couponModel = require("../models/couponModel");
-const WalletModel = require('../models/walletModel');
+const WalletModel = require("../models/walletModel");
 const categoryModel = require("../models/categoryModel");
 
 // tempHomePage
 const homePage = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req.session.userId });
-    const banner = await bannerModel.find({ is_listed: false })
+    const banner = await bannerModel.find({ is_listed: false });
     res.render("user/home", { userData, banner });
   } catch (error) {
     console.log(error.message);
@@ -172,9 +172,7 @@ const verifyOTP = async (req, res) => {
             await UserOTPVerfication.deleteMany({ userId });
             req.session.userId = userId;
 
-            const wallet = new WalletModel (
-              {userId: userId}
-            )
+            const wallet = new WalletModel({ userId: userId });
 
             await wallet.save();
 
@@ -243,32 +241,36 @@ const userLogout = async (req, res) => {
   }
 };
 
-const loadshop = async (req, res) => {
+const loadShop = async (req, res) => {
   try {
-    let product;
-    product = await productModel.find({});
-    if (req.query.sort === "high to low") {
-      product = await productModel.find({}).sort({ price: -1 });
-    } else if (req.query.sort === "low to high") {
-      product = await productModel.find({}).sort({ price: 1 });
-    } else if (req.query.sort === "A to Z") {
-      product = await productModel.find({}).sort({ name: 1 });
-    } else if (req.query.sort === "Z to A") {
-      product = await productModel.find({}).sort({ name: -1 });
+    const sortValue = req.query.sort;
+    const categoryValue = req.query.category;
+    const searchValue = req.query.search;
+
+    let productsQuery = productModel.find({ is_blocked: false }).populate('categoryId');
+
+    if (sortValue) {
+      if (sortValue === "high to low") {
+        productsQuery = productsQuery.sort({ price: -1 });
+      } else if (sortValue === "low to high") {
+        productsQuery = productsQuery.sort({ price: 1 });
+      } else if (sortValue === "A to Z") {
+        productsQuery = productsQuery.sort({ name: 1 });
+      } else if (sortValue === "Z to A") {
+        productsQuery = productsQuery.sort({ name: -1 });
+      }
     }
 
-    
-     
-    if(req.query.category ) {
-      let category = req.query.category
-      let product = await productModel.find({categoryId : category})
-       console.log("ssssss",product);
-       const categoryData = await categoryModel.find({})
-       const cart = await Cart.find({}).populate("items.productId");
-       res.render("user/shop", { product, cart, categoryData });
+    if (categoryValue) {
+      productsQuery = productsQuery.where('categoryId').equals(categoryValue);
     }
 
-    const categoryData = await categoryModel.find({})
+    if (searchValue) {
+      productsQuery = productsQuery.regex('name', new RegExp(searchValue, "i"));
+    }
+
+    const product = await productsQuery.exec();
+    const categoryData = await categoryModel.find({ is_block: false });
     const cart = await Cart.find({}).populate("items.productId");
     res.render("user/shop", { product, cart, categoryData });
   } catch (error) {
@@ -448,7 +450,7 @@ module.exports = {
   loadsignin,
   verifyLogin,
   userLogout,
-  loadshop,
+  loadShop,
   singleproduct,
   userProfile,
   editUserProfile,

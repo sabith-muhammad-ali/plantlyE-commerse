@@ -45,8 +45,8 @@ user.get(
 );
 user.post("/reset-password", auth.isLogout, userController.resetPassword);
 //shop
-user.get("/shop", userController.loadshop);
-user.get("/single-product", userController.singleproduct);
+user.get("/shop", auth.isLogin, userController.loadShop);
+user.get("/single-product", auth.isLogin, userController.singleproduct);
 //cart
 user.get("/cart", auth.isLogin, cartController.cartLoad);
 user.post("/addTo-cart", auth.isLogin, cartController.getCart);

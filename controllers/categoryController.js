@@ -78,19 +78,22 @@ const editCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
   try {
     const { id, name, description } = req.body;
-    const category = await categoryModel.findOne({ name: name });
-    if (category) {
-      return res.json({ exits: true });
+    const regex = new RegExp("^" + name + "$", "i"); 
+    const existingCategory = await categoryModel.findOne({ name: regex });
+
+    if (existingCategory ) {
+      return res.json({ exists: true });
     } else {
-      await categoryModel.updateOne(
-        { _id: id },
-        { $set: { name: name, description: description } },
+      await categoryModel.findByIdAndUpdate(
+        id,
+        { $set: { name, description } },
         { new: true }
       );
       return res.json({ ok: true });
     }
   } catch (error) {
     console.log(error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

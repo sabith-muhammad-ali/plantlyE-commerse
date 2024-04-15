@@ -447,7 +447,7 @@
           console.log(data);
           if (data.ok) {
             location.href='/admin/category'
-          } else if (data.exits) {
+          } else if (data.exists) {
             pTag.innerText = "Category already exists.";
           }
           console.log('form submission successful:',data);

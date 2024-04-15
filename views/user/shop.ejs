@@ -28,6 +28,9 @@
       <link rel="preconnect" href="https://fonts.gstatic.com/">
       <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"> 
    </head>
+   <style>
+
+   </style>
    <body>
       <!-- cart-model -->
       <div class="modal fade" id="cart_model" tabindex="-1"  aria-hidden="true">
@@ -294,18 +297,7 @@
                   <div class="col-xl-10 col-lg-10 col-6  head-search">
                      <div class="d-flex navbar">
                         <div class="input-class  text-left col-xl-8 col-lg-7 col-md-12  ">
-                           <div class="between-header border border-danger rounded mb-0 head-left">
-                              <select class="select-menu form-select d-none d-sm-block" >
-                                 <option value="selected">all categories</option>
-                                 <option value="1">laptop</option>
-                                 <option value="2">headphone</option>
-                                 <option value="3">audio</option>
-                              </select>
-                              <div class="input-group">
-                                 <input type="text" placeholder="search" class="form-control" aria-label="search" aria-describedby="button-addon2">
-                                 <div class="input-group-btn"><button type="button" class="btn btn-danger text-uppercase font-weight-normal">search</button></div>
-                              </div>
-                           </div>
+
                            <!-- between-header text-left col-sm-8 head-left border border-danger rounded mb-0 -->
                         </div>
                         <div class="col-xl-4 col-lg-5 head-right text-right">
@@ -602,6 +594,22 @@
                </div>
             </div>
          </div>
+
+         <div class="container">
+            <div class="row justify-content-center pl-1">
+                <div class="col-md-8">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <input type="search" class="form-control form-control-lg border border-primary" placeholder="Search for products..." aria-label="Search for products" aria-describedby="button-search" name="search" onchange="searchValue(value)">
+                            <!-- <div class="input-group-append">
+                                <input  class="btn btn-primary btn-lg" type="submit" id="button-search"></input>
+                            </div> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><br>
+
          <div class="container custom_container">
             <div class="row">
                <div class="col-lg-3 col-md-4">
@@ -614,8 +622,8 @@
                              <div class="collapse" id="shop_color_collapse">
                                  <% categoryData.forEach(function(category) { %>
                                  <label class="form-check">
-                                     <input class="form-check-input" type="radio" name="category" value="<%= category._id %>" onchange="selectCategory(value)">
-                                     <span class="form-check-label font-weight-bolder"><%= category.name %></span>
+                                    <input class="form-check-input" type="radio" name="category" value="<%= category._id %>" onchange="selectCategory(value)">
+                                    <span class="form-check-label font-weight-bolder"><%= category.name %></span>
                                  </label>
                                  <% }); %>
                              </div>
@@ -642,7 +650,6 @@
                         <div class="sort-by text-right">
                            <div class="sort">
                               <select class="custom-select" id="filter" onchange="filterProduct(value)">
-                                 <option selected>Relevance...</option>
                                  <option value="1">Relevance</option>
                                  <option value="A to Z">Name, A to Z</option>
                                  <option value="Z to A">Name, Z to A</option>
@@ -1002,28 +1009,64 @@
 
       <script>
          function filterProduct (value) {
-            console.log(value);
-            window.location.href = `/shop?sort=${value}`;
-         }
+            var queryString = window.location.search;
+            var params = new URLSearchParams(queryString);
+            
+            params.delete('sort');
+            params.append('sort',value);
 
-         window.addEventListener('DOMContentLoaded', (event) => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const categoryParam = urlParams.get('category');
-            if (categoryParam) {
-                const categoryRadio = document.querySelector(`input[name="category"][value="${categoryParam}"]`);
-                if (categoryRadio) {
-                    categoryRadio.checked = true;
-                }
-            }
-         });
+            var newQueryString = params.toString()
+            var newUrl = `/shop?${newQueryString}`
+
+            window.location.href = newUrl;
+         }
 
          function selectCategory(value) {
-             console.log(value);
-             window.location.href = `/shop?category=${value}`
+            // Store selected category in local storage
+            localStorage.setItem('selectedCategory', value);
+
+            var queryString = window.location.search;
+            var params = new URLSearchParams(queryString);
+            
+            params.delete('category');
+            params.append('category', value);
+
+            var newQueryString = params.toString();
+            var newUrl = `/shop?${newQueryString}`;
+
+            window.location.href = newUrl;
+        }
+
+        function selectPreviousCategory() {
+            var selectedCategory = localStorage.getItem('selectedCategory');
+            if (selectedCategory) {
+                document.querySelector('input[name="category"][value="' + selectedCategory + '"]').checked = true;
+            }
+        }
+
+        window.onload = selectPreviousCategory;
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            localStorage.removeItem('selectedCategory');
+        });
+
+
+         function searchValue(value) {
+            console.log("searchvalue:",value);
+           
+            var queryString = window.location.search
+            var params = new URLSearchParams(queryString);
+
+            params.delete('search');
+            params.append("search:",value);
+         
+            var newQueryString = params.toString();
+            var newUrl = `/shop?${newQueryString}`
+            
+            window.location.href = newUrl
          }
-
       </script>
-
+      
 
 
    </body>
