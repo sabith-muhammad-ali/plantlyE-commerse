@@ -58,7 +58,6 @@ admin.post("/deleteimage", productController.editProductImage);
 //orders
 admin.get("/orderlist", adminAuth.isLogin, adminController.ordersLoad);
 admin.post("/order-status", adminAuth.isLogin, adminController.orderStatus)
-
 //banner
 admin.get("/banner", adminAuth.isLogin, bannerController.loadBanner);
 admin.get("/add-banner", adminAuth.isLogin, bannerController.loadAddBanner);
@@ -73,5 +72,7 @@ admin.post("/load-add-coupons", adminAuth.isLogin, couponController.addCoupon);
 admin.get("/edit-coupon", adminAuth.isLogin, couponController.loadEditCoupon);
 admin.post("/edit-coupon", adminAuth.isLogin, couponController.editCoupon);
 admin.post("/delete-coupon", adminAuth.isLogin, couponController.removeCoupon);
+//sales-report
+admin.get("/sales-report", adminAuth.isLogin, adminController.loadSalesReport);
 
 module.exports = admin;

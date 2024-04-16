@@ -13,9 +13,12 @@ const categoryModel = require("../models/categoryModel");
 // tempHomePage
 const homePage = async (req, res) => {
   try {
+    const productData = await productModel.find({
+      is_blocked: false,
+    });
     const userData = await User.findOne({ _id: req.session.userId });
     const banner = await bannerModel.find({ is_listed: false });
-    res.render("user/home", { userData, banner });
+    res.render("user/home", { userData, banner, productData });
   } catch (error) {
     console.log(error.message);
   }

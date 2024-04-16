@@ -66,6 +66,30 @@
 .return-btn:hover {
     background-color: #28a745;
 }
+
+/* Add this CSS to your stylesheet */
+.card {
+    width: auto; /* Set card width to auto */
+}
+
+.card .row.no-gutters {
+    margin-right: 0; /* Remove right margin for the inner row */
+}
+
+.card .col-md-4 {
+    padding-right: 0; /* Remove padding for the image column */
+}
+
+.card .card-body {
+    padding: 1rem; /* Add padding to the card body */
+}
+
+.card-img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Set height to match the image height */
+}
 </style>
 
 
@@ -765,17 +789,19 @@
             </div>
             <!-- row -->
             <div class="row" id="viewOrder">
-                <div class="col-12">
-                    <% if (order && order.product && order.product.length > 0) { %>
-                        <div class="row">
-                            <% order.product.forEach(function(item) { %>
-                                <div class="col-md-4 mb-4">
-                                    <div class="card">
-                                        <img src="/assets/sharp/<%= item.productId.images[0] %>" class="card-img-top" alt="Product Image">
+                <% if (order && order.product && order.product.length > 0) { %>
+                    <% order.product.forEach(function(item) { %>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <div class="card-img-container">
+                                            <img src="/assets/sharp/<%= item.productId.images[0] %>" class="card-img" alt="Product Image">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">
-                                                <%= item.productId.name %>
-                                            </h5>
+                                            <h5 class="card-title"><%= item.productId.name %></h5>
                                             <p class="card-text">Price: <%= item.productId.price * item.quantity %></p>
                                             <p class="card-text">Quantity: <%= item.quantity %></p>
                                             <p class="card-text">Name: <%= order.shippingAddress.name %></p>
@@ -797,10 +823,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            <% }) %>
+                            </div>
                         </div>
-                    <% } %>
-                </div>
+                    <% }) %>
+                <% } %>
             </div>
         </div>
     </div>

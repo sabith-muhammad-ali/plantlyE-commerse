@@ -113,6 +113,38 @@ const orderStatus = async (req, res) => {
   }
 };
 
+const loadSalesReport = async (req, res) => {
+  try {
+    const salesReport = await orderModel.find().populate([
+      {
+        path: "userId",
+        model: "User",
+        select: "name",
+      },
+      {
+        path: "product.productId",
+        model: "product",
+      },
+    ]);
+
+    let totalSalesAmount = 0;
+
+    salesReport.forEach((order) => {
+      order.product.forEach((item) => {
+        if (item.productStatus === "Delivered") {
+          totalSalesAmount += item.price * item.quantity;
+        }
+      });
+    });
+
+    const totalSales = salesReport.length;
+
+    res.render("sales-report", { salesReport, totalSales, totalSalesAmount });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   loadLogin,
   verifyLogin,
@@ -122,4 +154,5 @@ module.exports = {
   logout,
   ordersLoad,
   orderStatus,
+  loadSalesReport,
 };
