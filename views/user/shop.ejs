@@ -601,9 +601,6 @@
                     <form class="form-inline">
                         <div class="input-group">
                             <input type="search" class="form-control form-control-lg border border-primary" placeholder="Search for products..." aria-label="Search for products" aria-describedby="button-search" name="search" onchange="searchValue(value)">
-                            <!-- <div class="input-group-append">
-                                <input  class="btn btn-primary btn-lg" type="submit" id="button-search"></input>
-                            </div> -->
                         </div>
                     </form>
                 </div>
@@ -666,8 +663,8 @@
                      <div class="item col-xl-3">
                         <div class="product_thumb bg-white rounded">
                            <div class="pro_image">
-                              <a href="/single-product?id=<%= product._id %>"><img src= "/assets/sharp/<%= product.images[0] %>" class="fst-image mx-auto d-block img-fluid" alt="product_1"></a>
-                              <a href="/single-product?id=<%= product._id %>"><img src="/assets/sharp/<%= product.images[1] %>" class="second-img mx-auto d-block img-fluid" alt="product_2"></a>
+                              <a href="/single-product?id=<%= product._id %>"><img src= "/assets/sharp/<%= product.images[1] %>" class="fst-image mx-auto d-block img-fluid" alt="product_1"></a>
+                              <a href="/single-product?id=<%= product._id %>"><img src="/assets/sharp/<%= product.images[2] %>" class="second-img mx-auto d-block img-fluid" alt="product_2"></a>
                            </div>
                            <div class="text-center main_text pt-3">
                               <div>
@@ -706,21 +703,23 @@
                <div class="col-12">
                   <nav class="float-right mt-5 mt-col-3">
                      <ul class="pagination">
-                        <li class="page-item">
-                           <a class="page-link" href="#">
+                       <li class="page-item">
+                         <a class="page-link" href="?page=1" aria-label="Previous">
                            <span aria-hidden="true">&laquo;</span>
-                           </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                           <a class="page-link" href="#">
+                         </a>
+                       </li>
+                       <% for(let i = 1; i <= totalPages; i++) { %>
+                         <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                           <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                         </li>
+                       <% } %>
+                       <li class="page-item">
+                         <a class="page-link" href="?page=<%= totalPages %>" aria-label="Next">
                            <span aria-hidden="true">&raquo;</span>
-                           </a>
-                        </li>
+                         </a>
+                       </li>
                      </ul>
-                  </nav>
+                   </nav>
                </div>
             </div>
          </div>
@@ -1064,7 +1063,16 @@
             var newUrl = `/shop?${newQueryString}`
             
             window.location.href = newUrl
+
+            localStorage.setItem('searchValue', value);
          }
+             document.addEventListener('DOMContentLoaded', function() {
+             var searchInput = document.querySelector('input[name="search"]');
+             var storedSearchValue = localStorage.getItem('searchValue');
+             if (storedSearchValue) {
+                 searchInput.value = storedSearchValue;
+             }
+            });
       </script>
       
 

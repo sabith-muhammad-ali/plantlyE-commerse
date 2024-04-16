@@ -35,6 +35,11 @@ const productSchema = new mongoose.Schema({
     default: false,
     required: true,
   },
+  popularity: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
 });
 
 const product = mongoose.model("product", productSchema);

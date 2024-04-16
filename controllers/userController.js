@@ -246,8 +246,12 @@ const loadShop = async (req, res) => {
     const sortValue = req.query.sort;
     const categoryValue = req.query.category;
     const searchValue = req.query.search;
+    const page = parseInt(req.query.page) || 1;
+    const limit = 12;
 
-    let productsQuery = productModel.find({ is_blocked: false }).populate('categoryId');
+    let productsQuery = productModel
+      .find({ is_blocked: false })
+      .populate("categoryId");
 
     if (sortValue) {
       if (sortValue === "high to low") {
@@ -262,17 +266,28 @@ const loadShop = async (req, res) => {
     }
 
     if (categoryValue) {
-      productsQuery = productsQuery.where('categoryId').equals(categoryValue);
+      productsQuery = productsQuery.where("categoryId").equals(categoryValue);
     }
 
     if (searchValue) {
-      productsQuery = productsQuery.regex('name', new RegExp(searchValue, "i"));
+      productsQuery = productsQuery.regex("name", new RegExp(searchValue, "i"));
     }
+
+    const totalProducts = await productModel.countDocuments(productsQuery);
+    productsQuery = productsQuery.skip((page - 1) * limit).limit(limit);
 
     const product = await productsQuery.exec();
     const categoryData = await categoryModel.find({ is_block: false });
     const cart = await Cart.find({}).populate("items.productId");
-    res.render("user/shop", { product, cart, categoryData });
+
+    const totalPages = Math.ceil(totalProducts / limit);
+    res.render("user/shop", {
+      product,
+      cart,
+      categoryData,
+      totalPages,
+      currentPage: page,
+    });
   } catch (error) {
     console.log(error);
   }

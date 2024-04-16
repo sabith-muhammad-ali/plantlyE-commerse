@@ -143,7 +143,7 @@ const placeOrder = async (req, res) => {
     if (paymentMethod === "cash On Delivey") {
       for (const item of userCart.items) {
         await productModel.findByIdAndUpdate(item.productId, {
-          $inc: { quantity: -item.quantity },
+          $inc: { quantity: -item.quantity, popularity: 1 },
         });
       }
       await cartModel.deleteOne({ user: userId });
@@ -168,7 +168,7 @@ const placeOrder = async (req, res) => {
 
       for (const item of userCart.items) {
         await productModel.findByIdAndUpdate(item.productId, {
-          $inc: { quantity: -item.quantity },
+          $inc: { quantity: -item.quantity, popularity: 1 },
         });
       }
       await cartModel.deleteOne({ user: userId });
@@ -246,7 +246,7 @@ const verifyPayment = async (req, res) => {
       for (const data of cartData.items) {
         const { productId, quantity } = data;
         await productModel.findByIdAndUpdate(productId, {
-          $inc: { quantity: -quantity },
+          $inc: { quantity: -quantity, popularity: 1 },
         });
       }
       res.json({ statusChanged: true, orderId });
