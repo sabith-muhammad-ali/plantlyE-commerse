@@ -807,6 +807,15 @@
                                             <p class="card-text">Name: <%= order.shippingAddress.name %></p>
                                             <p class="card-text">Address: <%= order.shippingAddress.address %>, <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>, <%= order.shippingAddress.postcode %></p>
                                             <p class="card-text">Mobile: <%= order.shippingAddress.mobile %></p>
+                                            <p class="align-middle">
+                                                <a href=""
+                                                   data-product-id="<%= item.productId._id %>"
+                                                   data-order-id="<%= order._id %>"
+                                                   class="view-invoice-link">
+                                                   <i class="fas fa-file-invoice"></i>
+                                                   View Invoice
+                                                </a>
+                                            </p>
                                             <% if (item.productStatus === 'Placed' || item.productStatus === 'shipped') { %>
                                                 <button class="btn cancel-btn"
                                                     data-product-id="<%= item.productId._id %>"
@@ -1165,6 +1174,7 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- cancell product -->
     <script>
         document.querySelectorAll('.cancel-btn').forEach(button => {
             button.addEventListener('click', () => {
@@ -1210,6 +1220,7 @@
         });
     </script>
     
+    <!-- return product  -->
     <script>
         document.querySelectorAll('.return-btn').forEach(button => {
             button.addEventListener('click', () => {
@@ -1253,6 +1264,32 @@
 
             })
         })
+    </script>
+
+    <!-- invoice -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const invoiceLinks = document.querySelectorAll('.view-invoice-link');
+            
+            invoiceLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    
+                    const orderId = link.getAttribute('data-order-id'); 
+                     const productId = link.getAttribute('data-product-id'); 
+                    
+                    console.log('Order ID:', orderId);
+                    console.log('Product ID:', productId);
+                    
+                    fetch(`/order-invoice?orderId=${orderId}&productId=${productId}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                });
+            });
+        });
     </script>
 </body>
 

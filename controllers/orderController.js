@@ -4,10 +4,13 @@ const productModel = require("../models/productModel");
 const cartModel = require("../models/cartModel");
 const couponModel = require("../models/couponModel");
 const walletModel = require("../models/walletModel");
+const userModel = require("../models/userModel");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
-const { find } = require("../models/OTPModel");
-const userModel = require("../models/userModel");
+const path = require("path");
+const puppeteer = require("puppeteer");
+const ejs = require("ejs");
+const fs = require("fs");
 
 const razorPay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -273,7 +276,7 @@ const showOrder = async (req, res) => {
 const cancelOrders = async (req, res) => {
   try {
     const { orderId, productId, status } = req.body;
-    const userId = req.session.userId
+    const userId = req.session.userId;
     await orderModel.updateOne(
       { _id: orderId, "product.productId": productId },
       { $set: { "product.$.productStatus": status } }
@@ -415,6 +418,42 @@ const loadWallet = async (req, res) => {
   }
 };
 
+const invoice = async (req, res) => {
+  try {
+    const { orderId, productId } = req.query;
+    console.log("Order ID:", orderId);
+    console.log("Product ID:", productId);
+
+    const orderData = await orderModel.findById(orderId).populate("product.productId");
+    console.log("Order Data:", orderData);
+
+    const date = new Date();
+    const data = { order: orderData, date };
+
+    const filepath = path.resolve(__dirname, "../views/user/invoice.ejs");
+    const html = fs.readFileSync(filepath, 'utf-8');
+
+    const invoiceDetails = ejs.render(html, data);
+
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+
+    await page.setContent(invoiceDetails, { waitUntil: "networkidle0" });
+
+    const pdfBytes = await page.pdf({ format: "Letter" });
+
+    await browser.close();
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "attachment; filename=Plantly-Invoice.pdf");
+
+    res.send(pdfBytes);
+  } catch (error) {
+    console.error("Error generating invoice:", error);
+    res.status(500).send("Error in generating invoice");
+  }
+};
+
 module.exports = {
   loadCheckout,
   checkoutAddAddress,
@@ -426,4 +465,5 @@ module.exports = {
   viewOrderDetails,
   returnOrder,
   loadWallet,
+  invoice,
 };
