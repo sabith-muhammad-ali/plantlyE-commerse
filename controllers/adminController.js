@@ -145,6 +145,97 @@ const loadSalesReport = async (req, res) => {
   }
 };
 
+const filterSalesReport = async (req, res) => {
+  try {
+    let fromdate, todate;
+    const currentDate = new Date();
+
+    const range = req.body.range;
+    switch (range) {
+      case "daily":
+        fromdate = new Date(currentDate);
+        fromdate.setHours(0, 0, 0, 0);
+        todate = new Date(currentDate);
+        todate.setHours(23, 59, 59, 999);
+        break;
+      case "weekly":
+        const currentDateCopy = new Date(currentDate);
+        const firstDayOfWeek = new Date(
+          currentDateCopy.setDate(
+            currentDateCopy.getDate() - currentDateCopy.getDay()
+          )
+        );
+        const lastDayOfWeek = new Date(
+          currentDateCopy.setDate(currentDateCopy.getDate() + 6)
+        ); // Saturday
+        fromdate = new Date(firstDayOfWeek);
+        fromdate.setHours(0, 0, 0, 0);
+        todate = new Date(lastDayOfWeek);
+        todate.setHours(23, 59, 59, 999);
+        break;
+      case "monthly":
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
+        fromdate = new Date(firstDayOfMonth);
+        fromdate.setHours(0, 0, 0, 0);
+        todate = new Date(lastDayOfMonth);
+        todate.setHours(23, 59, 59, 999);
+        break;
+      case "yearly":
+        const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
+        const lastDayOfYear = new Date(currentDate.getFullYear() + 1, 0, 0);
+        fromdate = new Date(firstDayOfYear);
+        fromdate.setHours(0, 0, 0, 0);
+        todate = new Date(lastDayOfYear);
+        todate.setHours(23, 59, 59, 999);
+        break;
+      case "custom":
+        fromdate = req.body.fromdate ? new Date(req.body.fromdate) : null;
+        if (fromdate) fromdate.setHours(0, 0, 0, 0);
+        todate = req.body.todate ? new Date(req.body.todate) : null;
+        if (todate) todate.setHours(23, 59, 59, 999);
+        break;
+    }
+
+    const salesReport = await orderModel
+      .find({
+        orderedData: {
+          $lt: todate || currentDate,
+          $gt: fromdate || new Date(0),
+        }, 
+      })
+      .populate({
+        path: "userId",
+        model: "User",
+        select: "name",
+      })
+      .populate({
+        path: "product.productId",
+        model: "product",
+      })
+      .sort({ orderedData: -1 });
+
+    let totalSalesAmount = 0;
+
+    salesReport.forEach((order) => {
+      order.product.forEach((item) => {
+        if (item.productStatus === "Delivered") {
+          totalSalesAmount += item.price * item.quantity;
+        }
+      });
+    });
+
+    const totalSales = salesReport.length;
+
+    res.render("sales-report", { salesReport, totalSales, totalSalesAmount });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   loadLogin,
   verifyLogin,
@@ -155,4 +246,5 @@ module.exports = {
   ordersLoad,
   orderStatus,
   loadSalesReport,
+  filterSalesReport,
 };

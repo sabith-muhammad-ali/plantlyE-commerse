@@ -19,6 +19,22 @@
     <link rel="shortcut icon" href="adminAssets/assets/images/favicon.png" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
 
+    <style>
+.form-inline .form-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-inline .form-group label {
+  margin-right: 10px;
+}
+
+.form-inline .btn {
+  margin-left: 10px;
+}
+
+    </style>
+
   </head>
   <body>
     <div class="container-scroller">
@@ -374,10 +390,50 @@
             </div>
              <div class="row"> 
               <!--  -->
+              <div class="container">
+                <div class="form-container row align-items-center">
+                  <form method="post" class="form-inline">
+                    <div class="form-group col-md-3">
+                      <label for="fromdate">Starting Date:</label>
+                      <input type="date" name="fromdate" id="fromdate" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="todate">Ending Date:</label>
+                      <input type="date" name="todate" id="todate" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="range">Select Range:</label>
+                      <select name="range" id="range" class="form-control">
+                        <option disabled selected>Select</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                        <option value="custom">Custom</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <button type="submit" class="btn btn-primary btn-md">Filter</button>
+                    </div>
+                  </form>
+                  <div class="dropdown col-md-2">
+                    <button type="button" class="btn btn-primary dropdown-toggle" id="downloadDropdown" data-toggle="dropdown">DOWNLOAD</button>
+                    <div class="dropdown-menu" aria-labelledby="downloadDropdown">
+                      <a class="dropdown-item" href="#" onclick="downloadPDF('printThisDiv')" style="color: green; font-weight: 600;">Download as PDF</a>
+                      <a class="dropdown-item" href="#" onclick="downloadExcel('printThisDiv')" style="color: green; font-weight: 600;">Download as Excel</a>
+                  </div>
+                  </div>
+                </div>
+              </div> 
+              
+              <!--  -->
+
+
+              <!--  -->
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive" id="printThisDiv">
                       <table id="dataTable" class="table table-striped">
                         <thead>
                           <tr>
@@ -447,6 +503,43 @@ $(document).ready(function() {
     $('#dataTable').DataTable();
 });
 </script>
+
+
+
+<script>
+  function downloadPDF(divName) {
+      const printContents = document.getElementById(divName).innerHTML;
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+  }
+  
+  function downloadExcel(divName) {
+      const table = document.getElementById(divName);
+      const rows = table.getElementsByTagName('tr');
+      let csvContent = "data:text/csv;charset=utf-8,";
+  
+      for (const row of rows) {
+          const cells = row.getElementsByTagName('td');
+          const cellValues = [];
+          for (const cell of cells) {
+              cellValues.push(cell.textContent);
+          }
+          csvContent += cellValues.join(',') + '\n';
+      }
+  
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'data.csv');
+      document.body.appendChild(link);
+  
+      link.click();
+      document.body.removeChild(link);
+  }
+  </script>
+
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->

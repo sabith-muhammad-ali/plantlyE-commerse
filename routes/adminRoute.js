@@ -74,5 +74,6 @@ admin.post("/edit-coupon", adminAuth.isLogin, couponController.editCoupon);
 admin.post("/delete-coupon", adminAuth.isLogin, couponController.removeCoupon);
 //sales-report
 admin.get("/sales-report", adminAuth.isLogin, adminController.loadSalesReport);
+admin.post("/sales-report", adminAuth.isLogin, adminController.filterSalesReport);
 
 module.exports = admin;
