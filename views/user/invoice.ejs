@@ -1,99 +1,105 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Soiree Beauty Invoice</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-}
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+    }
 
-.invoice-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #000000;
-    border-radius: 0px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgb(255, 255, 255);
-}
+    .invoice-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #000000;
+        border-radius: 0px;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgb(255, 255, 255);
+    }
 
-.invoice-details {
-    margin-bottom: 20px;
-}
+    .invoice-details {
+        margin-bottom: 20px;
+    }
 
-.services-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+    .services-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-.services-table th,
-.services-table td {
-    padding: 15px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
+    .services-table th,
+    .services-table td {
+        padding: 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
 
-.services-table th {
-    background-color: #000000;
-    color: #fff;
-}
+    .services-table th {
+        background-color: #000000;
+        color: #fff;
+    }
 
-.services-table td {
-    background-color: #ffffff;
-}
+    .services-table td {
+        background-color: #ffffff;
+    }
 
-.total-amount {
-    font-weight: bold;
-}
+    .total-amount {
+        font-weight: bold;
+    }
 
-.payment-details {
-    margin-top: 20px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
+    .payment-details {
+        margin-top: 20px;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+    }
 
-#img {
-    width: 29%;
-   margin-left: 70%;
-}
-#qr{
-  width: 10%;
-  margin-top: -7;
-}
+    #img {
+        width: 29%;
+        margin-left: 70%;
+    }
 
-.head {
-    background-color: #444;
-}
+    #qr {
+        width: 10%;
+        margin-top: -7;
+    }
 
-.invoice-container a {
-    color: #007bff;
-    text-decoration: none;
-}
+    .head {
+        background-color: #444;
+    }
 
-.invoice-container a:hover {
-    text-decoration: underline;
-}
+    .invoice-container a {
+        color: #007bff;
+        text-decoration: none;
+    }
 
+    .invoice-container a:hover {
+        text-decoration: underline;
+    }
 </style>
+
 <body>
     <div class="invoice-container">
-<img src="/public/images/logo.jpg" id="img" alt=""> 
-<img id="qr" src="/public/images/qr.jpg" alt="QR Code">
+        <img src="/public/assets/img/logo.png" id="img" alt="logo">
 
-<div class="payment-details"></div>
-<div class="invoice-details">
-            <p>Address: 1556 BUCKLEY LANE KANSAS CITY, MO</p>
-            <p>Website: <a href="soireebeauty.site.com">soireebeauty.site.com</a></p>
-            <p>Phone: (415) 413-0703</p>
-            <p>Invoice to: Jane Doe</p>
-            <p>Invoice no: 2023001</p>
-            <p>Date: 10/03/20XX</p>
+        <div class="payment-details"></div>
+        <div class="invoice-details">
+            <p>Address: Plantly Technologies Pvt. Ltd. </p>
+            <p>123 Greenleaf Avenue,</p>    
+            <p>Garden City,</p>    
+            <p>Bangalore - 560001,</p>    
+            <p>Karnataka, India.</p>    
+            
+            <p>Website: <a href="soireebeauty.site.com">Plantly.site.com</a></p>
+            <p>Phone: +91 95674 91453</p>
+
+            <p>Invoice no: <%=orderData._id %></p>
+            <p>Date: <%= orderData.orderedData %></p>
         </div>
         <table class="services-table">
             <thead class="head">
@@ -149,9 +155,13 @@
             <p>Payment to: Patricia Johnson</p>
             <p>Bank 1</p>
             <p>Bank Code: 12345678889</p>
-            <p>Terms & Conditions: Payment is due upon completion of services unless otherwise agreed upon in writing.</p>
+            <p>Terms & Conditions: Payment is due upon completion of services unless otherwise agreed upon in writing.
+            </p>
             <p>Thank you for choosing Soiree Beauty! We appreciate your business.</p>
         </div>
     </div>
 </body>
+
+
+
 </html>

@@ -4,12 +4,11 @@ const categoryController = require("../controllers/categoryController");
 const productController = require("../controllers/productController");
 const bannerController = require("../controllers/bannerController");
 const couponController = require("../controllers/couponController");
-
+const offerController = require("../controllers/offerController");
 const admin = express();
 const path = require("path");
 const adminAuth = require("../middelware/adminAuth");
 
-console.log(path.join(__dirname, "../public/multer"));
 
 // View setup
 admin.set("views", path.join(__dirname, "views"));
@@ -75,5 +74,12 @@ admin.post("/delete-coupon", adminAuth.isLogin, couponController.removeCoupon);
 //sales-report
 admin.get("/sales-report", adminAuth.isLogin, adminController.loadSalesReport);
 admin.post("/sales-report", adminAuth.isLogin, adminController.filterSalesReport);
+//offer
+admin.get("/load-offer", adminAuth.isLogin, offerController.loadOffer);
+admin.get("/add-offer", adminAuth.isLogin, offerController.loadAddOffer);
+admin.post("/add-offer", adminAuth.isLogin, offerController.addOffer);
+admin.patch("/list-offer/:id", adminAuth.isLogin, offerController.listOffer)
+admin.get("/edit-offer", adminAuth.isLogin, offerController.loadEditOffer)
+admin.post("/edit-offer", adminAuth.isLogin, offerController.editOffer);
 
 module.exports = admin;

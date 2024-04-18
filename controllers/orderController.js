@@ -421,35 +421,52 @@ const loadWallet = async (req, res) => {
 const invoice = async (req, res) => {
   try {
     const { orderId, productId } = req.query;
-    console.log("Order ID:", orderId);
-    console.log("Product ID:", productId);
+    // console.log("Order ID:", orderId);
+    // console.log("Product ID:", productId);
 
-    const orderData = await orderModel.findById(orderId).populate("product.productId");
+    const orderData = await orderModel
+      .findById({ _id: orderId })
+      .populate("product.productId");
+
     console.log("Order Data:", orderData);
 
     const date = new Date();
-    const data = { order: orderData, date };
-
+    const orderDetails = {
+      orderData,
+      date,
+      baseUrl: "http://" + req.headers.host,
+    };
     const filepath = path.resolve(__dirname, "../views/user/invoice.ejs");
-    const html = fs.readFileSync(filepath, 'utf-8');
+    const htmlTemplate = fs.readFileSync(filepath, "utf-8");
+    const invoiceHtml = ejs.render(htmlTemplate, orderDetails);
 
-    const invoiceDetails = ejs.render(html, data);
+    const updatedHtml = invoiceHtml.replace(
+      /src="\/public\/assets\/img\/([^"]*)"/g,
+      (match, src) => {
+        const imageFile = fs.readFileSync(
+          path.resolve(__dirname, "../public/assets/img", src)
+        );
+        const base64Image = imageFile.toString("base64");
+        return `src="data:image/png;base64,${base64Image}"`;
+      }
+    );
 
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
-    await page.setContent(invoiceDetails, { waitUntil: "networkidle0" });
+    await page.setContent(updatedHtml, { waitUntil: "networkidle0" });
 
     const pdfBytes = await page.pdf({ format: "Letter" });
-
     await browser.close();
 
     res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", "attachment; filename=Plantly-Invoice.pdf");
-
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename = BESPOKE-INVOICE.pdf"
+    );
     res.send(pdfBytes);
   } catch (error) {
-    console.error("Error generating invoice:", error);
+    console.error("Error:", error);
     res.status(500).send("Error in generating invoice");
   }
 };
