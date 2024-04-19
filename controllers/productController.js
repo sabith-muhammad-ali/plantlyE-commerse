@@ -6,8 +6,47 @@ const sharp = require("sharp");
 const loadproduct = async (req, res) => {
   try {
     const offerData = await offerModel.find({});
-    const product = await productModel.find({}).populate("categoryId").populate("offer")
-    res.render("product", { product, offerData });
+    const products = await productModel
+      .find({})
+      .populate("categoryId")
+      .populate("offer");
+
+    for (const productData of products) {
+      let discountPrice = productData.price; // Initialize discountPrice with the original price
+
+      console.log("Product:", productData);
+
+      // Check if there's an offer associated with the category
+      if (
+        productData.categoryId.offer &&
+        typeof productData.categoryId.offer.discountAmount === "number"
+      ) {
+        console.log("Category offer applied");
+        discountPrice -=
+          productData.price * productData.categoryId.offer.discountAmount;
+      }
+      // Check if there's a direct offer associated with the product
+      else if (
+        productData.offer &&
+        typeof productData.offer.discountAmount === "number"
+      ) {
+        console.log("Product offer applied");
+        discountPrice -= productData.offer.discountAmount; // Corrected the calculation here
+      }
+
+      // Ensure discountPrice is not negative
+      discountPrice = Math.max(discountPrice, 0);
+
+      // Update discountPrice field
+      productData.discountPrice = parseInt(discountPrice);
+
+      console.log("Discounted Price:", productData.discountPrice);
+
+      // Save product data
+      await productData.save();
+    }
+
+    res.render("product", { products, offerData });
   } catch (error) {
     console.log(error);
   }

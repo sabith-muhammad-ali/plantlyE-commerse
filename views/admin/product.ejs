@@ -440,57 +440,61 @@
                         <th class="text text-white"> Category </th>
                         <th class="text text-white"> Price </th>
                         <th class="text-white">Discount Price</th>
+                        <th class="text-white">Discount Price</th>
                         <th class="text text-white"> Discount </th>
                         <th class="text text-white"> Edit </th>
                         <th class="text text-white"> Status </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% for (let i=0; i < product.length; i++) {%>
+                      <% for (let i=0; i < products.length; i++) {%>
                         <tr>
                           <td class="text text-white">
                             <%= i + 1 %>
                           </td>
                           <td>
-                            <img src="assets/multer/<%= product[i].images[0] %>"
+                            <img src="assets/multer/<%= products[i].images[0] %>"
                               style="max-width:50px ; max-height:50px ;" alt="product cover image">
                           </td>
                           <td class="text text-white">
-                            <%= product[i].name %>
+                            <%= products[i].name %>
                           </td>
                           <td class="text text-white">
-                            <%= product[i].quantity %>
+                            <%= products[i].quantity %>
                           </td>
                           <td class="text text-white">
-                            <%= product[i].categoryId.name %>
+                            <%= products[i].categoryId.name %>
                           </td>
-                          <td class="text text-white">₹ <%= product[i].price %>
+                          <td class="text text-white">₹ <%= products[i].price %>
                           </td>
-                          <td class="<%= product[i].offer && product[i].offer.discountAmount ? 'text-success' : 'text-muted' %>">
-                            <%= product[i].offer ? product[i].offer.discountAmount : 'No offer available' %>
+                          <td class="<%= products[i].offer && products[i].offer.discountAmount ? 'text-success' : 'text-muted' %>">
+                            <%= products[i].offer ? products[i].offer.discountAmount : 'No offer available' %>
+                          </td>
+                          <td class="text-white">
+                            ₹<%= products[i].discountPrice %>
                           </td>
                           <td>
-                            <% if (!product[i].offer) { %>
+                            <% if (!products[i].offer) { %>
                               <button type="button" class="btn btn-success apply-offer" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal" onclick="selectProduct('<%= product[i]._id %>')">
+                                data-bs-target="#exampleModal" onclick="selectProduct('<%= products[i]._id %>')">
                                 Apply Offer
                               </button>
                             <% } else { %>
                               <button type="button" class="btn btn-danger"
-                                onclick="removeProductOffer('<%= product[i]._id %>')">
+                                onclick="removeProductOffer('<%= products[i]._id %>')">
                                 Remove Offer
                               </button>
                             <% } %>
                           </td>
                           <td>
-                            <a href="/admin/editproduct?id=<%= product[i]._id %>" class="btn btn-primary">Edit</a>
+                            <a href="/admin/editproduct?id=<%= products[i]._id %>" class="btn btn-primary">Edit</a>
                           </td>
                           <td class="text-end">
-                            <% if (product[i].is_blocked) { %>
+                            <% if (products[i].is_blocked) { %>
                               <a class="Unblock-product" data-product-id="<%= product[i]._id %>"><span
                                   class="btn btn-success border-0 px-4 py-2">Unblock</span></a>
                               <% } else { %>
-                                <a class="block-product" data-product-id="<%= product[i]._id %>"><span
+                                <a class="block-product" data-product-id="<%= products[i]._id %>"><span
                                     class="btn btn-warning border-0 px-4 py-2">Block</span></a>
                                 <% } %>
                           </td>
