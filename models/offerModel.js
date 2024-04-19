@@ -13,13 +13,13 @@ const offerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  isBlocked: {
-    type: Boolean,
-    default: false,
-  },
   discountAmount: {
     type: Number,
     required: true,
+  },
+  isBlocked: {
+    type: Boolean,
+    default: false,
   },
 });
 

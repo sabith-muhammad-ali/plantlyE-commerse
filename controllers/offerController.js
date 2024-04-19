@@ -87,6 +87,51 @@ const editOffer = async (req, res) => {
   }
 };
 
+const categoryOffer = async (req, res) => {
+  try {
+    const { categoryId, offerId } = req.body;
+    const selectedCategory = await categoryModel.findOneAndUpdate(
+      { _id: categoryId },
+      { $set: { offer: offerId } },
+      { new: true }
+    );
+    console.log("selectedCategory", selectedCategory);
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeCategoryOffer = async (req, res) => {
+  try {
+    const { categoryId } = req.body;
+    console.log("req.body:", req.body);
+    const selectedCategory = await categoryModel.findOneAndUpdate(
+      { _id: categoryId },
+      { $unset: { offer: 1 } },
+      { new: true }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const productOffer = async (req, res) => {
+  try {
+    const { productId, offerId } = req.body;
+    console.log("req.body:",req.body);
+    const selectedProduct = await productModel.findOneAndUpdate(
+      {_id: productId},
+      {$set:{offer : offerId}},
+      {new:true}
+    );
+    console.log("selectedProduct:",selectedProduct);
+    res.json({success: true})
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   loadOffer,
   loadAddOffer,
@@ -94,4 +139,7 @@ module.exports = {
   listOffer,
   loadEditOffer,
   editOffer,
+  categoryOffer,
+  removeCategoryOffer,
+  productOffer,
 };

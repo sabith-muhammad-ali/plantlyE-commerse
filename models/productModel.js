@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
   },
   offer: {
     type: ObjectId,
-    ref: "offerModel",
+    ref: "Offer",
   },
   discountPrice: Number,
   description: {

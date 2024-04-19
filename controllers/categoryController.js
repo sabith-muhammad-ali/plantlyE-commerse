@@ -1,10 +1,12 @@
 const categoryModel = require("../models/categoryModel");
 const category = require("../models/categoryModel");
+const offerModel = require("../models/offerModel");
 
 const productCategory = async (req, res) => {
   try {
-    const categories = await category.find();
-    res.render("category", { categories });
+    const offerData = await offerModel.find({});
+    const categories = await category.find().populate('offer');
+    res.render("category", { categories, offerData });
   } catch (error) {
     console.log(error);
   }
@@ -96,6 +98,8 @@ const updateCategory = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
 
 module.exports = {
   productCategory,

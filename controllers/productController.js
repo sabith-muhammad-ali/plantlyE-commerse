@@ -1,11 +1,13 @@
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
+const offerModel = require("../models/offerModel");
 const sharp = require("sharp");
 
 const loadproduct = async (req, res) => {
   try {
-    const product = await productModel.find({}).populate("categoryId");
-    res.render("product", { product });
+    const offerData = await offerModel.find({});
+    const product = await productModel.find({}).populate("categoryId").populate("offer")
+    res.render("product", { product, offerData });
   } catch (error) {
     console.log(error);
   }
