@@ -84,5 +84,6 @@ admin.post("/edit-offer", adminAuth.isLogin, offerController.editOffer);
 admin.post('/category-offer', adminAuth.isLogin, offerController.categoryOffer);
 admin.post("/remove-category-offer", adminAuth.isLogin, offerController.removeCategoryOffer)
 admin.post("/product-offer", adminAuth.isLogin, offerController.productOffer);
+admin.post("/remove-product-offer", adminAuth.isLogin, offerController.removeProductOffer);
 
 module.exports = admin;

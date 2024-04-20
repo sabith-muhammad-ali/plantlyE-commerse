@@ -439,7 +439,7 @@
                         <th class="text text-white"> Quantity </th>
                         <th class="text text-white"> Category </th>
                         <th class="text text-white"> Price </th>
-                        <th class="text-white">Discountfor  </th>
+                        <th class="text-white">Offer </th>
                         <th class="text text-white"> Discount </th>
                         <th class="text text-white"> Edit </th>
                         <th class="text text-white"> Status </th>
@@ -465,22 +465,29 @@
                             <%= products[i].categoryId.name %>
                           </td>
                           <td>
-                            <% if (products[i].discountAmount) { %>
-                              <s class="text-danger">₹<%= products[i].price %></s> <p class="text-success"><%= products[i].price - products[i].discountAmount %></p>
-                            <% } else if (products[i].categoryDiscount) { %>
-                              <s class="text-danger">₹<%= products[i].price %></s><p class="text-success"><%= products[i].price - products[i].categoryDiscount %></p>
-                            <% } else { %>
-                              <p class="text-white">₹<%= products[i].price %></p>
-                            <% } %>
+                            <% if (products[i].offer) { %>
+                              <s class="text-danger">₹<%= products[i].price %></s>
+                              <p class="text-success">
+                                <%= products[i].price - products[i].offer.discountAmount %>
+                              </p>
+                              <% } else if (products[i].categoryDiscount) { %>
+                                <s class="text-danger">₹<%= products[i].price %></s>
+                                <p class="text-success">
+                                  <%= products[i].price - products[i].categoryDiscount %>
+                                </p>
+                                <% } else { %>
+                                  <p class="text-white">₹<%= products[i].price %>
+                                  </p>
+                                  <% } %>
                           </td>
                           <td class="text-white">
                             <% if (products[i].offer && products[i].offer.discountAmount) { %>
-                              <P class="text-info">Product Offer</P>   
-                            <% } else if (products[i].categoryDiscount) { %> 
-                              <p class="text-info">Category Offer</p>
-                              <% } else { %>
-                              No offer available
-                            <% } %>
+                              <P class="text-info">Product Offer</P>
+                              <% } else if (products[i].categoryDiscount) { %>
+                                <p class="text-info">Category Offer</p>
+                                <% } else { %>
+                                  No offer available
+                                  <% } %>
                           </td>
                           <td>
                             <% if (!products[i].offer) { %>
@@ -488,12 +495,12 @@
                                 data-bs-target="#exampleModal" onclick="selectProduct('<%= products[i]._id %>')">
                                 Apply Offer
                               </button>
-                            <% } else { %>
-                              <button type="button" class="btn btn-danger"
-                                onclick="removeProductOffer('<%= products[i]._id %>')">
-                                Remove Offer
-                              </button>
-                            <% } %>
+                              <% } else { %>
+                                <button type="button" class="btn btn-danger"
+                                  onclick="removeProductOffer('<%= products[i]._id %>')">
+                                  Remove Offer
+                                </button>
+                                <% } %>
                           </td>
                           <td>
                             <a href="/admin/editproduct?id=<%= products[i]._id %>" class="btn btn-primary">Edit</a>
@@ -548,7 +555,8 @@
                           </p>
                           <p class="offer-details">Blocked: <%= offer.isBlocked %>
                           </p>
-                          <a href="/admin/product" onclick="applyCoupon('<%= offer._id %>')" class="btn btn-success"> Apply </a>
+                          <a href="/admin/product" onclick="applyCoupon('<%= offer._id %>')" class="btn btn-success">
+                            Apply </a>
                         </div>
                       </div>
                       <% if ((index + 1) % 2===0 || index===offerData.length - 1) { %>
@@ -582,6 +590,7 @@
     <script src="adminAssets/assets/js/settings.js"></script>
     <script src="adminAssets/assets/js/todolist.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
       $(document).ready(function () {
@@ -626,40 +635,83 @@
       });
     </script>
 
-        <!-- addOfferForproduct -->
-        <script>
-          let productId;
-    
-          function selectProduct(selectedProductId) {
-            productId = selectedProductId;
-            console.log("productId:", productId);
+    <!-- Add Offer For Product -->
+    <script>
+      let productId;
+
+      function selectProduct(selectedProductId) {
+        productId = selectedProductId;
+        console.log("productId:", productId);
+      }
+
+      function applyCoupon(offerId) {
+        console.log("offerId", offerId);
+        fetch("/admin/product-offer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            productId: productId,
+            offerId: offerId
+          }),
+        }).then(response => {
+          return response.json();
+        }).then(data => {
+          if (data.success === true) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Offer Added',
+              text: 'The offer has been successfully added to the category.',
+            });
           }
-    
-          function applyCoupon(offerId) {
-            console.log("offerId", offerId);
-            fetch("/admin/product-offer", {
+        })
+      }
+    </script>
+
+    <!-- Remove Offer From Product  -->
+    <script>
+
+      async function removeProductOffer(selectedProductId) {
+        try {
+          const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+          });
+          if (result.isConfirmed) {
+            console.log("selectProduct:", selectedProductId)
+            const response = await fetch("/admin/remove-product-offer", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                productId: productId,
-                offerId: offerId
-              }),
-            }).then(response => {
-              return response.json();
-            }).then(data => {
+                selectedProductId
+              })
+            })
+            if (response.ok) {
+              const data = await response.json();
               if (data.success === true) {
                 Swal.fire({
                   icon: 'success',
-                  title: 'Offer Added',
-                  text: 'The offer has been successfully added to the category.',
+                  title: 'Offer Deleted',
+                  text: 'The offer has been successfully deleted from product.',
+                }).then(() => {
+                  location.reload();
                 });
               }
-            })
+            }
           }
-        </script>
-
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    </script>
 
 
 </body>

@@ -90,8 +90,8 @@ const editOffer = async (req, res) => {
 const categoryOffer = async (req, res) => {
   try {
     const { categoryId, offerId } = req.body;
-    const selectedOffer = await offerModel.findById(offerId)
-    console.log("selectedOffer:",selectedOffer)
+    const selectedOffer = await offerModel.findById(offerId);
+    console.log("selectedOffer:", selectedOffer);
 
     // Update the category offer
     const selectedCategory = await categoryModel.findOneAndUpdate(
@@ -103,12 +103,12 @@ const categoryOffer = async (req, res) => {
 
     // Update discount amount for products in the category
     const categoryOffer = await productModel.updateMany(
-      { categoryId: categoryId , discountPrice : null},
+      { categoryId: categoryId, discountPrice: null },
       { $set: { categoryDiscount: selectedOffer.discountAmount } },
       { new: true }
     );
 
-    console.log("categoryOffer",categoryOffer);
+    console.log("categoryOffer", categoryOffer);
 
     res.json({ success: true });
   } catch (error) {
@@ -125,12 +125,14 @@ const removeCategoryOffer = async (req, res) => {
       { $unset: { offer: 1 } },
       { new: true }
     );
-    
-    console.log("selectedCategory:",selectedCategory);
 
-    await productModel.updateMany({categoryId:categoryId},{$unset: {categoryDiscount:1}})
-    res.json({success:true});
+    console.log("selectedCategory:", selectedCategory);
 
+    await productModel.updateMany(
+      { categoryId: categoryId },
+      { $unset: { categoryDiscount: 1 } }
+    );
+    res.json({ success: true });
   } catch (error) {
     console.log(error);
   }
@@ -143,6 +145,23 @@ const productOffer = async (req, res) => {
     const selectedProduct = await productModel.findOneAndUpdate(
       { _id: productId },
       { $set: { offer: offerId } },
+      { new: true }
+    );
+    console.log("selectedProduct:", selectedProduct);
+
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeProductOffer = async (req, res) => {
+  try {
+    const { selectedProductId } = req.body;
+    console.log("req.body:", req.body);
+    const selectedProduct = await productModel.findOneAndUpdate(
+      { _id: selectedProductId },
+      { $unset: { offer: 1 } },
       { new: true }
     );
     console.log("selectedProduct:", selectedProduct);
@@ -162,4 +181,5 @@ module.exports = {
   categoryOffer,
   removeCategoryOffer,
   productOffer,
+  removeProductOffer,
 };
