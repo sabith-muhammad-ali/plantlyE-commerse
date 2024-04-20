@@ -439,8 +439,7 @@
                         <th class="text text-white"> Quantity </th>
                         <th class="text text-white"> Category </th>
                         <th class="text text-white"> Price </th>
-                        <th class="text-white">Discount Price</th>
-                        <th class="text-white">Discount Price</th>
+                        <th class="text-white">Discountfor  </th>
                         <th class="text text-white"> Discount </th>
                         <th class="text text-white"> Edit </th>
                         <th class="text text-white"> Status </th>
@@ -465,13 +464,23 @@
                           <td class="text text-white">
                             <%= products[i].categoryId.name %>
                           </td>
-                          <td class="text text-white">₹ <%= products[i].price %>
-                          </td>
-                          <td class="<%= products[i].offer && products[i].offer.discountAmount ? 'text-success' : 'text-muted' %>">
-                            <%= products[i].offer ? products[i].offer.discountAmount : 'No offer available' %>
+                          <td>
+                            <% if (products[i].discountAmount) { %>
+                              <s class="text-danger">₹<%= products[i].price %></s> <p class="text-success"><%= products[i].price - products[i].discountAmount %></p>
+                            <% } else if (products[i].categoryDiscount) { %>
+                              <s class="text-danger">₹<%= products[i].price %></s><p class="text-success"><%= products[i].price - products[i].categoryDiscount %></p>
+                            <% } else { %>
+                              <p class="text-white">₹<%= products[i].price %></p>
+                            <% } %>
                           </td>
                           <td class="text-white">
-                            ₹<%= products[i].discountPrice %>
+                            <% if (products[i].offer && products[i].offer.discountAmount) { %>
+                              <P class="text-info">Product Offer</P>   
+                            <% } else if (products[i].categoryDiscount) { %> 
+                              <p class="text-info">Category Offer</p>
+                              <% } else { %>
+                              No offer available
+                            <% } %>
                           </td>
                           <td>
                             <% if (!products[i].offer) { %>

@@ -90,12 +90,26 @@ const editOffer = async (req, res) => {
 const categoryOffer = async (req, res) => {
   try {
     const { categoryId, offerId } = req.body;
+    const selectedOffer = await offerModel.findById(offerId)
+    console.log("selectedOffer:",selectedOffer)
+
+    // Update the category offer
     const selectedCategory = await categoryModel.findOneAndUpdate(
       { _id: categoryId },
       { $set: { offer: offerId } },
       { new: true }
     );
     console.log("selectedCategory", selectedCategory);
+
+    // Update discount amount for products in the category
+    const categoryOffer = await productModel.updateMany(
+      { categoryId: categoryId , discountPrice : null},
+      { $set: { categoryDiscount: selectedOffer.discountAmount } },
+      { new: true }
+    );
+
+    console.log("categoryOffer",categoryOffer);
+
     res.json({ success: true });
   } catch (error) {
     console.log(error);
@@ -111,6 +125,12 @@ const removeCategoryOffer = async (req, res) => {
       { $unset: { offer: 1 } },
       { new: true }
     );
+    
+    console.log("selectedCategory:",selectedCategory);
+
+    await productModel.updateMany({categoryId:categoryId},{$unset: {categoryDiscount:1}})
+    res.json({success:true});
+
   } catch (error) {
     console.log(error);
   }
@@ -119,14 +139,14 @@ const removeCategoryOffer = async (req, res) => {
 const productOffer = async (req, res) => {
   try {
     const { productId, offerId } = req.body;
-    console.log("req.body:",req.body);
+    console.log("req.body:", req.body);
     const selectedProduct = await productModel.findOneAndUpdate(
-      {_id: productId},
-      {$set:{offer : offerId}},
-      {new:true}
+      { _id: productId },
+      { $set: { offer: offerId } },
+      { new: true }
     );
-    console.log("selectedProduct:",selectedProduct);
-    res.json({success: true})
+    console.log("selectedProduct:", selectedProduct);
+    res.json({ success: true });
   } catch (error) {
     console.log(error);
   }
