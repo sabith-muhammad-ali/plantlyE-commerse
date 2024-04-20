@@ -2,8 +2,8 @@ const User = require("../models/userModel");
 const UserOTPVerfication = require("../models/OTPModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
-const productModel = require("../models/productModel");
 const crypto = require("crypto");
+const productModel = require("../models/productModel");
 const Cart = require("../models/cartModel");
 const bannerModel = require("../models/bannerModel");
 const couponModel = require("../models/couponModel");
@@ -16,9 +16,10 @@ const homePage = async (req, res) => {
     const productData = await productModel.find({
       is_blocked: false,
     });
+    const offer = await productModel.find({}).populate('offer');
     const userData = await User.findOne({ _id: req.session.userId });
     const banner = await bannerModel.find({ is_listed: false });
-    res.render("user/home", { userData, banner, productData });
+    res.render("user/home", { userData, banner, productData, offer });
   } catch (error) {
     console.log(error.message);
   }
@@ -282,6 +283,7 @@ const loadShop = async (req, res) => {
     const product = await productsQuery.exec();
     const categoryData = await categoryModel.find({ is_block: false });
     const cart = await Cart.find({}).populate("items.productId");
+    const offer = await productModel.find({}).populate("offer");
 
     const totalPages = Math.ceil(totalProducts / limit);
     res.render("user/shop", {
@@ -290,7 +292,9 @@ const loadShop = async (req, res) => {
       categoryData,
       totalPages,
       currentPage: page,
+      offer,
     });
+
   } catch (error) {
     console.log(error);
   }

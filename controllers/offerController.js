@@ -149,6 +149,14 @@ const productOffer = async (req, res) => {
     );
     console.log("selectedProduct:", selectedProduct);
 
+      
+    
+    const removeCategoryOffer =   await productModel.updateOne(
+        { _id: selectedProduct },
+        { $unset: { categoryDiscount: null } }
+      );
+
+      console.log("removeCategoryOffer",removeCategoryOffer);
     res.json({ success: true });
   } catch (error) {
     console.log(error);
