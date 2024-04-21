@@ -317,35 +317,39 @@
 
                                  <div class="dropdown-menu s_cart dropdown-menu-right">
                                     <ul class="shopping-cart p-2">
-                                        <% if (cart && cart.length > 0) { %>
-                                            <% 
-                                            let count = 0; 
-                                            cart.forEach(function(cartItem) { 
-                                                cartItem.items.forEach(function(item) { 
-                                                    // Check if the counter is less than 2
-                                                    if (count < 2) { %>
-                                                        <li class="pb-2 d-block">
-                                                            <div class="media">
-                                                                <div class="non-clickable-image">
-                                                                    <img src="/assets/sharp/<%= item.productId.images[0] %>" class="fst-image img-fluid align-self-center" alt="product_13"></a>
-                                                                </div>
-                                                                <div class="media-body">
-                                                                    <h6 class="m-3 f_15"><%= item.productId.name %></h6>
-                                                                    <h6 class="m-3 f_15">₹<%= item.productId.price %></h6>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <% 
-                                                        count++; 
-                                                    }
-                                                }); 
-                                            }); 
-                                            %>
-                                        <% } else { %>
-                                            <li class="pb-2 d-block">
-                                                <p>No items in the cart</p>
-                                            </li>
-                                        <% } %>
+                                       <% if (cart && cart.length > 0) { %>
+                                          <% cart.forEach(function(cartItem) { %>
+                                              <% cartItem.items.forEach(function(item) { %>
+                                                  <li class="pb-2 d-block">
+                                                      <div class="media">
+                                                          <div class="non-clickable-image">
+                                                              <img src="/assets/sharp/<%= item.productId.images[0] %>" class="fst-image img-fluid align-self-center" alt="product_13"></a>
+                                                          </div>
+                                                          <div class="media-body">
+                                                              <h6 class="m-3 f_15"><%= item.productId.name %></h6>
+                                                              <% if(item.productId.offer){ %>
+                                                                  <span class="text-center prices">
+                                                                      <del class="text-center text-muted price">&nbsp;&nbsp; ₹<%= item.productId.price %> </del>
+                                                                      <span class="font-weight-bolder price text-success">&nbsp; ₹<%= item.productId.price - item.productId.offer.discountAmount %></span>
+                                                                  </span>
+                                                              <% }else if (item.productId.categoryDiscount) { %>
+                                                                  <span class="text-center prices">
+                                                                      <del class="text-center text-muted price">&nbsp;&nbsp; ₹<%= item.productId.price %> </del>
+                                                                      <span class="font-weight-bolder price text-success">&nbsp; ₹<%= item.productId.price - item.productId.categoryDiscount %></span>
+                                                                  </span>
+                                                              <% } else { %>
+                                                                  <h6 class="m-3 f_15">₹<%= item.productId.price %></h6>
+                                                              <% } %>
+                                                          </div>
+                                                      </div>
+                                                  </li>
+                                              <% }); %>
+                                          <% }); %>
+                                      <% } else { %>
+                                          <li class="pb-2 d-block">
+                                              <p>No items in the cart</p>
+                                          </li>
+                                      <% } %>
                                 
                                         <li class="d-block font-weight-bolderer pt-2">
                                             <span class="text-left"><a href="/cart">view cart</a></span>
@@ -678,9 +682,9 @@
                                  <h2 class="pro-heading  font-weight-bolder mb-1	"><a href="single-product.html"><%= product.name  %></a></h2>
 
                                  <% if (product.offer) { %>
-                                    <span class="text-center prices"><del class=" text-muted">₹<%=product.price%> </del> <span class=" font-weight-bolder price text-success"> ₹<%= product.offer.discountAmount %> </span></span>
+                                    <span class="text-center prices"><del class=" text-muted">₹<%= product.price %> </del> <span class=" font-weight-bolder price text-success">&nbsp ₹<%= product.price - product.offer.discountAmount %> </span></span>
                                  <% }else if (product.categoryDiscount) { %>
-                                    <span class="text-center prices"><del class=" text-muted">₹<%=product.price%> </del> <span class=" font-weight-bolder price text-success"> ₹<%= product.categoryDiscount %> </span></span>
+                                    <span class="text-center prices"><del class=" text-muted">₹<%= product.price %> </del> <span class=" font-weight-bolder price text-success">&nbsp  ₹<%= product.price - product.categoryDiscount %> </span></span>
                                  <% } else  { %>
                                     <span class="text-center prices"><span class="font-weight-bolder price">₹<%=product.price%> </span> <del class="text-muted"></del></span>
                                  <% }   %>

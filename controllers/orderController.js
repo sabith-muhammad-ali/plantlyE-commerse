@@ -30,11 +30,23 @@ const loadCheckout = async (req, res) => {
       user: req.session.userId,
     });
 
-    const subtotal = cartData.items.reduce(
-      (acc, val) => acc + val.productId.price * val.quantity,
-      0
-    );
-
+    let subtotal = 0;
+    let totalDiscountAmount = 0;
+    cartData.items.forEach((val) => {
+      if (val.productId.offer) {
+        // If Apply Product Offer
+        subtotal += (val.productId.price - val.productId.offer.discountAmount) * val.quantity;
+        totalDiscountAmount += val.productId.offer.discountAmount * val.quantity;
+      } else {
+        if (val.productId.categoryDiscount) {
+          // If Apply category Offer
+          subtotal += (val.productId.price - val.productId.categoryDiscount) * val.quantity;
+          totalDiscountAmount += val.productId.categoryDiscount * val.quantity;
+        } else {
+          subtotal += val.productId.price * val.quantity;
+        }
+      }
+    });
     const couponData = await couponModel.find({
       expiryDate: { $gte: currentData },
       isBlocked: false,
@@ -46,6 +58,7 @@ const loadCheckout = async (req, res) => {
       addressData,
       cartData,
       subtotal,
+      totalDiscountAmount,
       couponData,
       walletData,
     });

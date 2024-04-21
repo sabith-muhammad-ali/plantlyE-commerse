@@ -688,8 +688,19 @@
                                           <%= items.productId.name %>
                                        </h4>
                                        <div>
-                                          <span class="font-weight-bolderer price">₹<%= items.productId.price %></span>
-                                          <del class="text-muted">₹1500</del>
+                                          <% if (items.productId.offer) { %>
+                                             <span class="text-center prices">
+                                                <del class="text-center text-muted price">₹<%= items.productId.price %> </del>
+                                                  <span class="font-weight-bolder price text-success">&nbsp; ₹<%= items.productId.price - items.productId.offer.discountAmount %></span>
+                                             </span>
+                                          <% } else if (items.productId.categoryDiscount) { %>
+                                             <span class="text-center prices">
+                                                <del class="text-center text-muted price">₹<%= items.productId.price %> </del>
+                                                  <span class="font-weight-bolder price text-success">&nbsp; ₹<%= items.productId.price - items.productId.categoryDiscount %></span>
+                                             </span>
+                                          <% } else { %>
+                                             <span class="font-weight-bolderer price">₹<%= items.productId.price %></span>
+                                          <% } %>
                                        </div>
                                     </div>
                                  </div>
@@ -697,8 +708,13 @@
                               <div class="col-12 col-md-6 mt-4">
                                  <div class="d-flex">
                                     <div class="col-md-3 col-sm-4 col-5 text-left text-md-right my-2">
-                                       <span class="font-weight-bolder">₹<%= items.productId.price * items.quantity %>
-                                       </span>
+                                       <% if (items.productId.offer) { %>
+                                          <span class="font-weight-bolder">₹<%= (items.productId.price - items.productId.offer.discountAmount) * items.quantity %> </span>
+                                       <% } else if (items.productId.categoryDiscount) { %>
+                                          <span class="font-weight-bolder">₹<%= (items.productId.price - items.productId.categoryDiscount) * items.quantity %> </span>
+                                       <% } else { %>
+                                          <span class="font-weight-bolder">₹<%= items.productId.price * items.quantity %></span>
+                                       <% } %>
                                     </div>
                                     <div class="col-md-6 col-sm-4 col-5">
                                        <div class="input-group">
@@ -727,14 +743,20 @@
                            <div class="row">
                               <div class="col-6 col-sm-7 text-right">
                                  <div class="my-2 font-weight-bolder">
-                                    <span>total:</span>
-                                    <% var total=0; %>
-                                       <% data.items.forEach(function(items) { %>
-                                          <% total += items.productId.price * items.quantity %>
-                                             <% }) %>
-                                                <span>₹<%= total %></span>
+                                     <span>total:</span>
+                                     <% var total = 0; %>
+                                     <% data.items.forEach(function(items) { %>
+                                         <% if (items.productId.offer) { %>
+                                             <% total += (items.productId.price - items.productId.offer.discountAmount) * items.quantity; %>
+                                         <% } else if (items.productId.categoryDiscount) { %>
+                                             <% total += (items.productId.price  - items.productId.categoryDiscount) * items.quantity; %>
+                                         <% } else { %>
+                                             <% total += items.productId.price * items.quantity; %>
+                                         <% } %>
+                                     <% }); %>
+                                     <span>₹<%= total %></span>
                                  </div>
-                              </div>
+                             </div>
                               <div class="col-6 col-sm-5 checkout-btn">
                                  <a href="/checkOut" class="btn btn-block f_13 font-weight-bolder">Checkout</a>
                               </div>

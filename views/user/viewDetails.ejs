@@ -802,7 +802,7 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title"><%= item.productId.name %></h5>
-                                            <p class="card-text">Price: <%= item.productId.price * item.quantity %></p>
+                                            <p class="card-text">Price: <%= order.Total %></p>
                                             <p class="card-text">Quantity: <%= item.quantity %></p>
                                             <p class="card-text">Name: <%= order.shippingAddress.name %></p>
                                             <p class="card-text">Address: <%= order.shippingAddress.address %>, <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>, <%= order.shippingAddress.postcode %></p>

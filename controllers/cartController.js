@@ -42,9 +42,8 @@ const cartLoad = async (req, res) => {
   try {
     if (req.session.userId) {
       const id = req.session.userId;
-      const cartData = await Cart.findOne({ user: id }).populate(
-        "items.productId"
-      );
+      const cartData = await Cart.findOne({ user: id })
+        .populate("items.productId")
 
       res.render("user/cart-load", { data: cartData, id });
     }

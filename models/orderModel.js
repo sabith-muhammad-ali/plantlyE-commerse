@@ -18,13 +18,13 @@ const orderSchema = new mongoose.Schema({
         required: true,
       },
       price: {
-        type:Number,
-        required:true
+        type: Number,
+        required: true,
       },
-      productStatus:{
-        type:String,
-        enum:["Pending","Placed","Delivered","Cancelled","Returned",],
-        default: "Pending"
+      productStatus: {
+        type: String,
+        enum: ["Pending", "Placed", "Delivered", "Cancelled", "Returned"],
+        default: "Pending",
       },
       cancel: {
         status: { type: String },
@@ -73,16 +73,19 @@ const orderSchema = new mongoose.Schema({
     default: Date.now,
   },
   expectedDate: {
-    type:Date,
-    required: true
+    type: Date,
+    required: true,
   },
   Total: {
     type: Number,
     required: true,
   },
-  coupon:{
-    type:Number
-  }
+  coupon: {
+    type: Number,
+  },
+  discountAmount: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);

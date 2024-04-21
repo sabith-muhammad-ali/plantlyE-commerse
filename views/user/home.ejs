@@ -810,9 +810,15 @@
                                                             <!-- Your star rating code here -->
                                                         </div>
                                                         <% if (product.offer) { %>
-                                                         <span class="text-center prices"><del class="text-center text-muted price">₹<%= product.price %> </del>&nspa; <span class="font-weight-bolder price text-success">₹<%= product.offer.discountAmount %></span></span>
+                                                         <span class="text-center prices">
+                                                            <del class="text-center text-muted price">₹<%= product.price %> </del>
+                                                              <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price - product.offer.discountAmount %></span>
+                                                         </span>
                                                         <% } else if (product.categoryDiscount) { %>
-                                                         <span class="text-center prices"><del class="text-center text-muted price">₹<%= product.price %> </del>&nspa; <span class="font-weight-bolder price text-success">₹<%= product.categoryDiscount %></span></span>
+                                                         <span class="text-center prices">
+                                                            <del class="text-center text-muted price">₹<%= product.price %> </del>
+                                                              <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price- product.categoryDiscount %> </span>
+                                                         </span>
                                                         <% } else { %>
                                                            <span class="text-center prices"><span class="font-weight-bolderer price">₹<%= product.price %> </span> <del class="text-muted"></del></span>
                                                         <% } %>
@@ -857,7 +863,19 @@
                                                             <div class="star">
                                                                 <!-- Your star rating code here -->
                                                             </div>
-                                                            <span class="text-center prices"><span class="font-weight-bolderer price">₹<%= product.price %></span> <del class="text-muted">₹1500</del></span>
+                                                            <% if (product.offer) { %>
+                                                               <span class="text-center prices">
+                                                                  <del class="text-center text-muted price">₹<%= product.price %> </del>
+                                                                    <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price - product.offer.discountAmount %></span>
+                                                               </span>
+                                                              <% } else if (product.categoryDiscount) { %>
+                                                               <span class="text-center prices">
+                                                                  <del class="text-center text-muted price">₹<%= product.price %> </del>
+                                                                    <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price - product.categoryDiscount %></span>
+                                                               </span>
+                                                              <% } else { %>
+                                                                 <span class="text-center prices"><span class="font-weight-bolderer price">₹<%= product.price %> </span> <del class="text-muted"></del></span>
+                                                              <% } %>
                                                             <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
                                                                 + ADD TO CART
                                                             </a>
@@ -1276,7 +1294,7 @@
                <!-- owl-carousel-1 -->
             </div>
             <div class="text-center">
-               <button type="btn" type="submit" class="products-btn"><a href="shop-left-sidebar.html">All Products</a></button>
+               <button type="btn" type="submit" class="products-btn"><a href="/shop">All Products</a></button>
             </div>
          </div>
       </div>

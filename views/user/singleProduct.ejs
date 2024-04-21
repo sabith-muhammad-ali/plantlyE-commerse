@@ -783,9 +783,19 @@
                      <h1 class=""><a href="#">
                            <%= product.name %>
                         </a></h1>
-                     <span class="sp_price font-weight-bold">
-                        ₹<%= product.price %>
-                     </span>
+                        <% if (product.offer) { %>
+                           <span class="text-center prices">
+                              <del class="text-center text-muted price">₹<%= product.price %> </del>
+                                <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price - product.offer.discountAmount %></span>
+                           </span>
+                          <% } else if (product.categoryDiscount) { %>
+                           <span class="text-center prices">
+                              <del class="text-center text-muted price">₹<%= product.price %> </del>
+                                <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price - product.categoryDiscount %></span>
+                           </span>
+                          <% } else { %>
+                             <span class="text-center prices"><span class="font-weight-bolderer price">₹<%= product.price %> </span> <del class="text-muted"></del></span>
+                          <% } %>
                      <div class="text-secondary sp_tax">Tax included.</div>
                      <div class="sp_add_info my-3">
                         <ul>

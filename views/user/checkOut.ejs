@@ -1016,7 +1016,7 @@
                </div>
             </div>
 
-            <% if (cartData && cartData.couponDiscount && cartData.couponDiscount.discountAmount !== null) { %>
+            <% if (cartData && cartData.couponDiscount && cartData.couponDiscount.discountAmount !== null  ) { %>
                <div class="col-lg-4 col-12">
                   <div class="border rounded bg-white final_payment">
                      <div class="card-body  border-bottom">
@@ -1031,6 +1031,10 @@
                         <div>
                            <span class="font-weight-bolder">Discount (<%= cartData.couponDiscount.name %>)</span>
                            <span class="float-right font-weight-bolder text-success">₹<%= cartData.couponDiscount.discountAmount %></span>
+                        </div>
+                        <div>
+                           <span class="font-weight-bolder">Offer Discount</span>
+                           <span class="float-right font-weight-bolder">₹<%= totalDiscountAmount %></span>
                         </div>
                      </div>
                      <div class="card-body ">
@@ -1054,8 +1058,12 @@
                            <span class="float-right font-weight-bolder">₹<%= subtotal %></span>
                         </div><br>
                         <div>
-                           <span class="font-weight-bolder">Discount</span>
+                           <span class="font-weight-bolder">Coupon Discount</span>
                            <span class="float-right font-weight-bolder">₹0</span>
+                        </div><br>
+                        <div>
+                           <span class="font-weight-bolder">Offer Discount</span>
+                           <span class="float-right font-weight-bolder text-success ">₹<%= totalDiscountAmount %></span>
                         </div>
                      </div>
                      <div class="card-body ">
