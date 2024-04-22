@@ -5,6 +5,7 @@ const cartModel = require("../models/cartModel");
 const couponModel = require("../models/couponModel");
 const walletModel = require("../models/walletModel");
 const userModel = require("../models/userModel");
+const offerModel = require("../models/offerModel");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const path = require("path");
@@ -22,9 +23,16 @@ const loadCheckout = async (req, res) => {
     const userId = req.session.userId;
     const currentData = new Date();
     const cartData = await cartModel
-      .findOne({ user: userId })
-      .populate("items.productId")
-      .populate("couponDiscount");
+    .findOne({ user: userId })
+    .populate({
+      path: "items.productId",
+      populate: {
+        path: "offer",
+        model: "Offer"
+      }
+    })
+    .populate("couponDiscount");
+      
 
     const addressData = await addressModel.findOne({
       user: req.session.userId,
@@ -33,7 +41,7 @@ const loadCheckout = async (req, res) => {
     let subtotal = 0;
     let totalDiscountAmount = 0;
     cartData.items.forEach((val) => {
-      if (val.productId.offer) {
+      if (val.productId.offer && val.productId.offer.discountAmount) {
         // If Apply Product Offer
         subtotal += (val.productId.price - val.productId.offer.discountAmount) * val.quantity;
         totalDiscountAmount += val.productId.offer.discountAmount * val.quantity;
@@ -98,6 +106,7 @@ const placeOrder = async (req, res) => {
     const addressId = requestBody.addressId;
     const paymentMethod = requestBody.paymentMethod;
     const subtotal = requestBody.subtotal;
+    const discountAmount = requestBody.discountAmount;
 
     let status =
       paymentMethod == "cash On Delivey" || paymentMethod == "wallet"
@@ -133,7 +142,6 @@ const placeOrder = async (req, res) => {
         productStatus: status,
       });
     }
-    console.log("orderProduct:", orderProducts);
 
     const order = new orderModel({
       userId: userId,
@@ -149,6 +157,7 @@ const placeOrder = async (req, res) => {
       paymentMethod: paymentMethod,
       expectedDate: expectedDate,
       Total: subtotal,
+      discountAmount:discountAmount,
     });
 
     await order.save();
@@ -164,13 +173,11 @@ const placeOrder = async (req, res) => {
       }
       await cartModel.deleteOne({ user: userId });
     } else if (paymentMethod === "wallet") {
-      console.log("order placed wallet");
       const data = {
         amount: subtotal,
         reason: "Order Placed",
         transaction: "Debit",
       };
-      console.log("data", data);
 
       const walletData = await walletModel.findOne({ userId: userId });
       walletData.history.push(data);
@@ -250,7 +257,6 @@ const verifyPayment = async (req, res) => {
       });
     }
 
-    console.log("productStatusChangeRazorpay:", productStatusChange);
 
     await orderModel.findByIdAndUpdate(
       { _id: orderId },
@@ -299,7 +305,6 @@ const cancelOrders = async (req, res) => {
     const cancelledOrder = order.product.find(
       (p) => p.productId == productId
     ).quantity;
-    console.log("cancelledOrder", cancelledOrder);
 
     //update quantity after cancell
     await productModel.findByIdAndUpdate(
@@ -309,11 +314,9 @@ const cancelOrders = async (req, res) => {
 
     if (order.paymentMethod === "razorPay" || order.payment === "wallet") {
       const orderDetails = await orderModel.findOne({ _id: orderId });
-      console.log("product:", orderDetails);
       const productPrice = orderDetails.product.find(
         (p) => p.productId == productId
       ).price;
-      console.log("productPrice123:", productPrice);
 
       await walletModel.updateOne(
         { userId: userId },
@@ -366,9 +369,6 @@ const returnOrder = async (req, res) => {
   try {
     const { orderId, status, productId } = req.body;
     const userId = req.session.userId;
-    console.log("orderId:", orderId);
-    console.log("productId:", productId);
-    console.log("status:", status);
     await orderModel.updateOne(
       { _id: orderId, "product.productId": productId },
       { $set: { "product.$.productStatus": status } }
@@ -377,7 +377,6 @@ const returnOrder = async (req, res) => {
     const returnedOrder = order.product.find(
       (p) => p.productId == productId
     ).quantity;
-    console.log("returnedOrder:", returnedOrder);
 
     // update quantity after returned product
     await productModel.findByIdAndUpdate(
@@ -387,11 +386,9 @@ const returnOrder = async (req, res) => {
 
     if (order.paymentMethod === "razorPay" || order.payment === "wallet") {
       const product = await orderModel.findOne({ _id: orderId });
-      console.log("product:", product);
       const productPrice = product.product.find(
         (p) => p.productId == productId
       ).price;
-      console.log("productPrice123:", productPrice);
 
       await walletModel.updateOne(
         { userId: userId },
@@ -434,14 +431,12 @@ const loadWallet = async (req, res) => {
 const invoice = async (req, res) => {
   try {
     const { orderId, productId } = req.query;
-    // console.log("Order ID:", orderId);
-    // console.log("Product ID:", productId);
+
 
     const orderData = await orderModel
       .findById({ _id: orderId })
       .populate("product.productId");
 
-    console.log("Order Data:", orderData);
 
     const date = new Date();
     const orderDetails = {
@@ -475,7 +470,7 @@ const invoice = async (req, res) => {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      "attachment; filename = BESPOKE-INVOICE.pdf"
+      "attachment; filename = Plantly-Invoice.pdf"
     );
     res.send(pdfBytes);
   } catch (error) {
@@ -483,6 +478,29 @@ const invoice = async (req, res) => {
     res.status(500).send("Error in generating invoice");
   }
 };
+
+const rePayment = async (req,res) => {
+  try {
+    const {orderId, totalAmount} = req.body;
+    console.log("req.body:",req.body);
+
+    let options = {
+      amount: subtotal * 100,
+      currency: "INR",
+      receipt: orderId,
+    };
+    razorPay.orders.create(options, function (err, order) {
+      if (err) {
+        console.log("err:", err);
+        res.status(500).json({ error: "Error creating Razorpay order" });
+      } else {
+        return res.json({ success: true, response: "razorpay", order });
+      }
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 module.exports = {
   loadCheckout,
@@ -496,4 +514,5 @@ module.exports = {
   returnOrder,
   loadWallet,
   invoice,
+  rePayment
 };

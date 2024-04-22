@@ -682,13 +682,17 @@
                         <div class="invalid-feedback">Please Enter your Account Name.</div>
                     </div>
                     <% if (user.mobile) { %>
-
                      <div class="form-group">
                         <label for="r_password" class="font-weight-bolder">Phone Number</label>
                         <input type="number" class="form-control" id="phone" name="phone" value="<%= user.mobile %>" required>
                         <div class="invalid-feedback">Please Enter your Phone Number.</div>
                      </div>
                      <% } %>
+                     <label for="r_email" class="font-weight-bolder">REFERRAL LINK:</label>
+                     <div class="form-group" style="display: flex;">
+                        <input type="text" class="form-control" id="referralLink" name="referralLink" required value="http://localhost:3001/registration?referralCode=<%= user.referralCode %>" readonly onclick="copyReferralLink()">
+                        <button class="btn btn-primary" onclick="copyReferralLink()">Link</button>
+                    </div>
                     <div class="clearfix">
                         <button id="resetpassword" type="reset" class="btn btn-primary rese float-left mt-3">Reset Password</button>
                         <button type="button" class="btn btn-primary rese float-right mt-3"  onclick="editprofile()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit profiile</button>
@@ -984,7 +988,7 @@
             </div>
             <div class="form-group">
                 <label for="r_email" class="font-weight-bolder">Email address</label>
-                <input type="email" class="form-control red-text " id="r_email" name="email" required value="To change email, please contact support at plantlyecom@gmail.com">
+                <input type="email" class="form-control red-text " id="r_email" name="email" required value="To change email, please contact support at plantly@gmail.com" readonly>
                 <div class="invalid-feedback">Please Enter your Account Name.</div>
             </div>
             <div class="form-group">
@@ -1020,9 +1024,19 @@
       $('#staticBackdrop').modal('show')
    }
  </script>
+ <script>
+           function copyReferralLink() {
+            var copyText = document.getElementById("referralLink");
+            copyText.select();
+            document.execCommand("copy");
+
+            Swal.fire("Referral link copied to clipboard!");
+        }
+ </script>
 
       <!-- footer -->
       <!-- footer end -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="assets/js/jquery-3.4.1.min.js"></script>
       <script src="assets/js/owl.carousel.js"></script>
       <script src="assets/js/bootstrap.min.js"></script>

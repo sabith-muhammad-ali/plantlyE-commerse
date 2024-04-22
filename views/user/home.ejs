@@ -809,7 +809,7 @@
                                                         <div class="star">
                                                             <!-- Your star rating code here -->
                                                         </div>
-                                                        <% if (product.offer) { %>
+                                                        <% if (product.offer && product.offer.discountAmount) { %>
                                                          <span class="text-center prices">
                                                             <del class="text-center text-muted price">₹<%= product.price %> </del>
                                                               <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price - product.offer.discountAmount %></span>
@@ -863,7 +863,7 @@
                                                             <div class="star">
                                                                 <!-- Your star rating code here -->
                                                             </div>
-                                                            <% if (product.offer) { %>
+                                                            <% if ( product.offer && product.offer.discountAmount) { %>
                                                                <span class="text-center prices">
                                                                   <del class="text-center text-muted price">₹<%= product.price %> </del>
                                                                     <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price - product.offer.discountAmount %></span>

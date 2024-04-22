@@ -642,7 +642,12 @@
             <h1 class="text-center h1_">SIGNUP WITH PLANTLY </h1>
             <div id="Registration" class="page-content card card-block p-3 p-sm-4">
                <form method="post" id="user-form">
-                  <p>Already have an account?<a href="#"> Log in instead!</a></p>
+                  <% if (typeof message !== 'undefined') { %>
+                     <div class="alert alert-danger" role="alert">
+                         <%= message %>
+                     </div>
+                  <% } %>
+                  <p>Already have an account?<a href="/login-User"> Log in instead!</a></p>
                   <div class="form-group">
                       <label for="f_name" class="font-weight-bolder">First name</label>
                       <input type="text" class="form-control" id="f_name" name="fname">

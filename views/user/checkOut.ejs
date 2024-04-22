@@ -968,13 +968,23 @@
                               <form>
                                  <div class="form-group text-left">
                                     <label class="font-weight-bolder">payment Method</label><br>
-                                    <span class="form-check d-inline-block">
-                                       <input class="form-check-input" type="radio" name="payment" id="pay_by_check"
-                                          value="cash On Delivey" checked>
-                                       <label class="form-check-label" for="pay_by_check">
-                                          Cash On Delivery
-                                       </label>
-                                    </span>
+                                    <% if(subtotal > 1000) { %>
+                                       <span class="form-check d-inline-block">
+                                          <input class="form-check-input" type="radio" name="payment" id="pay_by_check"value="cash On Delivey" disabled>
+                                          <label class="form-check-label" for="pay_by_check">
+                                             Cash On Delivery
+                                          </label>
+                                       </span>
+                                       <p class=" text text-danger">Apologies, we can't offer cash on delivery for orders over Rs. 1000; please use alternative payment methods</p>
+                                    <% }else { %>
+                                       <span class="form-check d-inline-block">
+                                          <input class="form-check-input" type="radio" name="payment" id="pay_by_check"
+                                             value="cash On Delivey" checked>
+                                          <label class="form-check-label" for="pay_by_check">
+                                             Cash On Delivery
+                                          </label>
+                                       </span>
+                                    <% } %>
                                     <span class="form-check d-inline-block ml-2">
                                        <input class="form-check-input" type="radio" name="payment" id="pay_by_bank"
                                           value="razorPay">
@@ -982,7 +992,6 @@
                                           Online Payment
                                        </label>
                                     </span>
-                                       <% console.log("wallet",walletData) %>
                                        <% if (walletData.amount < subtotal) { %>
                                           <span class="form-check d-inline-block ml-2">
                                               <input class="form-check-input" type="radio" name="payment" id="pay_by_bank" value="wallet" disabled>
@@ -1024,17 +1033,19 @@
                            <%= cartData.items.length %> items
                         </p>
                         <p class="font-weight-bolderer">show details</p>
-                        <div>
-                           <span class="font-weight-bolder">subtotal</span>
-                           <span class="float-right font-weight-bolder">₹<%= subtotal %></span>
-                        </div><br>
+                        <% cartData.items.forEach((item) => { %>
+                           <div>
+                              <span class="font-weight-bolder">subtotal</span>
+                              <span class="float-right font-weight-bolder">₹<%= item.productId.price %></span>
+                           </div><br>
+                        <% }); %>
                         <div>
                            <span class="font-weight-bolder">Discount (<%= cartData.couponDiscount.name %>)</span>
                            <span class="float-right font-weight-bolder text-success">₹<%= cartData.couponDiscount.discountAmount %></span>
-                        </div>
+                        </div><br>
                         <div>
                            <span class="font-weight-bolder">Offer Discount</span>
-                           <span class="float-right font-weight-bolder">₹<%= totalDiscountAmount %></span>
+                           <span class="float-right font-weight-bolder" id="discountAmount">₹<%= totalDiscountAmount %></span>
                         </div>
                      </div>
                      <div class="card-body ">
@@ -1053,17 +1064,19 @@
                            <%= cartData.items.length %> items
                         </p>
                         <p class="font-weight-bolderer">show details</p>
-                        <div>
-                           <span class="font-weight-bolder">subtotal</span>
-                           <span class="float-right font-weight-bolder">₹<%= subtotal %></span>
-                        </div><br>
+                        <% cartData.items.forEach((item) => { %>
+                           <div>
+                              <span class="font-weight-bolder">subtotal</span>
+                              <span class="float-right font-weight-bolder">₹<%= item.productId.price %></span>
+                           </div><br>
+                        <% }); %>
                         <div>
                            <span class="font-weight-bolder">Coupon Discount</span>
                            <span class="float-right font-weight-bolder">₹0</span>
                         </div><br>
                         <div>
                            <span class="font-weight-bolder">Offer Discount</span>
-                           <span class="float-right font-weight-bolder text-success ">₹<%= totalDiscountAmount %></span>
+                           <span class="float-right font-weight-bolder text-success" id="discountAmount">₹<%= totalDiscountAmount %></span>
                         </div>
                      </div>
                      <div class="card-body ">
@@ -1457,6 +1470,11 @@
          const subtotal = parseFloat(subtotalText.replace(/[^\d.-]/g, ''));
          console.log(subtotal);
 
+         const discountAmountElement = document.getElementById("discountAmount");
+         const discountAmountText = discountAmountElement.textContent.trim();
+         const discountAmount = parseFloat(discountAmountText.replace(/[^\d.-]/g, ''));
+
+
          var selectedAddressBtn = document.querySelector('.select-address-btn.active');
          if (selectedAddressBtn) {
             addressId = selectedAddressBtn.getAttribute('data-address-id');
@@ -1481,7 +1499,8 @@
          var requestBody = {
             addressId: addressId,
             paymentMethod: selectedPaymentMethod,
-            subtotal: subtotal
+            subtotal: subtotal,
+            discountAmount:discountAmount
          };
 
          fetch('/place-order', {

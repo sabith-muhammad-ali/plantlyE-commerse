@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { unregisterCustomQueryHandler } = require("puppeteer");
 const userSchema = mongoose.Schema({
   name: {
     type: String,
@@ -39,6 +40,9 @@ const userSchema = mongoose.Schema({
   },
   resetToken: String,
   resetTokenExpiry:Date,
+  referralCode:{
+    type:String,
+  }
   
 });
 module.exports = mongoose.model("User", userSchema);

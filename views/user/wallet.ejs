@@ -30,6 +30,16 @@
       <!-- googleapis -->
       <link rel="preconnect" href="https://fonts.gstatic.com/">
       <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"> 
+      
+      <style>
+         .debit {
+             color: red;
+         }
+         .credit {
+             color: green;
+         }
+     </style>
+
    </head>
    <body>
       <!-- cart-model -->
@@ -647,8 +657,9 @@
                  <tr>
                      <th>No</th>
                      <th>Amount</th>
-                     <th>Description</th>
                      <th>Date</th>
+                     <th>Reson</th>
+                     <th>Transaction</th>
                  </tr>
              </thead>
              <tbody>
@@ -658,8 +669,11 @@
                   <tr>
                       <td><%= i + 1 %></td>
                       <td><%= walletData.history[i].amount %></td>
-                      <td><%= walletData.history[i].transaction %></td>
                       <td><%= walletData.history[i].date.toLocaleString() %></td>
+                      <td><%= walletData.history[i].reason%></td>
+                      <td class="<%= walletData.history[i].transaction === 'Debit' ? 'debit' : 'credit' %>">
+                        <%= walletData.history[i].transaction %>
+                    </td>
                   </tr>
                <% } %>
                  

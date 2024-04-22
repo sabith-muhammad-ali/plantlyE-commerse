@@ -1,15 +1,4 @@
 const userModel = require("../models/userModel");
-// const isLogin = async (req, res, next) => {
-//   try {
-//     if (req.session.userId) {
-//       next();
-//     } else {
-//       res.redirect("/login-User");
-//     }
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
 
 const isLogin = async (req,res,next) => {
   try {

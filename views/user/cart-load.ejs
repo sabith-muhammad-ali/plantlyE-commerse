@@ -688,7 +688,8 @@
                                           <%= items.productId.name %>
                                        </h4>
                                        <div>
-                                          <% if (items.productId.offer) { %>
+
+                                          <% if (items.productId.offer && items.productId.offer.discountAmount ) { %>
                                              <span class="text-center prices">
                                                 <del class="text-center text-muted price">₹<%= items.productId.price %> </del>
                                                   <span class="font-weight-bolder price text-success">&nbsp; ₹<%= items.productId.price - items.productId.offer.discountAmount %></span>

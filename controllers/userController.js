@@ -9,17 +9,38 @@ const bannerModel = require("../models/bannerModel");
 const couponModel = require("../models/couponModel");
 const WalletModel = require("../models/walletModel");
 const categoryModel = require("../models/categoryModel");
+const offerModel = require("../models/offerModel");
+const walletModel = require("../models/walletModel");
 
-// tempHomePage
+//  referral code generating
+function generateReferralCode() {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+async function generateUniqueReferralCode() {
+  let uniqueCode;
+  let codeExists = true;
+
+  while (codeExists) {
+    uniqueCode = generateReferralCode();
+
+    const existingUser = await User.findOne({ referralCode: uniqueCode });
+    if (!existingUser) {
+      codeExists = false;
+    }
+  }
+
+  return uniqueCode;
+}
+
 const homePage = async (req, res) => {
   try {
-    const productData = await productModel.find({
-      is_blocked: false,
-    });
-    const offer = await productModel.find({}).populate('offer');
+    const productData = await productModel
+      .find({ is_blocked: false })
+      .populate("offer");
     const userData = await User.findOne({ _id: req.session.userId });
     const banner = await bannerModel.find({ is_listed: false });
-    res.render("user/home", { userData, banner, productData, offer });
+    res.render("user/home", { userData, banner, productData });
   } catch (error) {
     console.log(error.message);
   }
@@ -36,6 +57,7 @@ const securePassword = async (password) => {
 
 const loadRegister = async (req, res) => {
   try {
+    req.session.referralCode = req.query.referralCode;
     res.render("user/registration");
   } catch (error) {
     console.log(error.message);
@@ -44,29 +66,40 @@ const loadRegister = async (req, res) => {
 
 const insertUser = async (req, res) => {
   try {
-    const sPassword = await securePassword(req.body.password);
-    const user = new User({
-      name: req.body.fname,
-      email: req.body.email,
-      varified: false,
-      password: sPassword,
-      is_admin: false,
-      is_block: false,
-      google: false,
-      facebook: false,
-    });
-    const userData = await user.save();
-    await sendOTPVerificationEmail(userData, res);
-    if (userData) {
-      let id = userData._id;
-      res.redirect(`/userOTP?userid=${id}`);
+    const email = req.body.email;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      res.render("user/registration", {
+        message: "User with provided email already exists,try logging in",
+      });
     } else {
-      res.render("registration", { message: "Your registration has failed" });
+      const sPassword = await securePassword(req.body.password);
+      const user = new User({
+        name: req.body.fname,
+        email: email,
+        varified: false,
+        password: sPassword,
+        is_admin: false,
+        is_block: false,
+        google: false,
+        facebook: false,
+      });
+      const userData = await user.save();
+      await sendOTPVerificationEmail(userData, res);
+      if (userData) {
+        let id = userData._id;
+        res.redirect(`/userOTP?userid=${id}`);
+      } else {
+        res.render("registration", {
+          message: "Your registration has failed",
+        });
+      }
     }
   } catch (error) {
     console.log(error.message);
   }
 };
+
 // sending OTP verification email
 const sendOTPVerificationEmail = async ({ _id, email }, res) => {
   try {
@@ -143,6 +176,8 @@ const resendOtp = async (req, res) => {
 // User OTP verification page
 const verifyOTP = async (req, res) => {
   try {
+    const referralCode = await generateReferralCode();
+    console.log("refferrlCode1111", referralCode);
     let { userId, otp } = req.body;
     if (!userId || !otp) {
       throw Error("Empty otp details are not allowed");
@@ -172,13 +207,21 @@ const verifyOTP = async (req, res) => {
             res.render("user/userOTP", { message: "invalid OTP", userId });
           } else {
             // sucess
-            await User.updateOne({ _id: userId }, { varified: true });
+            await User.updateOne(
+              { _id: userId },
+              { varified: true, referralCode: referralCode }
+            );
             await UserOTPVerfication.deleteMany({ userId });
             req.session.userId = userId;
 
             const wallet = new WalletModel({ userId: userId });
 
             await wallet.save();
+
+            const referral = req.session.referralCode;
+            if (referral) {
+              await handelRefferal(referral, req.session.userId);
+            }
 
             res.redirect(`/`);
           }
@@ -189,6 +232,53 @@ const verifyOTP = async (req, res) => {
     console.log(error.message);
   }
 };
+
+async function handelRefferal(referralCode, userId) {
+  try {
+    console.log("ssssssssssss");
+    console.log("referralCode,", referralCode);
+    console.log("user", userId);
+  
+    if (!referralCode) {
+      return;
+    }
+    const referrer = await User.findOne({ referralCode: referralCode });
+    console.log(referrer);
+    if (!referrer) {
+      return;
+    }
+  
+    const refTransaction = {
+      reason:"Referral Reward",
+      transaction:"Credited",
+      amount:80,
+      date:new Date(),
+    };
+  
+    const recipientTransaction = {
+      reason:"SignUp Referral Bonus",
+      transaction:"Credited",
+      amount:40,
+      date:new Date(),
+    }
+  
+    let referrerId = referrer._id;
+    console.log("referrerId",referrerId);
+    const referrerFunds = await walletModel.findOne({userId:referrerId});
+    console.log("referrerFunds:",referrerFunds);
+    referrerFunds.history.push(refTransaction)
+    referrerFunds.amount += 80
+    await referrerFunds.save();
+  
+    const newUserBalance = await walletModel.findOne({userId:userId})
+    console.log("newUserBalance:", newUserBalance);
+    newUserBalance.history.push(recipientTransaction);
+    newUserBalance.amount += 40;
+    await newUserBalance.save();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // login Uer
 const loadsignin = async (req, res) => {
@@ -255,7 +345,8 @@ const loadShop = async (req, res) => {
 
     let productsQuery = productModel
       .find({ is_blocked: false })
-      .populate("categoryId");
+      .populate("categoryId")
+      .populate("offer");
 
     if (sortValue) {
       if (sortValue === "high to low") {
@@ -283,7 +374,6 @@ const loadShop = async (req, res) => {
     const product = await productsQuery.exec();
     const categoryData = await categoryModel.find({ is_block: false });
     const cart = await Cart.find({}).populate("items.productId");
-    const offer = await productModel.find({}).populate("offer");
 
     const totalPages = Math.ceil(totalProducts / limit);
     res.render("user/shop", {
@@ -292,9 +382,7 @@ const loadShop = async (req, res) => {
       categoryData,
       totalPages,
       currentPage: page,
-      offer,
     });
-
   } catch (error) {
     console.log(error);
   }
@@ -303,7 +391,7 @@ const loadShop = async (req, res) => {
 const singleproduct = async (req, res) => {
   try {
     const id = req.query.id;
-    const product = await productModel.findById({ _id: id });
+    const product = await productModel.findById({ _id: id }).populate("offer");
     res.render("user/singleProduct", { product });
   } catch (error) {
     console.log(error);

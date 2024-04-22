@@ -327,12 +327,12 @@
                                                           </div>
                                                           <div class="media-body">
                                                               <h6 class="m-3 f_15"><%= item.productId.name %></h6>
-                                                              <% if(item.productId.offer){ %>
+                                                              <% if (  item.productId.offer.discountAmount ) { %>
                                                                   <span class="text-center prices">
                                                                       <del class="text-center text-muted price">&nbsp;&nbsp; ₹<%= item.productId.price %> </del>
                                                                       <span class="font-weight-bolder price text-success">&nbsp; ₹<%= item.productId.price - item.productId.offer.discountAmount %></span>
                                                                   </span>
-                                                              <% }else if (item.productId.categoryDiscount) { %>
+                                                              <% } else if (item.productId.categoryDiscount) { %>
                                                                   <span class="text-center prices">
                                                                       <del class="text-center text-muted price">&nbsp;&nbsp; ₹<%= item.productId.price %> </del>
                                                                       <span class="font-weight-bolder price text-success">&nbsp; ₹<%= item.productId.price - item.productId.categoryDiscount %></span>

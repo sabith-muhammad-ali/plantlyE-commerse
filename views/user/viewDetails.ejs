@@ -807,6 +807,12 @@
                                             <p class="card-text">Name: <%= order.shippingAddress.name %></p>
                                             <p class="card-text">Address: <%= order.shippingAddress.address %>, <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>, <%= order.shippingAddress.postcode %></p>
                                             <p class="card-text">Mobile: <%= order.shippingAddress.mobile %></p>
+                                            <p class="card-text">Status: <%= item.productStatus %></p>
+                                            <p class="align-middle">
+                                                <a href="/order-invoice?orderId=<%= order._id %>&productId=<%= order.product.productId %>">
+                                                    <i class="fas fa-file-invoice"></i> View Invoice
+                                                </a>
+                                            </p>
                                             <% if (item.productStatus === 'Placed' || item.productStatus === 'shipped') { %>
                                                 <button class="btn cancel-btn"
                                                     data-product-id="<%= item.productId._id %>"
@@ -819,6 +825,12 @@
                                                     data-order-id="<%= order._id %>">
                                                     Return
                                                 </button>
+                                            <% } else if (item.productStatus === "Pending") { %>
+                                                <button class="btn btn-success"
+                                                data-product-id="<%= item.productId._id %>"
+                                                data-order-id="<%= order._id %>">
+                                                re-order
+                                            </button>
                                             <% } %>
                                         </div>
                                     </div>
@@ -1256,6 +1268,8 @@
             })
         })
     </script>
+
+    
 
     <!-- invoice -->
 

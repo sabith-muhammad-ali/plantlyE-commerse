@@ -467,7 +467,7 @@
                           <td>
                             <% if (products[i].offer) { %>
                               <s class="text-danger">₹<%= products[i].price %></s>
-                              <span class="text-success"> &nspa;
+                              <span class="text-success">
                                 ₹<%= products[i].price - products[i].offer.discountAmount %>
                               </span>
                               <% } else if (products[i].categoryDiscount) { %>
