@@ -788,6 +788,24 @@
                 <!-- col-12 -->
             </div>
             <!-- row -->
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6"> <!-- Adjust column size as needed -->
+                        <% if (order && order.product && order.product.length > 0) { %>
+                            <% order.product.forEach(function(item) { %>
+                                <% if (item.productStatus === "Pending") { %>
+                                    <button class="btn btn-success btn-block"
+
+                                    onclick="razorpayPayment('<%= order._id %>', '<%= order.Total %>')"> 
+                                       re-order
+                                    </button>
+                                <% } %>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                </div>
+            </div><br>
+
             <div class="row" id="viewOrder">
                 <% if (order && order.product && order.product.length > 0) { %>
                     <% order.product.forEach(function(item) { %>
@@ -802,17 +820,33 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title"><%= item.productId.name %></h5>
-                                            <p class="card-text">Price: <%= order.Total %></p>
+                                            <div class="media-body">
+                                                <% if (item.productId.offer && item.productId.offer.discountAmount) { %>
+                                                    <span class="text-center prices">
+                                                        <del class="text-center text-muted price">₹<%= item.productId.price %></del>
+                                                        <span class="font-weight-bolder price text-success">₹<%= item.productId.price - item.productId.offer.discountAmount %></span><br><br>
+                                                    </span>
+                                                <% } else if (item.productId.categoryDiscount) { %>
+                                                    <span class="text-center prices">
+                                                        <del class="text-center text-muted price">₹<%= item.productId.price %></del>
+                                                        <span class="font-weight-bolder price text-success">₹<%= item.productId.price - item.productId.categoryDiscount %></span><br><br>
+                                                    </span>
+                                                <% } else { %>
+                                                    <p class="m-3 f_15"> price: ₹<%= item.productId.price %></p>
+                                                <% } %>
+                                            </div>
                                             <p class="card-text">Quantity: <%= item.quantity %></p>
                                             <p class="card-text">Name: <%= order.shippingAddress.name %></p>
                                             <p class="card-text">Address: <%= order.shippingAddress.address %>, <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>, <%= order.shippingAddress.postcode %></p>
                                             <p class="card-text">Mobile: <%= order.shippingAddress.mobile %></p>
                                             <p class="card-text">Status: <%= item.productStatus %></p>
-                                            <p class="align-middle">
-                                                <a href="/order-invoice?orderId=<%= order._id %>&productId=<%= order.product.productId %>">
-                                                    <i class="fas fa-file-invoice"></i> View Invoice
-                                                </a>
-                                            </p>
+                                            <% if(item.productStatus === 'Delivered'){ %>
+                                                <p class="align-middle">
+                                                    <a href="/order-invoice?orderId=<%= order._id %>&productId=<%= item.productId %>">
+                                                        <i class="fas fa-file-invoice"></i> View Invoice
+                                                    </a>
+                                                </p>
+                                            <% } %>
                                             <% if (item.productStatus === 'Placed' || item.productStatus === 'shipped') { %>
                                                 <button class="btn cancel-btn"
                                                     data-product-id="<%= item.productId._id %>"
@@ -825,12 +859,6 @@
                                                     data-order-id="<%= order._id %>">
                                                     Return
                                                 </button>
-                                            <% } else if (item.productStatus === "Pending") { %>
-                                                <button class="btn btn-success"
-                                                data-product-id="<%= item.productId._id %>"
-                                                data-order-id="<%= order._id %>">
-                                                re-order
-                                            </button>
                                             <% } %>
                                         </div>
                                     </div>
@@ -1177,6 +1205,8 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
     <!-- cancell product -->
     <script>
         document.querySelectorAll('.cancel-btn').forEach(button => {
@@ -1269,9 +1299,60 @@
         })
     </script>
 
+    <script>
+              // razorPay
+      function razorpayPayment(order,amount) {
+         console.log('function called');
+         var options = {
+            "key": 'rzp_test_o7r1ebXkKkik6D',
+            "amount": amount * 100,
+            "currency": "INR",
+            "name": "Plantly",
+            "description": "Test Transaction",
+            "image": "",
+            "order_id": order.id,
+            "handler": function (response) {
+               verifyPayment(response, order)
+            },
+            "prefill": {
+               "name": "Gaurav Kumar",
+               "email": "gaurav.kumar@example.com",
+               "contact": "9000090000"
+            },
+            "notes": {
+               "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+               "color": "#3399cc"
+            }
+         }
+         var rzp1 = new Razorpay(options);
+         rzp1.open();
+         function verifyPayment(response, order) {
+            fetch("/re-payment", {
+               method: "POST",
+               headers: {
+                  'content-type': "application/json;charset=utf-8"
+               },
+               body: JSON.stringify({
+                  response,
+                  order
+               })
+            })
+               .then((res) => res.json())
+               .then((data) => {
+                  if (data.statusChanged) {
+                     window.location.href = '/order-success'
+                  }
+               })
+         }
+
+      }
+    </script>
+
     
 
-    <!-- invoice -->
+
 
 </body>
 

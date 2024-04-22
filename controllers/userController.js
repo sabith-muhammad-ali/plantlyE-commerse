@@ -177,7 +177,6 @@ const resendOtp = async (req, res) => {
 const verifyOTP = async (req, res) => {
   try {
     const referralCode = await generateReferralCode();
-    console.log("refferrlCode1111", referralCode);
     let { userId, otp } = req.body;
     if (!userId || !otp) {
       throw Error("Empty otp details are not allowed");
@@ -235,15 +234,11 @@ const verifyOTP = async (req, res) => {
 
 async function handelRefferal(referralCode, userId) {
   try {
-    console.log("ssssssssssss");
-    console.log("referralCode,", referralCode);
-    console.log("user", userId);
   
     if (!referralCode) {
       return;
     }
     const referrer = await User.findOne({ referralCode: referralCode });
-    console.log(referrer);
     if (!referrer) {
       return;
     }
@@ -263,15 +258,12 @@ async function handelRefferal(referralCode, userId) {
     }
   
     let referrerId = referrer._id;
-    console.log("referrerId",referrerId);
     const referrerFunds = await walletModel.findOne({userId:referrerId});
-    console.log("referrerFunds:",referrerFunds);
     referrerFunds.history.push(refTransaction)
     referrerFunds.amount += 80
     await referrerFunds.save();
   
     const newUserBalance = await walletModel.findOne({userId:userId})
-    console.log("newUserBalance:", newUserBalance);
     newUserBalance.history.push(recipientTransaction);
     newUserBalance.amount += 40;
     await newUserBalance.save();

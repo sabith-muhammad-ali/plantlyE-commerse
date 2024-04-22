@@ -23,16 +23,15 @@ const loadCheckout = async (req, res) => {
     const userId = req.session.userId;
     const currentData = new Date();
     const cartData = await cartModel
-    .findOne({ user: userId })
-    .populate({
-      path: "items.productId",
-      populate: {
-        path: "offer",
-        model: "Offer"
-      }
-    })
-    .populate("couponDiscount");
-      
+      .findOne({ user: userId })
+      .populate({
+        path: "items.productId",
+        populate: {
+          path: "offer",
+          model: "Offer",
+        },
+      })
+      .populate("couponDiscount");
 
     const addressData = await addressModel.findOne({
       user: req.session.userId,
@@ -43,12 +42,17 @@ const loadCheckout = async (req, res) => {
     cartData.items.forEach((val) => {
       if (val.productId.offer && val.productId.offer.discountAmount) {
         // If Apply Product Offer
-        subtotal += (val.productId.price - val.productId.offer.discountAmount) * val.quantity;
-        totalDiscountAmount += val.productId.offer.discountAmount * val.quantity;
+        subtotal +=
+          (val.productId.price - val.productId.offer.discountAmount) *
+          val.quantity;
+        totalDiscountAmount +=
+          val.productId.offer.discountAmount * val.quantity;
       } else {
         if (val.productId.categoryDiscount) {
           // If Apply category Offer
-          subtotal += (val.productId.price - val.productId.categoryDiscount) * val.quantity;
+          subtotal +=
+            (val.productId.price - val.productId.categoryDiscount) *
+            val.quantity;
           totalDiscountAmount += val.productId.categoryDiscount * val.quantity;
         } else {
           subtotal += val.productId.price * val.quantity;
@@ -66,7 +70,6 @@ const loadCheckout = async (req, res) => {
       addressData,
       cartData,
       subtotal,
-      totalDiscountAmount,
       couponData,
       walletData,
     });
@@ -157,7 +160,7 @@ const placeOrder = async (req, res) => {
       paymentMethod: paymentMethod,
       expectedDate: expectedDate,
       Total: subtotal,
-      discountAmount:discountAmount,
+      discountAmount: discountAmount,
     });
 
     await order.save();
@@ -256,7 +259,6 @@ const verifyPayment = async (req, res) => {
         productStatus: "Placed",
       });
     }
-
 
     await orderModel.findByIdAndUpdate(
       { _id: orderId },
@@ -358,7 +360,10 @@ const viewOrderDetails = async (req, res) => {
     const orderId = req.params.orderId;
     const order = await orderModel
       .findOne({ userId: userId, _id: orderId })
-      .populate("product.productId");
+      .populate({
+        path: "product.productId",
+        populate: { path: "offer" } 
+      });
     res.render("user/viewDetails", { order });
   } catch (error) {
     console.log(error);
@@ -431,13 +436,14 @@ const loadWallet = async (req, res) => {
 const invoice = async (req, res) => {
   try {
     const { orderId, productId } = req.query;
-
+    console.log("req.query:", req.query);
+    console.log("productId", productId);
 
     const orderData = await orderModel
       .findById({ _id: orderId })
       .populate("product.productId");
 
-
+    // console.log("orderData:",orderData);
     const date = new Date();
     const orderDetails = {
       orderData,
@@ -479,13 +485,20 @@ const invoice = async (req, res) => {
   }
 };
 
-const rePayment = async (req,res) => {
+const rePayment = async (req, res) => {
   try {
-    const {orderId, totalAmount} = req.body;
-    console.log("req.body:",req.body);
+
+    const cartData = await cartModel
+    .findOne({ user: req.session.userId })
+    .populate("items.productId");
+
+    const { orderId } = req.body;
+
+    const order = await orderModel.findById(req.body.order);
+    const totalAmount = order.Total * 100;
 
     let options = {
-      amount: subtotal * 100,
+      amount: totalAmount,
       currency: "INR",
       receipt: orderId,
     };
@@ -497,10 +510,41 @@ const rePayment = async (req,res) => {
         return res.json({ success: true, response: "razorpay", order });
       }
     });
+
+    const orderData = await orderModel.findById(req.body.order);
+    console.log("orderData:", orderData);
+
+    // Update order with product status changes
+    const productStatusChange = [];
+    for (const item of order.product) {
+      const product = await productModel.findById(item.productId);
+      if (!product) {
+        throw new Error(`Product with ID ${item.productId} not found`);
+      }
+      productStatusChange.push({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: product.price * item.quantity,
+        productStatus: "Placed",
+      });
+    }
+
+    await orderModel.findByIdAndUpdate(
+      { _id: order._id },
+      { $set: { product: productStatusChange } }
+    );
+
+    for (const data of cartData.items) {
+      const { productId, quantity } = data;
+      await productModel.findByIdAndUpdate(productId, {
+        $inc: { quantity: -quantity, popularity: 1 },
+      });
+    }
+
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 module.exports = {
   loadCheckout,
@@ -514,5 +558,5 @@ module.exports = {
   returnOrder,
   loadWallet,
   invoice,
-  rePayment
+  rePayment,
 };

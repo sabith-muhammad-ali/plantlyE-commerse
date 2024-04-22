@@ -321,18 +321,18 @@
                                           <% cart.forEach(function(cartItem) { %>
                                               <% cartItem.items.forEach(function(item) { %>
                                                   <li class="pb-2 d-block">
-                                                      <div class="media">
+                                                      <div class="media"> 
                                                           <div class="non-clickable-image">
                                                               <img src="/assets/sharp/<%= item.productId.images[0] %>" class="fst-image img-fluid align-self-center" alt="product_13"></a>
                                                           </div>
                                                           <div class="media-body">
                                                               <h6 class="m-3 f_15"><%= item.productId.name %></h6>
-                                                              <% if (  item.productId.offer.discountAmount ) { %>
+                                                              <% if ( item.productId.offer && item.productId.offer.discountAmount ) { %>
                                                                   <span class="text-center prices">
                                                                       <del class="text-center text-muted price">&nbsp;&nbsp; ₹<%= item.productId.price %> </del>
                                                                       <span class="font-weight-bolder price text-success">&nbsp; ₹<%= item.productId.price - item.productId.offer.discountAmount %></span>
                                                                   </span>
-                                                              <% } else if (item.productId.categoryDiscount) { %>
+                                                              <% } else if ( item.productId.categoryDiscount ) { %>
                                                                   <span class="text-center prices">
                                                                       <del class="text-center text-muted price">&nbsp;&nbsp; ₹<%= item.productId.price %> </del>
                                                                       <span class="font-weight-bolder price text-success">&nbsp; ₹<%= item.productId.price - item.productId.categoryDiscount %></span>

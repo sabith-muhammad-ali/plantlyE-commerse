@@ -177,7 +177,13 @@ const loadWishlist = async (req, res) => {
   try {
     const wishlistData = await wishlistModel
       .findOne({ user: req.session.userId })
-      .populate("product.productId");
+      .populate({
+        path: 'product.productId',
+        populate: {
+          path: 'offer',
+          model: 'Offer' 
+        }
+      });
     res.render("user/wishlist", { wishlistData });
   } catch (error) {
     console.log(error);

@@ -733,39 +733,56 @@
                <h2 class="font-weight-bold">Wishlist</h2><br>
             </div>
          </div>
-         <div class="row" >
-            <% if(wishlistData && wishlistData.product && wishlistData.product.length> 0){ %>
-               <% for(let i=0; i < wishlistData.product.length; i++ ) { %>
-                  <div class="col-md-6 mb-3">
-                     <div class="card">
-                        <div class="row no-gutters">
-                           <div class="col-md-4">
-                              <img src="/assets/sharp/<%= wishlistData.product[i].productId.images[1] %>"
-                                 class="card-img" alt="product">
-                           </div>
-                           <div class="col-md-8">
-                              <div class="card-body"><br>
-                                 <h5 class="card-title"><a
-                                       href="/single-product?id=<%= wishlistData.product[i].productId._id %>">
-                                       <%= wishlistData.product[i].productId.name %>
-                                    </a></h5>
-                                 <p class="card-text">Price: <%= wishlistData.product[i].productId.price %>
-                                 </p>
-                                 <p class="card-text">Availability: <%= wishlistData.product[i].productId.quantity %> in
-                                       stock</p>
-                                 <div class="wishlist-buttons">
-                                    <button class="btn btn-danger remove-from-wishlist"
-                                       onclick="removeWishlist('<%=wishlistData.product[i].productId._id %>')">Remove</button>
-                                    <button class="btn btn-primary add-to-cart" onclick="addToCart('<%=wishlistData.product[i].productId._id %>')">Add toCart</button>
-                                 </div>
-                              </div>
-                           </div>
+         <div class="row">
+            <% if (wishlistData && wishlistData.product && wishlistData.product.length > 0) { %>
+                <% wishlistData.product.forEach(product => { %>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/assets/sharp/<%= product.productId.images[1] %>" class="card-img" alt="product">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a href="/single-product?id=<%= product.productId._id %>"><%= product.productId.name %></a>
+                                        </h5>
+                                        <% if (product.productId.categoryDiscount) { %>
+                                            <span class="text-center prices">
+                                                <del class="text-center text-muted price">Price: <%= product.productId.price %></del>
+                                                <span class="font-weight-bolder price text-success">
+                                                    &nbsp; ₹<%= product.productId.price - product.productId.categoryDiscount %>
+                                                </span><br>
+                                            </span><br>
+                                        <% } else if (product.productId.offer && product.productId.offer.discountAmount) { %>
+                                            <span class="text-center prices">
+                                                <del class="text-center text-muted price">Price: <%= product.productId.price %></del>
+                                                <span class="font-weight-bolder price text-success">
+                                                    &nbsp; ₹<%= product.productId.price - product.productId.offer.discountAmount %>
+                                                </span><br>
+                                            </span><br>
+                                        <% } else { %>
+                                            <p class="card-text">Price: <%= product.productId.price %></p>
+                                        <% } %>
+                                        <p class="card-text">Availability: <%= product.productId.quantity %> in stock</p>
+                                        <div class="wishlist-buttons">
+                                            <button class="btn btn-danger remove-from-wishlist"
+                                                onclick="removeWishlist('<%= product.productId._id %>')">Remove</button>
+                                            <button class="btn btn-primary add-to-cart"
+                                                onclick="addToCart('<%= product.productId._id %>')">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                     </div>
-                  </div>
-                  <% } %>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="col-12">
+                    <p>Your wishlist is empty.</p>
+                </div>
             <% } %>
-         </div>
+        </div>
       </div>
       <!-- container custom_container -->
    </div>

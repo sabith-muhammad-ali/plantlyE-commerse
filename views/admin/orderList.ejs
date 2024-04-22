@@ -436,7 +436,6 @@
                                 <td>
                                   <select class="statusSelect" id="<%= order._id %><%= product._id %>" onchange="status(this)">
                                     <option value="Placed" data-order-id="<%= order._id %>" data-product-id="<%= product._id %>" <% if (product.productStatus === 'Placed') { %> selected <% } %>>Placed</option>
-                                    <option value="Returned" data-order-id="<%= order._id %>" data-product-id="<%= product._id %>" <% if (product.productStatus === 'Returned') { %> selected <% } %>>Returned</option>
                                     <option value="shipped" data-order-id="<%= order._id %>" data-product-id="<%= product._id %>" <% if (product.productStatus === 'shipped') { %> selected <% } %>>Shipped</option>
                                     <option value="Delivered" data-order-id="<%= order._id %>" data-product-id="<%= product._id %>" <% if (product.productStatus === 'Delivered') { %> selected <% } %>>Delivered</option>
                                   </select>

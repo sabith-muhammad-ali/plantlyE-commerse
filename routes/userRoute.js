@@ -62,7 +62,7 @@ user.get("/order-success", auth.isLogin, orderController.successsPage);
 user.get("/product-details/:orderId", auth.isLogin, orderController.viewOrderDetails);
 user.get("/order-invoice", auth.isLogin, orderController.invoice);
 user.post("/verify-payment", auth.isLogin, orderController.verifyPayment);//razorpay
-user.post("/re-payment", auth.isLogin, orderController.rePayment);
+user.post("/re-payment", auth.isLogin, orderController.rePayment);//repayment
 user.post("/return-order", auth.isLogin, orderController.returnOrder);
 user.get("/load-wallet", auth.isLogin, orderController.loadWallet);
 

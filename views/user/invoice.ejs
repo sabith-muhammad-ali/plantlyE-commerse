@@ -88,25 +88,28 @@
         <img src="/public/assets/img/logo.png" id="img" alt="logo">
 
         <div class="payment-details"></div>
-        <div class="invoice-details">
-            <p>Address: Plantly Technologies Pvt. Ltd. </p>
-            <p>123 Greenleaf Avenue,</p>    
-            <p>Garden City,</p>    
-            <p>Bangalore - 560001,</p>    
-            <p>Karnataka, India.</p>    
-            
-            <p>Website: <a href="soireebeauty.site.com">Plantly.site.com</a></p>
-            <p>Phone: +91 95674 91453</p>
-
-            <p>Invoice no: <%=orderData._id %></p>
-            <p>Date: <%= orderData.orderedData %></p>
+        <div class="invoice-details" style="border: 2px solid black; padding: 10px; max-height: 350px;">
+            <div style="margin-bottom: 10px;">
+                <p style="font-weight: bold;">Address:</p>
+                <p>Plantly Technologies Pvt. Ltd.</p>
+                <p>123 Greenleaf Avenue,</p>    
+                <p>Garden City,</p>    
+                <p>Bangalore - 560001,</p>    
+                <p>Karnataka, India.</p>    
+                <p>Phone: +91 95674 91453</p>
+                <p>email: Plantly@gmai.com</p>
+                <p>Website: <a href="soireebeauty.site.com">Plantly.site.com</a></p>
+                <p>Date: <%= orderData.orderedData %></p>
+            </div>
         </div>
         <table class="services-table">
             <thead class="head">
                 <tr>
-                    <th class="th">SERVICE</th>
+                    <th class="th">Item Details</th>
                     <th class="th">QTY</th>
-                    <th class="th">PRICE</th>
+                    <th class="th">PRICE(RS)</th>
+                    <th class="th">Unit Price</th>
+                    <th class="th">Discount(RS)</th>
                     <th class="th">TOTAL</th>
                 </tr>
             </thead>
