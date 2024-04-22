@@ -832,7 +832,8 @@
                                                         <span class="font-weight-bolder price text-success">₹<%= item.productId.price - item.productId.categoryDiscount %></span><br><br>
                                                     </span>
                                                 <% } else { %>
-                                                    <p class="m-3 f_15"> price: ₹<%= item.productId.price %></p>
+                                                    
+                                                    <p class="card-text"> price: ₹<%= item.productId.price %></p>
                                                 <% } %>
                                             </div>
                                             <p class="card-text">Quantity: <%= item.quantity %></p>

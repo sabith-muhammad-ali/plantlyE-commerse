@@ -436,14 +436,30 @@ const loadWallet = async (req, res) => {
 const invoice = async (req, res) => {
   try {
     const { orderId, productId } = req.query;
-    console.log("req.query:", req.query);
-    console.log("productId", productId);
+    console.log("productId1234", productId);
 
     const orderData = await orderModel
-      .findById({ _id: orderId })
-      .populate("product.productId");
+    .findById(orderId)
+    .populate({
+      path: "product.productId",
+      model: "product" 
+    })
+    .populate("shippingAddress");
 
-    // console.log("orderData:",orderData);
+    console.log("orderData:",orderData);
+
+    let foundProduct;
+
+    orderData.product.forEach((productItem) => {
+      let productItemId = productItem.productId._id.toString(); 
+      console.log("productItemId:", productItemId); 
+      console.log("productId:", productId); 
+      if (productItemId === productId) {
+        foundProduct = productItem;
+      }
+    });
+
+    
     const date = new Date();
     const orderDetails = {
       orderData,

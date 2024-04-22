@@ -4,7 +4,7 @@
 <head>
     <title>Soiree Beauty Invoice</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -81,86 +81,105 @@
     .invoice-container a:hover {
         text-decoration: underline;
     }
+    body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #fff;
+        }
+        .head th {
+            background-color: #333;
+        }
+        .services-table td:first-child {
+            color: #fff;
+        }
+        .services-table tfoot td {
+            font-weight: bold;
+            background-color: #333;
+            color: #fff;
+        }
+        .services-table .total-amount {
+            text-align: right;
+        }
 </style>
+<title>Invoice</title>
+</head>
 
 <body>
     <div class="invoice-container">
         <img src="/public/assets/img/logo.png" id="img" alt="logo">
 
-        <div class="payment-details"></div>
-        <div class="invoice-details" style="border: 2px solid black; padding: 10px; max-height: 350px;">
-            <div style="margin-bottom: 10px;">
+        
+        <div style="border: 2px solid black; padding: 10px; max-height: 350px;">
+            <div style="">
                 <p style="font-weight: bold;">Address:</p>
-                <p>Plantly Technologies Pvt. Ltd.</p>
-                <p>123 Greenleaf Avenue,</p>    
-                <p>Garden City,</p>    
-                <p>Bangalore - 560001,</p>    
-                <p>Karnataka, India.</p>    
-                <p>Phone: +91 95674 91453</p>
-                <p>email: Plantly@gmai.com</p>
-                <p>Website: <a href="soireebeauty.site.com">Plantly.site.com</a></p>
-                <p>Date: <%= orderData.orderedData %></p>
+                <p style="font-weight: 700;">Plantly Technologies Pvt. Ltd.</p>
+                <p style="font-weight: 700;">123 Greenleaf Avenue,</p>    
+                <p style="font-weight: 700;">Garden City,</p>    
+                <p style="font-weight: 700;">Bangalore - 560001,</p>    
+                <p style="font-weight: 700;">Karnataka, India.</p>    
+                <p style="font-weight: 700;">Phone: +91 95674 91453</p>
+                <p style="font-weight: 700;">email: Plantly@gmai.com</p>
+                <p style="font-weight: 700;">Website: <a href="soireebeauty.site.com">Plantly.site.com</a></p>
+                <p style="font-weight: 700;"><%= orderData.orderedData.toLocaleDateString('en-US', {
+                    year  : 'numeric',
+                    month : 'long',
+                    day   : 'numeric',
+                    });
+                %></p>
             </div>
         </div>
-        <table class="services-table">
-            <thead class="head">
+        <table class="services-table " style="border: 2px solid black;">
+            <thead class="head" style="border: 2px solid black;">
                 <tr>
-                    <th class="th">Item Details</th>
-                    <th class="th">QTY</th>
-                    <th class="th">PRICE(RS)</th>
-                    <th class="th">Unit Price</th>
-                    <th class="th">Discount(RS)</th>
-                    <th class="th">TOTAL</th>
+                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >Item Details</th>
+                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >QTY</th>
+                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >PRICE(RS)</th>
+                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >Unit Price</th>
+                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >Discount(RS)</th>
+                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >Coupon(RS)</th>
+                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >TOTAL</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody  style="border: 2px solid black;">
                 <tr>
-                    <td>Haircut & Style</td>
-                    <td>1</td>
-                    <td>$100</td>
-                    <td>$100</td>
-                </tr>
-                <tr>
-                    <td>Color Treatment</td>
-                    <td>1</td>
-                    <td>$200</td>
-                    <td>$200</td>
-                </tr>
-                <tr>
-                    <td>Manicure & Pedicure</td>
-                    <td>1</td>
-                    <td>$100</td>
-                    <td>$100</td>
-                </tr>
-                <tr>
-                    <td>Spa Facial</td>
-                    <td>1</td>
-                    <td>$300</td>
-                    <td>$300</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= orderData.product[0].productId.name %></td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" >quantity</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" >price</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" > discountAmount</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" > Coupon </td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" > Total</td>
                 </tr>
             </tbody>
-            <tfoot>
+            <tfoot style="border: 2px solid black;" >
                 <tr>
-                    <td colspan="3">Subtotal:</td>
-                    <td>$700</td>
+                    <td colspan="6" style="font-weight: 700; color: #000; border: 2px solid black;" >Subtotal:</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;"" >$700</td>
                 </tr>
                 <tr>
-                    <td colspan="3">Tax (@X%):</td>
-                    <td>$10</td>
+                    <td colspan="6" style="font-weight: 700; color: #000; border: 2px solid black;"" >Tax (@X%):</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" >$10</td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="total-amount">Total Amount Due:</td>
-                    <td class="total-amount">$710</td>
+                    <td colspan="6" class="total-amount" style="font-weight: 700; color: #000; border: 2px solid black;" >Total Amount Due:</td>
+                    <td class="total-amount" style="font-weight: 700; color: #000; border: 2px solid black;" >$710</td>
                 </tr>
             </tfoot>
         </table>
-        <div class="payment-details">
-            <p>Payment to: Patricia Johnson</p>
-            <p>Bank 1</p>
-            <p>Bank Code: 12345678889</p>
-            <p>Terms & Conditions: Payment is due upon completion of services unless otherwise agreed upon in writing.
-            </p>
-            <p>Thank you for choosing Soiree Beauty! We appreciate your business.</p>
+
+        <div class="payment-details" style="font-weight: 700; color: #000; border: 2px solid black;" >
+            <p style="font-weight: 700; color: #000;" >Payment to: Patricia Johnson</p>
+            <p style="font-weight: 700; color: #000;" >Bank 1</p>
+            <p style="font-weight: 700; color: #000;" >Bank Code: 12345678889</p>
+            <p style="font-weight: 700; color: #000;" >Terms & Conditions: Payment is due upon completion of services unless otherwise agreed upon in writing.</p>
+            <p style="font-weight: 700; color: #000;" >Thank you for choosing Soiree Beauty! We appreciate your business.</p>
         </div>
     </div>
 </body>
