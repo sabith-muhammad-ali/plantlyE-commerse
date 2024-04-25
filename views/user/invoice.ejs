@@ -142,42 +142,49 @@
                     <th style="font-weight: 700; color: #000; border: 2px solid black;" >Item Details</th>
                     <th style="font-weight: 700; color: #000; border: 2px solid black;" >QTY</th>
                     <th style="font-weight: 700; color: #000; border: 2px solid black;" >PRICE(RS)</th>
-                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >Unit Price</th>
-                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >Discount(RS)</th>
+                    <th style="font-weight: 700; color: #000; border: 2px solid black;" >Discount Price</th>
                     <th style="font-weight: 700; color: #000; border: 2px solid black;" >Coupon(RS)</th>
                     <th style="font-weight: 700; color: #000; border: 2px solid black;" >TOTAL</th>
                 </tr>
             </thead>
             <tbody  style="border: 2px solid black;">
                 <tr>
-                    <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= orderData.product[0].productId.name %></td>
-                    <td style="font-weight: 700; color: #000; border: 2px solid black;" >quantity</td>
-                    <td style="font-weight: 700; color: #000; border: 2px solid black;" >price</td>
-                    <td style="font-weight: 700; color: #000; border: 2px solid black;" > discountAmount</td>
-                    <td style="font-weight: 700; color: #000; border: 2px solid black;" > Coupon </td>
-                    <td style="font-weight: 700; color: #000; border: 2px solid black;" > Total</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= foundProduct.productId.name %></td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= orderData.product[0].quantity %> </td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= (foundProduct.productId.price * orderData.product[0].quantity)  %></td>
+                    <% if (foundProduct.productId.categoryDiscount) { %>
+                        <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= foundProduct.productId.categoryDiscount * orderData.product[0].quantity  %> </td>
+                    <% } else { %>
+                        <td style="font-weight: 700; color: #000; border: 2px solid black;" >0</td>
+                    <% } %>
+                    <!-- <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= foundProduct.productId.categoryDiscount %> </td> -->
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= orderData.discountAmount %> </td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" ><%= (foundProduct.productId.price * orderData.product[0].quantity) - foundProduct.productId.categoryDiscount %></td>
                 </tr>
             </tbody>
             <tfoot style="border: 2px solid black;" >
                 <tr>
-                    <td colspan="6" style="font-weight: 700; color: #000; border: 2px solid black;" >Subtotal:</td>
-                    <td style="font-weight: 700; color: #000; border: 2px solid black;"" >$700</td>
+                    <td colspan="5" style="font-weight: 700; color: #000; border: 2px solid black;" >Subtotal:</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;"" ><%= (foundProduct.productId.price * orderData.product[0].quantity) - foundProduct.productId.categoryDiscount %></td>
                 </tr>
                 <tr>
-                    <td colspan="6" style="font-weight: 700; color: #000; border: 2px solid black;"" >Tax (@X%):</td>
-                    <td style="font-weight: 700; color: #000; border: 2px solid black;" >$10</td>
+                    <td colspan="5" style="font-weight: 700; color: #000; border: 2px solid black;"" >Tax (@X%):</td>
+                    <td style="font-weight: 700; color: #000; border: 2px solid black;" ></td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="total-amount" style="font-weight: 700; color: #000; border: 2px solid black;" >Total Amount Due:</td>
-                    <td class="total-amount" style="font-weight: 700; color: #000; border: 2px solid black;" >$710</td>
+                    <td colspan="5" class="total-amount" style="font-weight: 700; color: #000; border: 2px solid black;" >Total Amount Due:</td>
+                    <td class="total-amount" style="font-weight: 700; color: #000; border: 2px solid black;" ><%= (foundProduct.productId.price * orderData.product[0].quantity) - foundProduct.productId.categoryDiscount %></td>
                 </tr>
             </tfoot>
         </table>
 
         <div class="payment-details" style="font-weight: 700; color: #000; border: 2px solid black;" >
-            <p style="font-weight: 700; color: #000;" >Payment to: Patricia Johnson</p>
-            <p style="font-weight: 700; color: #000;" >Bank 1</p>
-            <p style="font-weight: 700; color: #000;" >Bank Code: 12345678889</p>
+            <p style="font-weight: 700; color: #000;" >name: <%= orderData.shippingAddress.name %></p>
+            <p style="font-weight: 700; color: #000;" >address: <%= orderData.shippingAddress.address %></p>
+            <p style="font-weight: 700; color: #000;" >state: <%= orderData.shippingAddress.state %></p>
+            <p style="font-weight: 700; color: #000;" >city: <%= orderData.shippingAddress.city %></p>
+            <p style="font-weight: 700; color: #000;" >postcode: <%= orderData.shippingAddress.postcode %></p>
+            <p style="font-weight: 700; color: #000;" >mobile: <%= orderData.shippingAddress.mobile %></p>
             <p style="font-weight: 700; color: #000;" >Terms & Conditions: Payment is due upon completion of services unless otherwise agreed upon in writing.</p>
             <p style="font-weight: 700; color: #000;" >Thank you for choosing Soiree Beauty! We appreciate your business.</p>
         </div>

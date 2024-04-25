@@ -980,7 +980,7 @@
                               <form>
                                  <div class="form-group text-left">
                                     <label class="font-weight-bolder">payment Method</label><br>
-                                    <% if(subtotal> 1000) { %>
+                                    <% if(subtotal > 1000) { %>
                                        <span class="form-check d-inline-block">
                                           <input class="form-check-input" type="radio" name="payment" id="pay_by_check"
                                              value="cash On Delivey" disabled>
@@ -988,8 +988,6 @@
                                              Cash On Delivery
                                           </label>
                                        </span>
-                                       <p class=" text text-danger">Sorry, no COD for orders over Rs. 1000. Try other
-                                          payment methods</p>
                                        <% }else { %>
                                           <span class="form-check d-inline-block">
                                              <input class="form-check-input" type="radio" name="payment"
@@ -1025,9 +1023,9 @@
                                                    <% } %>%>
                                  </div>
                                  <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="user_pay_check">
-                                    <label class="form-check-label" for="user_pay_check">I accept the Terms of Use &
-                                       Privacy Policy</label>
+                                    <% if(subtotal > 1000) { %>
+                                    <p style="color: #f70308;">Sorry, no COD for orders over Rs. 1000. Try other payment methods</p>
+                                    <% } %>
                                  </div>
                                  <div class="text-center">
                                     <button type="button" class="btn btn-primary f_13" onclick="placeOrder()">

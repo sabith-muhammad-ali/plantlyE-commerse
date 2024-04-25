@@ -843,7 +843,7 @@
                                             <p class="card-text">Status: <%= item.productStatus %></p>
                                             <% if(item.productStatus === 'Delivered'){ %>
                                                 <p class="align-middle">
-                                                    <a href="/order-invoice?orderId=<%= order._id %>&productId=<%= item.productId %>">
+                                                    <a href="/order-invoice?orderId=<%= order._id %>&productId=<%= item.productId._id  %>">
                                                         <i class="fas fa-file-invoice"></i> View Invoice
                                                     </a>
                                                 </p>

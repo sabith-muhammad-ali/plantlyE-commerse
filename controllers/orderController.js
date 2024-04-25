@@ -109,7 +109,6 @@ const placeOrder = async (req, res) => {
     const addressId = requestBody.addressId;
     const paymentMethod = requestBody.paymentMethod;
     const subtotal = requestBody.subtotal;
-    const discountAmount = requestBody.discountAmount;
 
     let status =
       paymentMethod == "cash On Delivey" || paymentMethod == "wallet"
@@ -126,7 +125,16 @@ const placeOrder = async (req, res) => {
       (a) => a._id.toString() === addressId
     );
 
-    const userCart = await cartModel.findOne({ user: userId });
+    let discountAmount = 0; 
+
+    const userCart = await cartModel.findOne({ user: userId }).populate("couponDiscount");
+    if (userCart.couponDiscount) {
+        discountAmount = userCart.couponDiscount.discountAmount; 
+        console.log("Discount Amount:", discountAmount);
+    } else {
+        console.log("No coupon applied.");
+    }
+
 
     const currentData = new Date();
     const expectedDate = new Date(currentData);
@@ -160,7 +168,7 @@ const placeOrder = async (req, res) => {
       paymentMethod: paymentMethod,
       expectedDate: expectedDate,
       Total: subtotal,
-      discountAmount: discountAmount,
+      discountAmount: discountAmount, 
     });
 
     await order.save();
@@ -362,7 +370,7 @@ const viewOrderDetails = async (req, res) => {
       .findOne({ userId: userId, _id: orderId })
       .populate({
         path: "product.productId",
-        populate: { path: "offer" } 
+        populate: { path: "offer" },
       });
     res.render("user/viewDetails", { order });
   } catch (error) {
@@ -436,35 +444,33 @@ const loadWallet = async (req, res) => {
 const invoice = async (req, res) => {
   try {
     const { orderId, productId } = req.query;
-    console.log("productId1234", productId);
 
     const orderData = await orderModel
-    .findById(orderId)
-    .populate({
-      path: "product.productId",
-      model: "product" 
-    })
-    .populate("shippingAddress");
+      .findById(orderId)
+      .populate({
+        path: "product.productId",
+        model: "product",
+      })
+      .populate("shippingAddress");
 
-    console.log("orderData:",orderData);
+      console.log("orderData1111",orderData)
 
-    let foundProduct;
-
-    orderData.product.forEach((productItem) => {
-      let productItemId = productItem.productId._id.toString(); 
-      console.log("productItemId:", productItemId); 
-      console.log("productId:", productId); 
-      if (productItemId === productId) {
-        foundProduct = productItem;
-      }
+    const foundProduct = orderData.product.find(
+      (productItem) => productItem.productId._id.toString() === productId
+    );
+    await productModel.populate(foundProduct, {
+      path: "productId.offer",
+      model: "Offer",
+      select: "discountAmount", 
     });
+    console.log("foundProduct:::", foundProduct);
 
-    
     const date = new Date();
     const orderDetails = {
       orderData,
       date,
       baseUrl: "http://" + req.headers.host,
+      foundProduct,
     };
     const filepath = path.resolve(__dirname, "../views/user/invoice.ejs");
     const htmlTemplate = fs.readFileSync(filepath, "utf-8");
@@ -494,6 +500,7 @@ const invoice = async (req, res) => {
       "Content-Disposition",
       "attachment; filename = Plantly-Invoice.pdf"
     );
+    // res.render("user/invoice",{orderData,date,foundProduct,})
     res.send(pdfBytes);
   } catch (error) {
     console.error("Error:", error);
@@ -503,10 +510,9 @@ const invoice = async (req, res) => {
 
 const rePayment = async (req, res) => {
   try {
-
     const cartData = await cartModel
-    .findOne({ user: req.session.userId })
-    .populate("items.productId");
+      .findOne({ user: req.session.userId })
+      .populate("items.productId");
 
     const { orderId } = req.body;
 
@@ -556,7 +562,6 @@ const rePayment = async (req, res) => {
         $inc: { quantity: -quantity, popularity: 1 },
       });
     }
-
   } catch (error) {
     console.log(error);
   }

@@ -276,7 +276,7 @@
                     <div class="row">
                       <div class="col-9">
                         <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0">$12.34</h3>
+                          <h3 class="mb-0"><%= totalSalesAmount %></h3>
                           <p class="text-success ml-2 mb-0 font-weight-medium">
                             +3.5%
                           </p>
@@ -291,7 +291,7 @@
                       </div>
                     </div>
                     <h6 class="text-muted font-weight-normal">
-                      Potential growth
+                      total Sales Amount
                     </h6>
                   </div>
                 </div>
@@ -375,14 +375,23 @@
             </div>
 
             <div class="row">
+
               <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
+                  <div class="form-group " style="width: 100px;">
+                    <label for="range">filter:</label>
+                    <select name="range" id="range" class="form-control" onchange="filterChart(value)">
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly" >Yearly</option>
+                    </select>
+                  </div>
                   <div class="card-body">
                     <h4 class="card-title">Selles Report</h4>
                     <canvas id="lineChart" style="height:250px"></canvas>
                   </div>
                 </div>
               </div>
+
               <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
@@ -391,9 +400,11 @@
                   </div>
                 </div>
               </div>
+
             </div>
 
             <div class="row">
+
               <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
@@ -455,11 +466,12 @@
    * Data and config for chartjs
    */
   'use strict';
+  console.log(<%=cod%>,"codhdhhd")
   var paymentMethod = {
     labels: ["COD", "WALLET", "RAZOR PAY"],
     datasets: [{
-      label: '# of Votes',
-      data: [4, 1, 3],
+      label: 'Total',
+      data: [<%=cod%>, <%=wallet%>, <%=razorPay%>],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -482,12 +494,13 @@
   };
 
 
+  console.log("labelsss","<%=labels%>");
   //sales report
   var salesReport = {
-    labels: ["2013", "2014", "20148347", "2015", "2016", "2017"],
+    labels:  [<%=labels.toString()%>],
     datasets: [{
       label: '# of Votes',
-      data: [20, 19, 20, 20, 20, 3],
+      data: <%= JSON.stringify(graphValue) %>,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -538,7 +551,7 @@
   
   var top3Products = {
     datasets: [{
-      data: [90, 5, 5],
+      data:   ["<%=topPerformingProducts[0].totalSold%>","<%=topPerformingProducts[1].totalSold%>","<%=topPerformingProducts[2].totalSold%>"],
       backgroundColor: [
         'rgba(255, 99, 132, 0.5)',
         'rgba(54, 162, 235, 0.5)',
@@ -558,15 +571,11 @@
     }],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-      'Pink',
-      'Blue',
-      'Yellow',
-    ]
+    labels:["<%=topPerformingProducts[0].productName%>","<%=topPerformingProducts[1].productName%>","<%=topPerformingProducts[2].productName%>"]
   };
   var top3Categories = {
     datasets: [{
-      data: [20, 40, 40],
+      data:  ["<%=topPerformingCategories[0].totalSold%>","<%=topPerformingCategories[1].totalSold%>","<%=topPerformingCategories[2].totalSold%>"],
       backgroundColor: [
         'rgba(255, 99, 132, 0.5)',
         'rgba(54, 162, 235, 0.5)',
@@ -585,12 +594,14 @@
       ],
     }],
 
+
+    
+  
+
+
+
     // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-      'Pink',
-      'Blue',
-      'Yellow',
-    ]
+    labels:["<%=topPerformingCategories[0].categoryName%>","<%=topPerformingCategories[1].categoryName%>","<%=topPerformingCategories[2].categoryName%>"]
   };
   var doughnutPieOptions = {
     responsive: true,
@@ -645,6 +656,13 @@
 
 
 });
+  </script>
+
+  <script>
+    function filterChart(value) {
+      var newUrl = `/admin/admindashbord?filter=${value}`
+      window.location.href = newUrl
+    }
   </script>
 
 

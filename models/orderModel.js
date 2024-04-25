@@ -86,6 +86,7 @@ const orderSchema = new mongoose.Schema({
   discountAmount: {
     type: Number,
   },
+
 });
 
 module.exports = mongoose.model("Order", orderSchema);

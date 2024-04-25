@@ -373,18 +373,21 @@
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <form class="forms-sample" method="post">
+                    <form class="forms-sample" method="post" onsubmit="return validateForm()" >
                       <div class="form-group">
                         <label for="exampleInputName1">Name</label>
                         <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name">
+                        <p id="nameError" style="color: red;"></p>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail3">Amount</label>
                         <input type="number" name="amount" class="form-control" id="exampleInputEmail3" placeholder="Amount">
+                        <p id="amountError" style="color: red;"></p>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword4">Expiry Date</label>
                         <input type="date" name="expiryData" class="form-control" id="exampleInputPassword4" placeholder="Expiry Date">
+                        <p id="expiryDateError" style="color: red;"></p>
                       </div>
                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
                       <a href="/admin/load-offer" class="btn btn-dark">Cancel</a>
@@ -424,4 +427,46 @@
     <script src="adminAssets/assets/js/select2.js"></script>
     <!-- End custom js for this page -->
   </body>
+
+  <script>
+    function validateForm() {
+      var name = document.getElementById('exampleInputName1').value;
+      var amount = document.getElementById('exampleInputEmail3').value;
+      var expiryDate = document.getElementById('exampleInputPassword4').value;
+  
+      var nameError = document.getElementById('nameError');
+      var amountError = document.getElementById('amountError');
+      var expiryDateError = document.getElementById('expiryDateError');
+  
+      nameError.innerHTML = "";
+      amountError.innerHTML = "";
+      expiryDateError.innerHTML = "";
+  
+      var isValid = true;
+  
+      if (name === "") {
+        nameError.innerHTML = "Name is required";
+        isValid = false;
+      }
+  
+      if (amount === "") {
+      amountError.innerHTML = "Amount is required";
+      isValid = false;
+    } else if (amount < 0) {
+      amountError.innerHTML = "Amount must be a positive number";
+      isValid = false;
+    }
+  
+      if (expiryDate === "") {
+        expiryDateError.innerHTML = "Expiry Date is required";
+        isValid = false;
+      }
+  
+      return isValid;
+    }
+  </script>
+
+
+
+
 </html>
