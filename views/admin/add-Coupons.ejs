@@ -491,6 +491,13 @@
         if (expiryDate === '') {
           expiryDateError.textContent = 'Expiry Date is required';
           isValid = false;
+        } else {
+          const selectedDate = new Date(expiryDate);
+          const currentDate = new Date();
+          if (selectedDate < currentDate) {
+            expiryDateError.textContent = 'Expiry Date must be in the future';
+            isValid = false;
+          }
         }
 
         if (discountAmount === criteriaAmount) {

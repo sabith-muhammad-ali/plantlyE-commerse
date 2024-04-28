@@ -11,7 +11,7 @@ const bcrypt = require("bcrypt");
 
 
 // Database connection
-mongoose.connect("mongodb://127.0.0.1:27017/ecommerse");
+mongoose.connect(process.env.dataBase);
 
 // Configure express-session
 app.use(
@@ -144,8 +144,9 @@ app.get("/facebook/login", (req, res) => {
 });
 
 // Start the server
-app.listen(3001, () => {
-  console.log(`Server is running on http://localhost:3001`);
+const PORT = process.env.PORT 
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 module.exports = app;

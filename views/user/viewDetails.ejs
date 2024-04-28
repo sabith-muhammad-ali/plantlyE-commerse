@@ -347,8 +347,8 @@
                     <!-- col-xl-2 col-lg-2 col-md-2 col-sm-3 head-logo -->
                     <div class="col-xl-10 col-lg-10 col-6  head-search">
                         <div class="d-flex navbar">
-                            <div class="input-class  text-left col-xl-8 col-lg-7 col-md-12  ">
-                                <div class="between-header border border-danger rounded mb-0 head-left">
+                             <div class="input-class  text-left col-xl-8 col-lg-7 col-md-12  ">
+                                <!-- <div class="between-header border border-danger rounded mb-0 head-left">
                                     <select class="select-menu form-select d-none d-sm-block">
                                         <option value="selected">all categories</option>
                                         <option value="1">laptop</option>
@@ -362,9 +362,8 @@
                                                 class="btn btn-danger text-uppercase font-weight-normal">search</button>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- between-header text-left col-sm-8 head-left border border-danger rounded mb-0 -->
-                            </div>
+                                </div> -->
+                            </div> 
                             <div class="col-xl-4 col-lg-5 head-right text-right">
                                 <ul class="top_cart">
                                     <li class="dropdown right1 md_acc md_acco">
@@ -820,6 +819,10 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title"><%= item.productId.name %></h5>
+                                            <p class="card-text">Quantity: <%= item.quantity %></p>
+                                            <p class="card-text">Name: <%= order.shippingAddress.name %></p>
+                                            <p class="card-text">Address: <%= order.shippingAddress.address %>, <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>, <%= order.shippingAddress.postcode %></p>
+                                            <p class="card-text">Mobile: <%= order.shippingAddress.mobile %></p>
                                             <div class="media-body">
                                                 <% if (item.productId.offer && item.productId.offer.discountAmount) { %>
                                                     <span class="text-center prices">
@@ -832,14 +835,10 @@
                                                         <span class="font-weight-bolder price text-success">₹<%= item.productId.price - item.productId.categoryDiscount %></span><br><br>
                                                     </span>
                                                 <% } else { %>
-                                                    
                                                     <p class="card-text"> price: ₹<%= item.productId.price %></p>
                                                 <% } %>
                                             </div>
-                                            <p class="card-text">Quantity: <%= item.quantity %></p>
-                                            <p class="card-text">Name: <%= order.shippingAddress.name %></p>
-                                            <p class="card-text">Address: <%= order.shippingAddress.address %>, <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>, <%= order.shippingAddress.postcode %></p>
-                                            <p class="card-text">Mobile: <%= order.shippingAddress.mobile %></p>
+                                            <p class="card-text">Coupon: <%= order.discountAmount %></p>
                                             <p class="card-text">Status: <%= item.productStatus %></p>
                                             <% if(item.productStatus === 'Delivered'){ %>
                                                 <p class="align-middle">

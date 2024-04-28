@@ -486,32 +486,37 @@
             isValid = false;
           }
 
-          // Check if criteriaAmount is not a valid positive number
           if (criteriaAmount === '' || isNaN(criteriaAmountValue) || criteriaAmountValue <= 0) {
             criteriaAmountError.textContent = 'Criteria Amount must be a valid positive number';
             isValid = false;
           }
 
-          // More validation logic...
 
-          // Check if discountAmount and criteriaAmount are the same
           if (discountAmountValue === criteriaAmountValue) {
             discountAmountError.textContent = 'Discount Amount and Criteria Amount cannot be the same';
             criteriaAmountError.textContent = 'Discount Amount and Criteria Amount cannot be the same';
             isValid = false;
           }
 
-          // Check if discountAmount is greater than or equal to criteriaAmount
           if (discountAmountValue >= criteriaAmountValue) {
             discountAmountError.textContent = 'Discount Amount must be less than Criteria Amount';
             isValid = false;
           }
 
-          // Check if expiryDate is empty
-          if (expiryDate === '') {
-            expiryDateError.textContent = 'Expiry Date is required';
-            isValid = false;
-          }
+      const currentDate = new Date();
+      const minExpiryDate = new Date(currentDate);
+      minExpiryDate.setDate(currentDate.getDate() + 1);
+
+      if (expiryDate === '') {
+        expiryDateError.textContent = 'Expiry Date is required';
+        isValid = false;
+      } else {
+        const selectedDate = new Date(expiryDate);
+        if (selectedDate < minExpiryDate) {
+          expiryDateError.textContent = 'Expiry Date must be at least one day after the current date';
+          isValid = false;
+        }
+      }
 
           if (!isValid) {
             event.preventDefault();

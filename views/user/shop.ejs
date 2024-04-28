@@ -614,25 +614,29 @@
          <div class="container custom_container">
             <div class="row">
                <div class="col-lg-3 col-md-4">
-                  <form action="#" id="shop_page-form" method="post" class="needs-validation" novalidate>
-                     <div class="shop_sidebar border card-body rounded bg-white">
-                         <h2 class="text-uppercase card-title font-weight-bolder d-md-block d-none">filter by</h2>
-                         <div class="s_filter form">
-                             <% console.log("category", categoryData) %>
-                             <h6 class="text-uppercase border-bottom font-weight-bold">Category<button class="toggle collapsed" data-toggle="collapse" data-target="#shop_color_collapse"></button></h6>
-                             <div class="collapse" id="shop_color_collapse">
-                                 <% categoryData.forEach(function(category) { %>
-                                 <label class="form-check">
-                                    <input class="form-check-input" type="radio" name="category" value="<%= category._id %>" onchange="selectCategory(value)">
-                                    <span class="form-check-label font-weight-bolder"><%= category.name %></span>
-                                 </label>
-                                 <% }); %>
-                             </div>
-                         </div>
-                         <a id="clearButton" href="/shop" class="btn btn-primary clear_btn" type="reset">Clear all</a>
-                     </div>
-                 </form>
+                  <form action="/shop" id="shop_page-form" method="get" class="needs-validation" novalidate>
+                      <div class="shop_sidebar border card-body rounded bg-white">
+                          <h2 class="text-uppercase card-title font-weight-bolder d-md-block d-none">filter by</h2>
+                          <div class="s_filter form">
+                              <% console.log("category", categoryData) %>
+                              <h6 class="text-uppercase border-bottom font-weight-bold">Category<button class="toggle collapsed" data-toggle="collapse" data-target="#shop_color_collapse"></button></h6>
+                              <div class="collapse" id="shop_color_collapse">
+                                  <% categoryData.forEach(function(category) { %>
+                                  <label class="form-check">
+                                      <input class="form-check-input" type="checkbox" name="category" value="<%= category._id %>">
+                                      <span class="form-check-label font-weight-bolder"><%= category.name %></span>
+                                  </label>
+                                  <% }); %>
+                              </div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center">
+                              <button id="applyFilterButton" class="btn btn-primary apply_filter_btn " type="submit">Apply Filter</button>
+                              <a id="clearButton" href="/shop" class="btn btn-primary clear_btn m-1 pl-4 pr-4 py-2" type="reset">Clear all</a>
+                          </div>
+                      </div>
+                  </form>
               </div>
+              
 
                <div class="col-lg-9 col-md-8">
                   <div class="row shop_grid_list_row mb-5 bg-white p-2 p-md-1 mb-lg-3 mx-0">
@@ -1030,34 +1034,50 @@
             window.location.href = newUrl;
          }
 
-         function selectCategory(value) {
-            // Store selected category in local storage
-            localStorage.setItem('selectedCategory', value);
+         function selectCategory() {
+    var selectedCategories = [];
+    var checkboxes = document.querySelectorAll('input[name="category"]:checked');
+    checkboxes.forEach(function(checkbox) {
+        selectedCategories.push(checkbox.value);
+    });
 
-            var queryString = window.location.search;
-            var params = new URLSearchParams(queryString);
-            
-            params.delete('category');
-            params.append('category', value);
+    var queryString = window.location.search;
+    var params = new URLSearchParams(queryString);
 
-            var newQueryString = params.toString();
-            var newUrl = `/shop?${newQueryString}`;
+    // Remove existing category parameter(s)
+    params.delete('category');
 
-            window.location.href = newUrl;
-        }
+    // Add selected category parameter(s)
+    selectedCategories.forEach(function(category) {
+        params.append('category', category);
+    });
 
-        function selectPreviousCategory() {
-            var selectedCategory = localStorage.getItem('selectedCategory');
-            if (selectedCategory) {
-                document.querySelector('input[name="category"][value="' + selectedCategory + '"]').checked = true;
-            }
-        }
+    var newQueryString = params.toString();
+    var newUrl = `/shop?${newQueryString}`;
 
-        window.onload = selectPreviousCategory;
+    window.location.href = newUrl;
+}
 
-        document.getElementById('clearButton').addEventListener('click', function() {
-            localStorage.removeItem('selectedCategory');
-        });
+function selectPreviousCategory() {
+    var queryString = window.location.search;
+    var params = new URLSearchParams(queryString);
+
+    // Check previously selected categories
+    var selectedCategories = params.getAll('category');
+    selectedCategories.forEach(function(category) {
+        document.querySelector('input[name="category"][value="' + category + '"]').checked = true;
+    });
+}
+
+window.onload = selectPreviousCategory;
+
+document.getElementById('clearButton').addEventListener('click', function() {
+    // Clear selected categories
+    var checkboxes = document.querySelectorAll('input[name="category"]:checked');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+    });
+})
 
 
          function searchValue(value) {

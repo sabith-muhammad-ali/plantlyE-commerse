@@ -340,17 +340,18 @@ const loadShop = async (req, res) => {
       .populate("categoryId")
       .populate("offer");
 
-    if (sortValue) {
-      if (sortValue === "high to low") {
-        productsQuery = productsQuery.sort({ price: -1 });
-      } else if (sortValue === "low to high") {
-        productsQuery = productsQuery.sort({ price: 1 });
-      } else if (sortValue === "A to Z") {
-        productsQuery = productsQuery.sort({ name: 1 });
-      } else if (sortValue === "Z to A") {
-        productsQuery = productsQuery.sort({ name: -1 });
+      const collation = { locale: 'en', strength: 2 };
+      if (sortValue) {
+        if (sortValue === "high to low") {
+          productsQuery = productsQuery.sort({ price: -1 });
+        } else if (sortValue === "low to high") {
+          productsQuery = productsQuery.sort({ price: 1 });
+        } else if (sortValue === "A to Z") {
+          productsQuery = productsQuery.collation(collation).sort({ name: 1 });
+        } else if (sortValue === "Z to A") {
+          productsQuery = productsQuery.collation(collation).sort({ name: -1 });
+        }
       }
-    }
 
     if (categoryValue) {
       productsQuery = productsQuery.where("categoryId").equals(categoryValue);

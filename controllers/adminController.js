@@ -157,7 +157,7 @@ const loadDashboard = async (req, res) => {
     }
 
     const cod = await orderModel.countDocuments({
-      paymentMethod: "cash On Delivery",
+      paymentMethod: "cash On Delivey",
       "product.productStatus": "Delivered",
     });
     const wallet = await orderModel.countDocuments({

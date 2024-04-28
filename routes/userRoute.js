@@ -65,7 +65,6 @@ user.post("/verify-payment", auth.isLogin, orderController.verifyPayment);//razo
 user.post("/re-payment", auth.isLogin, orderController.rePayment);//repayment
 user.post("/return-order", auth.isLogin, orderController.returnOrder);
 user.get("/load-wallet", auth.isLogin, orderController.loadWallet);
-
 //wishlist
 user.post("/add-wishlist", auth.isLogin, cartController.addToWishlist);
 user.get("/load-wishlist", auth.isLogin, cartController.loadWishlist);
