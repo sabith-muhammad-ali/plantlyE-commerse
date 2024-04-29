@@ -18,8 +18,12 @@
   <link rel="stylesheet" href="adminAssets/assets/css/style.css">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="adminAssets/assets/images/favicon.png" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,200" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,200" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,200" />
+
 
 </head>
 
@@ -42,7 +46,7 @@
                 <span class="count bg-success"></span>
               </div>
               <div class="profile-name">
-                <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
+                <h5 class="mb-0 font-weight-normal">Sabith Muhammad Ali</h5>
                 <span>Gold Member</span>
               </div>
             </div>
@@ -91,16 +95,16 @@
           <a class="nav-link" href="/admin/admindashbord">
             <span class="material-symbols-outlined" style="color: skyblue">
               dashboard
-              </span>
+            </span>
             <span class="menu-title">Dashboard</span>
           </a>
         </li>
         </li>
         <li class="nav-item menu-items">
           <a class="nav-link" href="/admin/category">
-            <span class="material-symbols-outlined"  style="color: skyblue;">
+            <span class="material-symbols-outlined" style="color: skyblue;">
               category
-              </span>
+            </span>
             <span class="menu-title">Category</span>
           </a>
         </li>
@@ -108,7 +112,7 @@
           <a class="nav-link" href="/admin/product">
             <span class="material-symbols-outlined" style="color: skyblue;">
               shopping_cart
-              </span>
+            </span>
             <span class="menu-title">Products</span>
           </a>
         </li>
@@ -116,15 +120,15 @@
           <a class="nav-link" href="/admin/userprofile">
             <span class="material-symbols-outlined" style="color: skyblue;">
               account_circle
-              </span>
-            <span class="menu-title" >Customers</span>
+            </span>
+            <span class="menu-title">Customers</span>
           </a>
         </li>
         <li class="nav-item menu-items">
           <a class="nav-link" href="/admin/orderlist">
             <span class="material-symbols-outlined" style="color: skyblue;">
               draft_orders
-              </span>
+            </span>
             <span class="menu-title">Orders</span>
           </a>
         </li>
@@ -132,7 +136,7 @@
           <a class="nav-link" href="/admin/banner">
             <span class="material-symbols-outlined" style="color: skyblue;">
               planner_banner_ad_pt
-              </span>
+            </span>
             <span class="menu-title">Banner</span>
           </a>
         </li>
@@ -140,7 +144,7 @@
           <a class="nav-link" href="/admin/coupon">
             <span class="material-symbols-outlined" style="color: skyblue;">
               credit_card_heart
-              </span>
+            </span>
             <span class="menu-title">Coupon</span>
           </a>
         </li>
@@ -148,7 +152,7 @@
           <a class="nav-link" href="/admin/load-offer">
             <span class="material-symbols-outlined" style="color: skyblue;">
               redeem
-              </span>
+            </span>
             <span class="menu-title">Offer</span>
           </a>
         </li>
@@ -162,9 +166,9 @@
           </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link"href="/admin/logout">
-          <span class="material-symbols-outlined" style="color: skyblue;">
-            logout
+          <a class="nav-link" href="/admin/logout">
+            <span class="material-symbols-outlined" style="color: skyblue;">
+              logout
             </span>
             <span class="menu-title">logout</span>
           </a>
@@ -335,7 +339,7 @@
               <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                 <div class="navbar-profile">
                   <img class="img-xs rounded-circle" src="adminAssets/assets/images/faces/face15.jpg" alt="">
-                  <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name">Sabith Muhammad Ali</p>
                   <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
               </a>
@@ -400,11 +404,12 @@
                           <th class="text-white">Payment Method</th>
                           <th class="text-white">Order Time</th>
                           <th class="text-white">Status</th>
+                          <th class="text-white">Request</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <% orderDetails.forEach(order => { %>
-                          <% order.product.forEach(product => { %>
+                        <% orderDetails.forEach(order=> { %>
+                          <% order.product.forEach(product=> { %>
                             <tr>
                               <td class="text-white">
                                 <%= order.shippingAddress.name %>
@@ -427,24 +432,44 @@
                               <td class="text-white">
                                 <%= order.orderedData.toLocaleString() %>
                               </td>
-                              <% if (product.productStatus === 'cancelled') { %>
+                              <% if (product.productStatus==='cancelled' ) { %>
                                 <td class="text-danger">cancelled</td>
-                              <% } else if (product.productStatus === 'Delivered') { %>
-                                <td class="text-success">Delivered</td>
-                              <% } else if (product.productStatus === 'Returned') { %>
-                                <td class="text-info">Returned</td>
-                              <% } else { %>
-                                <td>
-                                  <select class="statusSelect" id="<%= order._id %><%= product._id %>" onchange="status(this)">
-                                    <option value="Placed" data-order-id="<%= order._id %>" data-product-id="<%= product._id %>" <% if (product.productStatus === 'Placed') { %> selected <% } %>>Placed</option>
-                                    <option value="shipped" data-order-id="<%= order._id %>" data-product-id="<%= product._id %>" <% if (product.productStatus === 'shipped') { %> selected <% } %>>Shipped</option>
-                                    <option value="Delivered" data-order-id="<%= order._id %>" data-product-id="<%= product._id %>" <% if (product.productStatus === 'Delivered') { %> selected <% } %>>Delivered</option>
-                                  </select>
-                                </td>
-                              <% } %>
+                                <% } else if (product.productStatus==='Delivered' ) { %>
+                                  <td class="text-success">Delivered</td>
+                                  <% } else if (product.productStatus==='return request' ) { %>
+                                    <td class="text-success">Delivered</td>
+                                    <% } else if (product.productStatus==='Returned' ) { %>
+                                      <td class="text-info">Returned</td>
+                                      <% } else { %>
+                                        <td>
+                                          <select class="statusSelect" id="<%= order._id %><%= product._id %>"
+                                            onchange="status(this)">
+                                            <option value="Placed" data-order-id="<%= order._id %>"
+                                              data-product-id="<%= product._id %>" <% if
+                                              (product.productStatus==='Placed' ) { %> selected <% } %>>Placed</option>
+                                            <option value="shipped" data-order-id="<%= order._id %>"
+                                              data-product-id="<%= product._id %>" <% if
+                                              (product.productStatus==='shipped' ) { %> selected <% } %>>Shipped
+                                            </option>
+                                            <option value="Delivered" data-order-id="<%= order._id %>"
+                                              data-product-id="<%= product._id %>" <% if
+                                              (product.productStatus==='Delivered' ) { %> selected <% } %>>Delivered
+                                            </option>
+                                          </select>
+                                        </td>
+                                        <% } %>
+                                          <td>
+                                            <% if(product.productStatus==='return request' ) { %>
+                                              <button class="btn btn-success" data-order-id="<%= order._id %>"
+                                                data-product-id="<%= product._id %>"
+                                                onclick="acceptOrder(this)">Accept</button>
+                                              <% } else { %>
+                                                <span class="text-white">No Request</span>
+                                                <% } %>
+                                          </td>
                             </tr>
-                          <% }); %>
-                        <% }); %>
+                            <% }); %>
+                              <% }); %>
                       </tbody>
                     </table>
                   </div>
@@ -530,6 +555,43 @@
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });
+  }
+</script>
+
+
+
+<!--  returnRequestAccept    -->
+<script>
+  function acceptOrder(button) {
+    var orderId = button.getAttribute('data-order-id');
+    var productId = button.getAttribute('data-product-id');
+    var status = 'Returned'
+
+    console.log("Order ID:", orderId);
+    console.log("Product ID:", productId);
+    console.log("Status:", status);
+
+    fetch("/admin/return-request-accept", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        orderId,
+        productId,
+        status
+      })
+    })
+      .then((res) => res.json())
+      .then(data => {
+
+        if (data.status === true) {
+          location.reload()
+          console.log('Order status updated successfully');
+        } else {
+          console.log('Failed to update order status');
+        }
+      })
   }
 </script>
 

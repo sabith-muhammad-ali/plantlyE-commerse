@@ -39,57 +39,62 @@
         integrity="sha384-RTzjGCzKaJLUIh41wAipKGU7Ks2X+13RVXu0W7cpn6OM+gFKohA9yOnvg4KuooiC" crossorigin="anonymous">
 </head>
 <style>
-.cancel-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    .cancel-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-.cancel-btn:hover {
-    background-color: #c82333;
-}
+    .cancel-btn:hover {
+        background-color: #c82333;
+    }
 
-.return-btn {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    .return-btn {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-.return-btn:hover {
-    background-color: #28a745;
-}
+    .return-btn:hover {
+        background-color: #28a745;
+    }
 
-/* Add this CSS to your stylesheet */
-.card {
-    width: auto; /* Set card width to auto */
-}
+    /* Add this CSS to your stylesheet */
+    .card {
+        width: auto;
+        /* Set card width to auto */
+    }
 
-.card .row.no-gutters {
-    margin-right: 0; /* Remove right margin for the inner row */
-}
+    .card .row.no-gutters {
+        margin-right: 0;
+        /* Remove right margin for the inner row */
+    }
 
-.card .col-md-4 {
-    padding-right: 0; /* Remove padding for the image column */
-}
+    .card .col-md-4 {
+        padding-right: 0;
+        /* Remove padding for the image column */
+    }
 
-.card .card-body {
-    padding: 1rem; /* Add padding to the card body */
-}
+    .card .card-body {
+        padding: 1rem;
+        /* Add padding to the card body */
+    }
 
-.card-img-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%; /* Set height to match the image height */
-}
+    .card-img-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        /* Set height to match the image height */
+    }
 </style>
 
 
@@ -293,48 +298,7 @@
     <!-- header area -->
     <!-- header area -->
     <header>
-        <div class="topbar-outer py-2 border-bottom d-md-none d-none d-none d-lg-block">
-            <div class="">
-                <div class="row">
-                    <div class="col-lg-5 col-md-4 col-sm-4 topbar_left">
-                        <ul>
-                            <li>
-                                <span class="font-weight-bolderer">Get 30% Off On Selected Items</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- col-lg-5 col-md-4 col-sm-4 hidden-md-down topbar_left -->
-                    <div class="col-lg-7 col-md-8 col-sm-8 text-xs-right  topbar_right text-right">
-                        <nav class="navbar d-flex align-items-center  justify-content-end">
-                            <div class="dropdown right1 md_2 hr_">
-                                <span class="dropdown-toggle lng-select-menu" role="menu" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <select class=" select-menu form-select d-none d-sm-block">
-                                        <option value="selected">English <i class="fas fa-angle-down"></i></option>
-                                        <option value="1">Polski</option>
-                                        <option value="2">Romana</option>
-                                        <option value="3">Deutsch</option>
-                                    </select>
-                                </span>
-                            </div>
-                            <div class="dropdown right1 md_1">
-                                <span class="dropdown-toggle lng-select-menu" role="menu" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <select class=" select-menu form-select d-none d-sm-block">
-                                        <option value="selected">EUR €<i class="fas fa-angle-down"></i></option>
-                                        <option value="1">USD $</option>
-                                    </select>
-                                </span>
-                            </div>
 
-                        </nav>
-                    </div>
-                    <!-- col-lg-7 col-md-8 col-sm-8 text-xs-right hidden-md-down topbar_right text-right -->
-                </div>
-                <!-- row -->
-            </div>
-            <!-- container  -->
-        </div>
         <!-- topbar-outer py-2 border-bottom<-->
         <!-- second row -->
         <div class="header-top py-4 border-bottom sticky-md-top">
@@ -347,7 +311,7 @@
                     <!-- col-xl-2 col-lg-2 col-md-2 col-sm-3 head-logo -->
                     <div class="col-xl-10 col-lg-10 col-6  head-search">
                         <div class="d-flex navbar">
-                             <div class="input-class  text-left col-xl-8 col-lg-7 col-md-12  ">
+                            <div class="input-class  text-left col-xl-8 col-lg-7 col-md-12  ">
                                 <!-- <div class="between-header border border-danger rounded mb-0 head-left">
                                     <select class="select-menu form-select d-none d-sm-block">
                                         <option value="selected">all categories</option>
@@ -363,86 +327,10 @@
                                         </div>
                                     </div>
                                 </div> -->
-                            </div> 
+                            </div>
                             <div class="col-xl-4 col-lg-5 head-right text-right">
                                 <ul class="top_cart">
-                                    <li class="dropdown right1 md_acc md_acco">
-                                        <span class="account-block">
-                                        </span>
-                                        <span class="dropdown-toggle my_account" role="menu" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">My account
-                                            <a href="#">
-                                            </a>
-                                        </span>
-                                        <span class="dropdown-menu r_menu dropdown-menu-right">
-                                            <a class="dropdown-item font-weight-bolderer" href="login.html">log in</a>
-                                            <a class="dropdown-item font-weight-bolderer"
-                                                href="registration.html">register</a>
-                                        </span>
-                                    </li>
-                                    <!--  <li class="d-lg-none d-md-inline-block user">
-                                 <div class="head_ border rounded bg-white text-left">
-                                    <a class=" md_login" href="#"></a>
-                                 </div>
-                                 </li> -->
-                                    <li class="dropdown d-inline-block my-cart md_acco">
-                                        <a href="#" class="cart-qty">
-                                            <span class="cart-contents">
-                                            </span>
-                                            <span
-                                                class="d-lg-inline-block d-md-none d-sm-none d-none align-middle font-weight-bolderer"></span><span
-                                                class="price_cart d-md-inline-block align-middle font-weight-bolderer">2</span>
-                                        </a>
-                                        <span class="dropdown-toggle Price-amount" role="menu" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            $230.00
-                                        </span>
-                                        <div class="dropdown-menu s_cart dropdown-menu-right">
-                                            <ul class="shopping-cart p-2 ">
-                                                <li class="pb-2 d-block cart-remove cart_cross">
-                                                    <div class="media">
 
-                                                        <div>
-                                                            <a href="#"><img src="/assets/img/product/product_13.jpg"
-                                                                    class="fst-image img-fluid align-self-center"
-                                                                    alt="product_13"></a>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h6 class="mt-0 f_15">Media heading</h6>
-                                                            <p><span class="f_13">1 x $ 299.00</span></p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li
-                                                    class="pb-2 d-block cart-remove border-bottom pl-0 cart_cross wblastcart">
-                                                    <!-- <span class=""></span> -->
-                                                    <div class="media ">
-
-                                                        <div>
-                                                            <a href="#"><img src="/assets/img/product/product_21.jpg"
-                                                                    class="fst-image img-fluid align-self-center"
-                                                                    alt="product_21"></a>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h6 class="mt-0 f_15">Media heading</h6>
-                                                            <p><span>1 x $ 299.00</span></p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-
-                                                <li class="d-block text-muted font-weight-bolderer p-2 border-bottom">
-                                                    <span class="text-left">subtotal:</span>
-                                                    <span class="float-right">$230.00</span>
-                                                </li>
-                                                <li class="d-block font-weight-bolderer pt-2">
-                                                    <span class="text-left"><a href="/cart">view cart</a></span>
-                                                    <span class="float-right"><a href="/checkout">check out</a></span>
-                                                </li>
-                                            </ul>
-                                            <p class="text-center cartempty">Your Shopping cart is empty!</p>
-                                        </div>
-                                    </li>
                                 </ul>
                             </div>
                             <!-- col-sm-4 head-right text-right -->
@@ -466,123 +354,7 @@
                     <div class="col-lg-12 text-left">
                         <ul class="main-menu navbar">
                             <li><a href="/">Home</a></li>
-                            <li>
-                                <a class="dropdown-toggle" href="/shop">shop&nbsp;<span><i></i></span></a>
-                                <ul>
-                                </ul>
-                            </li>
-                            </li>
-                            <li class="dropdown mega_menu m1 level-1 font-weight-bolderer">
-                                <a class="dropdown-toggle" href="single-product.html" role="button"
-                                    data-toggle="dropdown" aria-expanded="false">category&nbsp;<span
-                                        class="float-right"><i class="fas fa-angle-down"></i></span></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <ul class="row mx-0">
-                                            <li class="mg_menu col-lg-3 col-md-12 ">
-                                                <ul class="sub-category">
-                                                    <li
-                                                        class="h_title text-uppercase font-weight-bolder border-bottom d-block">
-                                                        Pot</li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Pigmyweeds</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Indoor Plants</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">outdoor Plants</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Flamingo plant</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Succulent Plant</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="mg_menu col-lg-3 col-md-12 ">
-                                                <ul class="sub-category">
-                                                    <li
-                                                        class="h_title text-uppercase font-weight-bolder border-bottom d-block">
-                                                        Plant</li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Fragrant Plants</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Purifying Plant</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Live Plant</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Raisin Pot</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html"> Decorative Pot</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="mg_menu col-lg-3 col-md-12 ">
-                                                <ul class="sub-category">
-                                                    <li
-                                                        class="h_title text-uppercase font-weight-bolder border-bottom d-block">
-                                                        Crassula</li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Nerve Plant</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Flowering Plants</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Plant Seed</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Luck Plants</a></li>
-                                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                                            href="shop-left-sidebar.html">Plant House</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="mg_menu col-lg-3 col-md-12">
-                                                <ul>
-                                                    <li class="d-block"><a href="single-product.html"><img
-                                                                src="/assets/img/m_menu.jpg"
-                                                                class="fst-image mx-auto d-block mb-1 img-fluid"
-                                                                alt="m_menu"></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="dropdown-toggle" href="blog.html" role="button" data-toggle="dropdown"
-                                    aria-expanded="false">blog&nbsp;<span class="float-right"><i
-                                            class="fas fa-angle-down"></i></span></a>
-                                <ul class="dropdown-menu all-page-drop">
-                                    <li><a class="dropdown-item font-weight-bolder" href="blog.html">blog</a></li>
-                                    <li><a class="dropdown-item font-weight-bolder" href="blog-left-sidebar.html">left
-                                            sidebar</a></li>
-                                    <li><a class="dropdown-item font-weight-bolder" href="blog-right-sidebar.html">right
-                                            sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="portfolio-grid-4.html">gallery</a></li>
-                            <li><a href="about-us.html">about us</a></li>
-                            <li>
-                                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                                    aria-expanded="false">pages <i class="fas fa-angle-down"></i></a>
-                                <ul class="dropdown-menu all-page-drop">
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="about-us.html">about us</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="single-product.html">single product</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="single-blog.html">single blog</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="login.html">login</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="registration.html">registration</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="cart.html">cart</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="compare.html">compare</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="wishlist.html">wishlist</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="checkout.html">check out</a></li>
-                                    <li class="d-block"><a class="dropdown-item font-weight-bolderer"
-                                            href="forgot.html">forgot password</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact-us.html">contact-us</a></li>
+                            <li><a href="/shop">shop&nbsp;<span class="float-right"><i></i></span></a></li>
                         </ul>
                     </div>
                     <!-- col-lg-12 text-left -->
@@ -790,83 +562,102 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6"> <!-- Adjust column size as needed -->
-                        <% if (order && order.product && order.product.length > 0) { %>
+                        <% if (order && order.product && order.product.length> 0) { %>
                             <% order.product.forEach(function(item) { %>
-                                <% if (item.productStatus === "Pending") { %>
+                                <% if (item.productStatus==="Pending" ) { %>
                                     <button class="btn btn-success btn-block"
-
-                                    onclick="razorpayPayment('<%= order._id %>', '<%= order.Total %>')"> 
-                                       re-order
+                                        onclick="razorpayPayment('<%= order._id %>', '<%= order.Total %>')">
+                                        re-order
                                     </button>
-                                <% } %>
-                            <% }); %>
-                        <% } %>
+                                    <% } %>
+                                        <% }); %>
+                                            <% } %>
                     </div>
                 </div>
             </div><br>
 
             <div class="row" id="viewOrder">
-                <% if (order && order.product && order.product.length > 0) { %>
+                <% if (order && order.product && order.product.length> 0) { %>
                     <% order.product.forEach(function(item) { %>
                         <div class="col-md-6 mb-3">
                             <div class="card">
                                 <div class="row no-gutters">
                                     <div class="col-md-4">
                                         <div class="card-img-container">
-                                            <img src="/assets/sharp/<%= item.productId.images[0] %>" class="card-img" alt="Product Image">
+                                            <img src="/assets/sharp/<%= item.productId.images[0] %>" class="card-img"
+                                                alt="Product Image">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title"><%= item.productId.name %></h5>
-                                            <p class="card-text">Quantity: <%= item.quantity %></p>
-                                            <p class="card-text">Name: <%= order.shippingAddress.name %></p>
-                                            <p class="card-text">Address: <%= order.shippingAddress.address %>, <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>, <%= order.shippingAddress.postcode %></p>
-                                            <p class="card-text">Mobile: <%= order.shippingAddress.mobile %></p>
+                                            <h5 class="card-title">
+                                                <%= item.productId.name %>
+                                            </h5>
+                                            <p class="card-text">Quantity: <%= item.quantity %>
+                                            </p>
+                                            <p class="card-text">Name: <%= order.shippingAddress.name %>
+                                            </p>
+                                            <p class="card-text">Address: <%= order.shippingAddress.address %>,
+                                                    <%=order.shippingAddress.state %>, <%= order.shippingAddress.city%>,
+                                                            <%= order.shippingAddress.postcode %>
+                                            </p>
+                                            <p class="card-text">Mobile: <%= order.shippingAddress.mobile %>
+                                            </p>
                                             <div class="media-body">
                                                 <% if (item.productId.offer && item.productId.offer.discountAmount) { %>
                                                     <span class="text-center prices">
-                                                        <del class="text-center text-muted price">₹<%= item.productId.price %></del>
-                                                        <span class="font-weight-bolder price text-success">₹<%= item.productId.price - item.productId.offer.discountAmount %></span><br><br>
+                                                        <del class="text-center text-muted price">₹<%=
+                                                                item.productId.price %></del>
+                                                        <span class="font-weight-bolder price text-success">₹<%=
+                                                                item.productId.price -
+                                                                item.productId.offer.discountAmount %></span><br><br>
                                                     </span>
-                                                <% } else if (item.productId.categoryDiscount) { %>
-                                                    <span class="text-center prices">
-                                                        <del class="text-center text-muted price">₹<%= item.productId.price %></del>
-                                                        <span class="font-weight-bolder price text-success">₹<%= item.productId.price - item.productId.categoryDiscount %></span><br><br>
-                                                    </span>
-                                                <% } else { %>
-                                                    <p class="card-text"> price: ₹<%= item.productId.price %></p>
-                                                <% } %>
+                                                    <% } else if (item.productId.categoryDiscount) { %>
+                                                        <span class="text-center prices">
+                                                            <del class="text-center text-muted price">₹<%=
+                                                                    item.productId.price %></del>
+                                                            <span class="font-weight-bolder price text-success">₹<%=
+                                                                    item.productId.price -
+                                                                    item.productId.categoryDiscount %></span><br><br>
+                                                        </span>
+                                                        <% } else { %>
+                                                            <p class="card-text"> price: ₹<%= item.productId.price %>
+                                                            </p>
+                                                            <% } %>
                                             </div>
-                                            <p class="card-text">Coupon: <%= order.discountAmount %></p>
-                                            <p class="card-text">Status: <%= item.productStatus %></p>
-                                            <% if(item.productStatus === 'Delivered'){ %>
+                                            <p class="card-text">Coupon: <%= order.discountAmount %>
+                                            </p>
+                                            <p class="card-text">Status: <%= item.productStatus %>
+                                            </p>
+                                            <% if(item.productStatus==='Delivered' ){ %>
                                                 <p class="align-middle">
-                                                    <a href="/order-invoice?orderId=<%= order._id %>&productId=<%= item.productId._id  %>">
+                                                    <a
+                                                        href="/order-invoice?orderId=<%= order._id %>&productId=<%= item.productId._id  %>">
                                                         <i class="fas fa-file-invoice"></i> View Invoice
                                                     </a>
                                                 </p>
-                                            <% } %>
-                                            <% if (item.productStatus === 'Placed' || item.productStatus === 'shipped') { %>
-                                                <button class="btn cancel-btn"
-                                                    data-product-id="<%= item.productId._id %>"
-                                                    data-order-id="<%= order._id %>">
-                                                    Cancel
-                                                </button>
-                                            <% } else if (item.productStatus === 'Delivered') { %>
-                                                <button class="btn return-btn"
-                                                    data-product-id="<%= item.productId._id %>"
-                                                    data-order-id="<%= order._id %>">
-                                                    Return
-                                                </button>
-                                            <% } %>
+                                                <% } %>
+                                                    <% if (item.productStatus==='Placed' ||
+                                                        item.productStatus==='shipped' ) { %>
+                                                        <button class="btn cancel-btn"
+                                                            data-product-id="<%= item.productId._id %>"
+                                                            data-order-id="<%= order._id %>">
+                                                            Cancel
+                                                        </button>
+                                                        <% } else if (item.productStatus==='Delivered' ) { %>
+                                                            <button class="btn return-btn"
+                                                                data-product-id="<%= item.productId._id %>"
+                                                                data-order-id="<%= order._id %>">
+                                                                Return
+                                                            </button>
+                                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    <% }) %>
-                <% } %>
+                        <% }) %>
+                            <% } %>
             </div>
         </div>
     </div>
@@ -1210,21 +1001,31 @@
     <!-- cancell product -->
     <script>
         document.querySelectorAll('.cancel-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', async () => {
                 button.disabled = true;
                 var orderId = button.getAttribute('data-order-id');
                 var productId = button.getAttribute('data-product-id');
                 console.log("productId", productId);
                 console.log("orderId", orderId);
-
-                Swal.fire({
-                    title: 'Are you sure you want to cancel?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, cancel it!',
-                    cancelButtonText: 'No, keep it'
-                }).then((result) => {
-                    if (result.isConfirmed) {
+    
+                const ipAPI = "//api.ipify.org?format=json";
+                try {
+                    const response = await fetch(ipAPI);
+                    const data = await response.json();
+                    const inputValue = "";
+                    const { value: reason } = await Swal.fire({
+                        title: "Reason?",
+                        input: "text",
+                        inputLabel: "Your Reason",
+                        inputValue,
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return "You need to write something!";
+                            }
+                        }
+                    });
+                    if (reason) {
                         fetch('/show-order', {
                             method: 'POST',
                             headers: {
@@ -1233,124 +1034,136 @@
                             body: JSON.stringify({
                                 orderId: orderId,
                                 status: "Cancelled",
-                                productId: productId
+                                productId: productId,
+                                reason: reason
                             })
                         })
                         .then(response => {
                             if (response.ok) {
                                 button.innerText = 'Cancelled';
                                 button.disabled = true;
-                                button.style.backgroundColor = '#ccc'; 
-                                button.style.color = '#666'; 
+                                button.style.backgroundColor = '#ccc';
+                                button.style.color = '#666';
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
                         });
                     }
-                });
+                } catch (error) {
+                    console.error('Error:', error);
+                }
             });
         });
     </script>
-    
+
     <!-- return product  -->
     <script>
         document.querySelectorAll('.return-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                button.disabled = true
+            button.addEventListener('click', async () => {
+                button.disabled = true;
                 var orderId = button.getAttribute('data-order-id');
                 var productId = button.getAttribute('data-product-id');
-                console.log("productId",productId);
+                console.log("productId", productId);
                 console.log("orderId", orderId);
-
-                Swal.fire({
-                    title: 'Are you sure you want to return?',
-                    icon: 'warning',
+    
+                const ipAPI = "//api.ipify.org?format=json";
+                const response = await fetch(ipAPI);
+                const data = await response.json();
+                const inputValue = "";
+                const { value: reason } = await Swal.fire({
+                    title: "Reason?",
+                    input: "text",
+                    inputLabel: "Your Reason",
+                    inputValue,
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, return it!',
-                    cancelButtonText: 'No, keep it'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        fetch('/return-order', {
-                            method:'POST',
-                            headers:{
-                                'content-Type':'application/json'
-                            },
-                            body:JSON.stringify({
-                                orderId:orderId,
-                                status:'Returned',
-                                productId:productId
-                            })
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                button.innerText = 'Returned';
-                                button.disabled = true;
-                                button.style.backgroundColor = '#ccc'; 
-                                button.style.color = '#666'; 
-                            }
-                        }).catch(error => {
-                            console.log(error);
-                        })
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return "You need to write something!";
+                        }
                     }
-                })
-
-            })
-        })
+                });
+                if (reason) {
+                            fetch('/return-order', {
+                                method: 'POST',
+                                headers: {
+                                    'content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    orderId: orderId,
+                                    status: 'return request',
+                                    productId: productId,
+                                    reason: reason
+                                })
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        button.innerText = 'Returned';
+                                        button.disabled = true;
+                                        button.style.backgroundColor = '#ccc';
+                                        button.style.color = '#666';
+                                    }
+                                }).catch(error => {
+                                    console.log(error);
+                                })
+                        
+                }
+            });
+        });
     </script>
 
     <script>
-              // razorPay
-      function razorpayPayment(order,amount) {
-         console.log('function called');
-         var options = {
-            "key": 'rzp_test_o7r1ebXkKkik6D',
-            "amount": amount * 100,
-            "currency": "INR",
-            "name": "Plantly",
-            "description": "Test Transaction",
-            "image": "",
-            "order_id": order.id,
-            "handler": function (response) {
-               verifyPayment(response, order)
-            },
-            "prefill": {
-               "name": "Gaurav Kumar",
-               "email": "gaurav.kumar@example.com",
-               "contact": "9000090000"
-            },
-            "notes": {
-               "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-               "color": "#3399cc"
+        // razorPay
+        function razorpayPayment(order, amount) {
+            console.log('function called');
+            var options = {
+                "key": 'rzp_test_o7r1ebXkKkik6D',
+                "amount": amount * 100,
+                "currency": "INR",
+                "name": "Plantly",
+                "description": "Test Transaction",
+                "image": "",
+                "order_id": order.id,
+                "handler": function (response) {
+                    verifyPayment(response, order)
+                },
+                "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9000090000"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
             }
-         }
-         var rzp1 = new Razorpay(options);
-         rzp1.open();
-         function verifyPayment(response, order) {
-            fetch("/re-payment", {
-               method: "POST",
-               headers: {
-                  'content-type': "application/json;charset=utf-8"
-               },
-               body: JSON.stringify({
-                  response,
-                  order
-               })
-            })
-               .then((res) => res.json())
-               .then((data) => {
-                  if (data.statusChanged) {
-                     window.location.href = '/order-success'
-                  }
-               })
-         }
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            function verifyPayment(response, order) {
+                fetch("/re-payment", {
+                    method: "POST",
+                    headers: {
+                        'content-type': "application/json;charset=utf-8"
+                    },
+                    body: JSON.stringify({
+                        response,
+                        order
+                    })
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.statusChanged) {
+                            window.location.href = '/order-success'
+                        }
+                    })
+            }
 
-      }
+        }
     </script>
 
-    
+
 
 
 

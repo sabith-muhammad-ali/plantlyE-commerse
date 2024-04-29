@@ -23,17 +23,15 @@ const orderSchema = new mongoose.Schema({
       },
       productStatus: {
         type: String,
-        enum: ["Pending", "Placed", "Delivered", "Cancelled", "Returned"],
+        enum: ["Pending", "Placed", "Delivered", "Cancelled", "Returned","return request"],
         default: "Pending",
       },
       cancel: {
-        status: { type: String },
         reason: { type: String },
         date: { type: Date },
       },
       return: {
-        status: { type: String },
-        reson: { type: String },
+        reason: { type: String }, 
         date: { type: Date },
       },
     },

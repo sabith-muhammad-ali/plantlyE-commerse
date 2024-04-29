@@ -56,7 +56,8 @@ admin.post("/editproduct", upload.array("image", 4), adminAuth.isLogin, productC
 admin.post("/deleteimage", productController.editProductImage);
 //orders
 admin.get("/orderlist", adminAuth.isLogin, adminController.ordersLoad);
-admin.post("/order-status", adminAuth.isLogin, adminController.orderStatus)
+admin.post("/order-status", adminAuth.isLogin, adminController.orderStatus);
+admin.post("/return-request-accept", adminAuth.isLogin, adminController.returnRequestAccept);
 //banner
 admin.get("/banner", adminAuth.isLogin, bannerController.loadBanner);
 admin.get("/add-banner", adminAuth.isLogin, bannerController.loadAddBanner);

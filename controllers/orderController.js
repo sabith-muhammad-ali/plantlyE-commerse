@@ -125,16 +125,17 @@ const placeOrder = async (req, res) => {
       (a) => a._id.toString() === addressId
     );
 
-    let discountAmount = 0; 
+    let discountAmount = 0;
 
-    const userCart = await cartModel.findOne({ user: userId }).populate("couponDiscount");
+    const userCart = await cartModel
+      .findOne({ user: userId })
+      .populate("couponDiscount");
     if (userCart.couponDiscount) {
-        discountAmount = userCart.couponDiscount.discountAmount; 
-        console.log("Discount Amount:", discountAmount);
+      discountAmount = userCart.couponDiscount.discountAmount;
+      console.log("Discount Amount:", discountAmount);
     } else {
-        console.log("No coupon applied.");
+      console.log("No coupon applied.");
     }
-
 
     const currentData = new Date();
     const expectedDate = new Date(currentData);
@@ -168,7 +169,7 @@ const placeOrder = async (req, res) => {
       paymentMethod: paymentMethod,
       expectedDate: expectedDate,
       Total: subtotal,
-      discountAmount: discountAmount, 
+      discountAmount: discountAmount,
     });
 
     await order.save();
@@ -304,11 +305,17 @@ const showOrder = async (req, res) => {
 
 const cancelOrders = async (req, res) => {
   try {
-    const { orderId, productId, status } = req.body;
+    const { orderId, productId, status, reason } = req.body;
+    console.log("cancel product body:", req.body);
     const userId = req.session.userId;
     await orderModel.updateOne(
       { _id: orderId, "product.productId": productId },
-      { $set: { "product.$.productStatus": status } }
+      { $set: {
+         "product.$.productStatus": status,
+         "product.$.cancel.reason": reason,
+         "product.$.cancel.date": new Date(),
+        },
+       },
     );
 
     const order = await orderModel.findById({ _id: orderId });
@@ -380,12 +387,21 @@ const viewOrderDetails = async (req, res) => {
 
 const returnOrder = async (req, res) => {
   try {
-    const { orderId, status, productId } = req.body;
+    const { orderId, status, productId, reason } = req.body;
+
     const userId = req.session.userId;
+    // Update product status and set return reason
     await orderModel.updateOne(
       { _id: orderId, "product.productId": productId },
-      { $set: { "product.$.productStatus": status } }
+      {
+        $set: {
+          "product.$.productStatus": status,
+          "product.$.return.reason": reason,
+          "product.$.return.date": new Date(),
+        },
+      }
     );
+
     const order = await orderModel.findById({ _id: orderId });
     const returnedOrder = order.product.find(
       (p) => p.productId == productId
@@ -453,7 +469,7 @@ const invoice = async (req, res) => {
       })
       .populate("shippingAddress");
 
-      console.log("orderData1111",orderData)
+    console.log("orderData1111", orderData);
 
     const foundProduct = orderData.product.find(
       (productItem) => productItem.productId._id.toString() === productId
@@ -461,7 +477,7 @@ const invoice = async (req, res) => {
     await productModel.populate(foundProduct, {
       path: "productId.offer",
       model: "Offer",
-      select: "discountAmount", 
+      select: "discountAmount",
     });
     console.log("foundProduct:::", foundProduct);
 

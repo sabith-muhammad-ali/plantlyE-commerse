@@ -455,6 +455,27 @@ const filterSalesReport = async (req, res) => {
   }
 };
 
+
+const returnRequestAccept = async (req,res) => {
+  try {
+    const {orderId, productId, status} = req.body;
+    const updatedOrder = await orderModel.findOneAndUpdate(
+      { _id: orderId, "product._id": productId },
+      { $set: { "product.$.productStatus": status } },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ error: "Order or product not found" });
+    }
+
+    res.json({ status: true });
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   loadLogin,
   verifyLogin,
@@ -466,4 +487,5 @@ module.exports = {
   orderStatus,
   loadSalesReport,
   filterSalesReport,
+  returnRequestAccept
 };

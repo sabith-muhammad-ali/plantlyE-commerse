@@ -40,7 +40,8 @@ const homePage = async (req, res) => {
       .populate("offer");
     const userData = await User.findOne({ _id: req.session.userId });
     const banner = await bannerModel.find({ is_listed: false });
-    res.render("user/home", { userData, banner, productData });
+    const cart = await Cart.find({}).populate("items.productId");
+    res.render("user/home", { userData, banner, productData, cart });
   } catch (error) {
     console.log(error.message);
   }
@@ -385,7 +386,8 @@ const singleproduct = async (req, res) => {
   try {
     const id = req.query.id;
     const product = await productModel.findById({ _id: id }).populate("offer");
-    res.render("user/singleProduct", { product });
+    const cart = await Cart.find({}).populate("items.productId");
+    res.render("user/singleProduct", { product, cart });
   } catch (error) {
     console.log(error);
   }

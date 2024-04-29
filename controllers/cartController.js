@@ -184,7 +184,8 @@ const loadWishlist = async (req, res) => {
           model: 'Offer' 
         }
       });
-    res.render("user/wishlist", { wishlistData });
+      const cart = await Cart.find({}).populate("items.productId");
+    res.render("user/wishlist", { wishlistData, cart });
   } catch (error) {
     console.log(error);
   }

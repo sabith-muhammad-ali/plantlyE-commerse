@@ -262,46 +262,6 @@
       <div class="preloader"></div>
       <!-- header area -->
       <header>
-         <div class="topbar-outer py-2 border-bottom d-md-none d-none d-none d-lg-block">
-            <div class="">
-               <div class="row">
-                  <div class="col-lg-5 col-md-4 col-sm-4 topbar_left">
-                     <ul>
-                        <li>
-                           <span class="font-weight-bolderer">Get 30% Off On Selected Items</span>
-                        </li>
-                     </ul>
-                  </div>
-                  <!-- col-lg-5 col-md-4 col-sm-4 hidden-md-down topbar_left -->
-                  <div class="col-lg-7 col-md-8 col-sm-8 text-xs-right  topbar_right text-right">
-                     <nav class="navbar d-flex align-items-center  justify-content-end">
-                        <div class="dropdown right1 md_2 hr_">
-                           <span class="dropdown-toggle lng-select-menu" role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               <select class=" select-menu form-select d-none d-sm-block" >
-                                 <option value="selected">English <i class="fas fa-angle-down"></i></option>
-                                 <option value="1">Polski</option>
-                                 <option value="2">Romana</option>
-                                 <option value="3">Deutsch</option>
-                              </select>
-                           </span>
-                        </div>
-                        <div class="dropdown right1 md_1">
-                            <span class="dropdown-toggle lng-select-menu" role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               <select class=" select-menu form-select d-none d-sm-block" >
-                                 <option value="selected">EUR €<i class="fas fa-angle-down"></i></option>
-                                 <option value="1">USD $</option>
-                              </select>
-                           </span>
-                        </div>
-                        
-                     </nav>
-                  </div>
-                  <!-- col-lg-7 col-md-8 col-sm-8 text-xs-right hidden-md-down topbar_right text-right -->
-               </div>
-               <!-- row -->
-            </div>
-            <!-- container  -->
-         </div>
          <!-- topbar-outer py-2 border-bottom<-->
          <!-- second row -->
          <div class="header-top py-4 border-bottom sticky-md-top">
@@ -371,51 +331,53 @@
                                  <a href="#"  class="cart-qty">
                                  <span class="cart-contents">
                                  </span>
-                                 <span class="d-lg-inline-block d-md-none d-sm-none d-none align-middle font-weight-bolderer"></span><span class="price_cart d-md-inline-block align-middle font-weight-bolderer">2</span>
+                                 <span class="d-lg-inline-block d-md-none d-sm-none d-none align-middle font-weight-bolderer"></span><span class=""></span>
                                  </a>
-                                 <span class="dropdown-toggle Price-amount" role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                 $230.00
-                                 </span>
-                                 <div class="dropdown-menu s_cart dropdown-menu-right" >
-                                    <ul class="shopping-cart p-2 ">
-                                       <li class="pb-2 d-block cart-remove cart_cross">
-                                          <div class="media">
-                                            
-                                             <div>
-                                                <a href="#"><img src="assets/img/product/product_13.jpg" class="fst-image img-fluid align-self-center" alt="product_13"></a>
-                                             </div>
-                                             <div class="media-body">
-                                                <h6 class="mt-0 f_15">Media heading</h6>
-                                                <p><span class="f_13">1 x $ 299.00</span></p>
-                                             </div>
-                                          </div>
-                                       </li>
-                                       <li class="pb-2 d-block cart-remove border-bottom pl-0 cart_cross wblastcart">
-                                          <!-- <span class=""></span> -->
-                                          <div class="media ">
-                                             
-                                             <div>
-                                                <a href="#"><img src="assets/img/product/product_21.jpg" class="fst-image img-fluid align-self-center" alt="product_21"></a>
-                                             </div>
-                                             <div class="media-body">
-                                                <h6 class="mt-0 f_15">Media heading</h6>
-                                                <p><span>1 x $ 299.00</span></p>
-                                             </div>
-                                          </div>
-                                       </li>
-
-
-                                          <li class="d-block text-muted font-weight-bolderer p-2 border-bottom">
-                                             <span class="text-left">subtotal:</span>
-                                             <span class="float-right">$230.00</span>
+                                 <span class="dropdown-toggle Price-amount" role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+                                 
+                                 <div class="dropdown-menu s_cart dropdown-menu-right">
+                                    <ul class="shopping-cart p-2">
+                                       <% if (cart && cart.length > 0) { %>
+                                          <% cart.forEach(function(cartItem) { %>
+                                              <% cartItem.items.forEach(function(item) { %>
+                                                  <li class="pb-2 d-block">
+                                                      <div class="media"> 
+                                                          <div class="non-clickable-image">
+                                                              <img src="/assets/sharp/<%= item.productId.images[0] %>" class="fst-image img-fluid align-self-center" alt="product_13"></a>
+                                                          </div>
+                                                          <div class="media-body">
+                                                              <h6 class="m-3 f_15"><%= item.productId.name %></h6>
+                                                              <% if ( item.productId.offer && item.productId.offer.discountAmount ) { %>
+                                                                  <span class="text-center prices">
+                                                                      <del class="text-center text-muted price">&nbsp;&nbsp; ₹<%= item.productId.price %> </del>
+                                                                      <span class="font-weight-bolder price text-success">&nbsp; ₹<%= item.productId.price - item.productId.offer.discountAmount %></span>
+                                                                  </span>
+                                                              <% } else if ( item.productId.categoryDiscount ) { %>
+                                                                  <span class="text-center prices">
+                                                                      <del class="text-center text-muted price">&nbsp;&nbsp; ₹<%= item.productId.price %> </del>
+                                                                      <span class="font-weight-bolder price text-success">&nbsp; ₹<%= item.productId.price - item.productId.categoryDiscount %></span>
+                                                                  </span>
+                                                              <% } else { %>
+                                                                  <h6 class="m-3 f_15">₹<%= item.productId.price %></h6>
+                                                              <% } %>
+                                                          </div>
+                                                      </div>
+                                                  </li>
+                                              <% }); %>
+                                          <% }); %>
+                                      <% } else { %>
+                                          <li class="pb-2 d-block">
+                                              <p>No items in the cart</p>
                                           </li>
-                                          <li class="d-block font-weight-bolderer pt-2">
-                                             <span class="text-left"><a href="/cart">view cart</a></span>
-                                             <span class="float-right"><a href="/checkout">check out</a></span>
-                                          </li>
+                                      <% } %>
+                                
+                                        <li class="d-block font-weight-bolderer pt-2">
+                                            <span class="text-left"><a href="/cart">view cart</a></span>
+                                            <span class="float-right"><a href="/checkOut">check out</a></span>
+                                        </li>
                                     </ul>
                                     <p class="text-center cartempty">Your Shopping cart is empty!</p>
-                                 </div>
+                                </div>
                                </li>
                               <%}%>
                            </ul>
@@ -441,80 +403,7 @@
                <div class="col-lg-12 text-left">
                   <ul class="main-menu navbar">
                      <li><a href="/">Home</a></li>
-                     <li>
-                  <a  href="/shop" ">shop&nbsp;<span class="float-right"><i"></i></span></a>
-               </li>
-               </li>
-               <li class="dropdown mega_menu m1 level-1 font-weight-bolderer">
-                  <a class="dropdown-toggle" href="single-product.html"  role="button" data-toggle="dropdown" aria-expanded="false">category&nbsp;<span class="float-right"><i class="fas fa-angle-down"></i></span></a>
-                  <ul class="dropdown-menu">
-                     <li>
-                        <ul class="row mx-0">
-                           <li class="mg_menu col-lg-3 col-md-12 ">
-                              <ul class="sub-category">
-                                 <li class="h_title text-uppercase font-weight-bolder border-bottom d-block">Pot</li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Pigmyweeds</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Indoor Plants</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">outdoor Plants</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Flamingo plant</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Succulent Plant</a></li>
-                              </ul>
-                           </li>
-                           <li class="mg_menu col-lg-3 col-md-12 ">
-                              <ul class="sub-category">
-                                 <li class="h_title text-uppercase font-weight-bolder border-bottom d-block">Plant</li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Fragrant Plants</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Purifying Plant</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Live Plant</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Raisin Pot</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html"> Decorative Pot</a></li>
-                              </ul>
-                           </li>
-                           <li class="mg_menu col-lg-3 col-md-12 ">
-                              <ul class="sub-category">
-                                 <li class="h_title text-uppercase font-weight-bolder border-bottom d-block">Crassula</li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Nerve Plant</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Flowering Plants</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Plant Seed</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Luck Plants</a></li>
-                                 <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="shop-left-sidebar.html">Plant House</a></li>
-                              </ul>
-                           </li>
-                           <li class="mg_menu col-lg-3 col-md-12">
-                              <ul>
-                                 <li class="d-block"><a href="single-product.html"><img src="assets/img/m_menu.jpg" class="fst-image mx-auto d-block mb-1 img-fluid" alt="m_menu"></a></li>
-                              </ul>
-                           </li>
-                        </ul>
-                     </li>
-                  </ul>
-               </li>
-               <li>
-                  <a class="dropdown-toggle" href="blog.html"  role="button" data-toggle="dropdown" aria-expanded="false">blog&nbsp;<span class="float-right"><i class="fas fa-angle-down"></i></span></a>
-                  <ul class="dropdown-menu all-page-drop">
-                     <li><a class="dropdown-item font-weight-bolder" href="blog.html">blog</a></li>
-                     <li><a class="dropdown-item font-weight-bolder" href="blog-left-sidebar.html">left sidebar</a></li>
-                     <li><a class="dropdown-item font-weight-bolder" href="blog-right-sidebar.html">right sidebar</a></li>
-                  </ul>
-               </li>
-               <li><a href="portfolio-grid-4.html">gallery</a></li>
-               <li><a href="about-us.html">about us</a></li>
-               <li>
-                  <a class="dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-expanded="false">pages  <i class="fas fa-angle-down"></i></a>
-                  <ul class="dropdown-menu all-page-drop">
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="about-us.html">about us</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="single-product.html">single product</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="single-blog.html">single blog</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="login.html">login</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="registration.html">registration</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="cart.html">cart</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="compare.html">compare</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="wishlist.html">wishlist</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="checkout.html">check out</a></li>
-                     <li class="d-block"><a class="dropdown-item font-weight-bolderer" href="forgot.html">forgot password</a></li>
-                  </ul>
-               </li>
-               <li><a href="contact-us.html">contact-us</a></li>
+                     <li><a href="/shop">shop&nbsp;</a></li>
             </ul>
          </div>
          <!-- col-lg-12 text-left -->
@@ -727,7 +616,7 @@
                      </li>
                      <li class="ser-t d-lg-inline-block d-md-block align-middle  text-left">
                         <h6>world wide shipping</h6>
-                        <p class="mb-0 text-muted">On Order Over $99</p>
+                        <p class="mb-0 text-muted">On Order Over ₹100</p>
                      </li>
                   </ul>
                </div>
@@ -757,7 +646,7 @@
             </div>
             <div class="col-12 col-lg-4 collection col-md-6">
                <div class="banner_text">
-                  <p class="sec-1">New Collection 2021</p>
+                  <p class="sec-1">New Collection </p>
                   <h1 class="sec-2">House Shape Plant </h1>
                   <p class="sec-3">Casual multifunctional sofabeds head elevation comfortable sofa at daytime ttransforms into changes to a very comfortable bed at night.
                   </p>
@@ -906,7 +795,7 @@
                      <a href="category.html">
                         <img src="assets/img/sm-sec-1.png" alt="sm-sec-1" class="w-100 img-fluid">
                      <div class="box-1">
-                        <h3 class="">Plant House (06)</h3>
+                        <a href="/shop?category=65e5ef2700b91dc27ec8e886" class="">Indoor plants </a>
                      </div>
                      </a>
                   </div>
@@ -915,7 +804,7 @@
                         <a href="category.html">
                            <img src="assets/img/sm-sec-2.png" alt="sm-sec-2" class="w-100 img-fluid">
                            <div class="box-1">
-                              <h3 class="">Small Plants (08)</h3>
+                              <a href="/shop?category=65e6942ceae264a7d317c5a9" class="">Outdoor plants </a>
                            </div>
                           </a> 
                      </div>
@@ -927,7 +816,7 @@
                          <a href="category.html">
                            <img src="assets/img/sm-sec-3.png" alt="sm-sec-3" class="w-100 img-fluid">
                            <div class="box-1">
-                              <h3 style="color: #6ea820;">Office Plants (12)</h3>
+                              <a href="/shop" style="color: #6ea820;">Shop</a>
                            </div>
                         </a>
                      </div>
@@ -935,7 +824,7 @@
                         <a href="category.html">
                         <img src="assets/img/sm-sec-4.png" alt="sm-sec-4" class="w-100 img-fluid">
                         <div class="box-1">
-                           <h3>Succulents (04)</h3>
+                           <a href="/shop?category=65e69451eae264a7d317c5ad" >Lucky Plants</a>
                         </div>
                      </a>
                      </div>
@@ -945,7 +834,7 @@
                         <a href="category.html">
                         <img src="assets/img/sm-sec-5.png" alt="sm-sec-5" class="w-100 img-fluid">
                         <div class="box-1">
-                           <h3 class="">Garden Plant (10)</h3>
+                           <a href="/shop?category=65e69470eae264a7d317c5b1" class="">Purifying Plants</a>
                         </div>
                      </a>
                      </div>
@@ -970,329 +859,54 @@
             <!-- row -->
             <div class="row">
                <div id="lastest_carousel" class="owl-carousel owl-theme pro_thumb">
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_1.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_1"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_6.jpg" class="second-img mx-auto d-block img-fluid" alt="product_6"></a>
+                   <!-- item --> 
+                   <% lastFiveProducts.forEach((product, index) => { %>
+                       <!-- item -->
+                       <div class="item">
+                           <div class="col-12">
+                               <div class="product_thumb bg-white rounded">
+                                   <div class="pro_image">
+                                       <a href="/single-product?id=<%= product._id %>"><img src="/assets/sharp/<%= product.images[1] %>" class="fst-image mx-auto d-block img-fluid" alt="product_1"></a>
+                                       <a href="/single-product?id=<%= product._id %>"><img src="/assets/sharp/<%= product.images[2] %>" class="second-img mx-auto d-block img-fluid" alt="product_2"></a>
+                                   </div>
+                                   <div class="text-center">
+                                       <div class="button-group">
+                                           <a href="#" class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
+                                           <a href="#" class="symbol pro_eye" data-toggle="modal" data-target="#eye_model"></a>
+                                           <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model"></a>
+                                       </div>
+                                       <div class="main_text">
+                                           <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer"><%= product.name %></a></h2>
+                                           <div class="star">
+                                               <!-- Your star rating code here -->
+                                           </div>
+                                           <% if (product.offer && product.offer.discountAmount) { %>
+                                               <span class="text-center prices">
+                                                   <del class="text-center text-muted price">₹<%= product.price %> </del>
+                                                   <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price - product.offer.discountAmount %></span>
+                                               </span>
+                                           <% } else if (product.categoryDiscount) { %>
+                                               <span class="text-center prices">
+                                                   <del class="text-center text-muted price">₹<%= product.price %> </del>
+                                                   <span class="font-weight-bolder price text-success">&nbsp; ₹<%= product.price- product.categoryDiscount %> </span>
+                                               </span>
+                                           <% } else { %>
+                                               <span class="text-center prices"><span class="font-weight-bolderer price">₹<%= product.price %> </span> <del class="text-muted"></del></span>
+                                           <% } %>
+                                           <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
+                                               + ADD TO CART
+                                           </a>
+                                       </div>
+                                   </div>
+                               </div>
                            </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">Ugaoo Indoor Plants With Pot For Home</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item -->
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_16.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_16"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_1.jpg" class="second-img mx-auto d-block img-fluid" alt="product_1"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">Ugaoo Good Luck Jade Plant with Self Watering Pot</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item -->
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_17.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_17"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_18.jpg" class="second-img mx-auto d-block img-fluid" alt="product_18"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">Ayansh Plants Lily Plant  (Hybrid, Pack of 2)</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item -->
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_19.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_19"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_20.jpg" class="second-img mx-auto d-block img-fluid" alt="product_20"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">get some deals Heart Leaf Oxycardium Plant</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item -->
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_21.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_21"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_22.jpg" class="second-img mx-auto d-block img-fluid" alt="product_22"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">GreenBourne Areca Plam  (Hybrid, Pack of 1)</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item --> 
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_23.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_23"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_24.jpg" class="second-img mx-auto d-block img-fluid" alt="product_24"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">Platycladus/Morpankhi Plant</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item --> 
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_25.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_25"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_26.jpg" class="second-img mx-auto d-block img-fluid" alt="product_26"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">NurseryNature Asparagus live</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item --> 
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_27.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_27"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_28.jpg" class="second-img mx-auto d-block img-fluid" alt="product_28"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">plant center Variegated Saplera</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item --> 
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_29.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_29"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_30.jpg" class="second-img mx-auto d-block img-fluid" alt="product_30"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">GreenBourne Coleus Plant  (Hybrid, Pack of 1)</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item --> 
-                  <div class="item">
-                     <div class="col-12">
-                        <div class="product_thumb bg-white rounded">
-                           <div class="pro_image">
-                              <a href="single-product.html"><img src="assets/img/product/product_3.jpg" class="fst-image mx-auto d-block img-fluid" alt="product_3"></a>
-                              <a href="single-product.html"><img src="assets/img/product/product_2.jpg" class="second-img mx-auto d-block img-fluid" alt="product_2"></a>
-                           </div>
-                           <div class="text-center">
-                              <div class="button-group">
-                                 <a href="#"  class="symbol pro_heart" data-toggle="modal" data-target="#heart_model"></a>
-                                 <a href="#" class="symbol pro_eye"  data-toggle="modal" data-target="#eye_model"></a>
-                                 <a href="#" class="symbol pro_compare" data-toggle="modal" data-target="#compare_model "></a>   
-                              </div>
-                              <div class="main_text">
-                                 <h2 class="text-center pro-heading my-2"><a href="single-product.html" class="font-weight-bolderer">MorningVale Croton Mammy pot</a></h2>
-                                 <div class="star">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </div>
-                                 <span class="text-center prices"><span class="font-weight-bolderer price">$69.00 </span> <del class="text-muted">$100.00</del></span>
-                                 <a href="#" class="symbol add_to_cart" data-toggle="modal" data-target="#cart_model">
-                                 + ADD TO CART
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- item --> 
+                       </div>
+                       <!-- item -->
+                   <% }) %>
+                   <!-- item --> 
                </div>
                <!-- owl-carousel-1 -->
-            </div>
+           </div>
             <div class="text-center">
                <button type="btn" type="submit" class="products-btn"><a href="/shop">All Products</a></button>
             </div>
@@ -1310,7 +924,7 @@
                   <div class="col-12">
                      <div class="mr-jhon">
                         <p class="">
-                           Sed elit quam the iaculis sed semper or sit amet the udin vitae nibh at magna akal semper Fusce commodo molestie elit quam, iaculis sum sempervitae nibh at magna semperusce commodo ltieelit semper quam molestie iaculis...
+                           Highly satisfied with products from plantlygreen.online! Exceptional quality and service. Will definitely be recommending to friends and family. Keep up the great work!
                         </p>
                      </div>
                      <div class="designer">
@@ -1318,7 +932,7 @@
                            <img src="assets/img/Testi-1.png" alt="Testi-1" class="jhon-img img-fluid">
                         </div>
                         <div class="name">
-                           <h5 class="">mr.John doe</h5>
+                           <h5 class="">Muhsina Muhammed Ali</h5>
                            <span>Designer</span>
                         </div>
                      </div>
@@ -1328,7 +942,7 @@
                   <div class="col-12">
                      <div class="mr-jhon">
                         <p class="">
-                           Sed elit quam the iaculis sed semper or sit amet the udin vitae nibh at magna akal semper Fusce commodo molestie elit quam, iaculis sum sempervitae nibh at magna semperusce commodo ltieelit semper quam molestie iaculis...
+                           Thrilled with plantlygreen.online! Impressive products and service. Will recommend to others. Keep up the great work!
                         </p>
                      </div>
                      <div class="designer">
@@ -1336,8 +950,8 @@
                            <img src="assets/img/Testi-2.png" alt="Testi-2" class="jhon-img img-fluid">
                         </div>
                         <div class="name">
-                           <h5 class="">mr.John doerrrr</h5>
-                           <span>Designer</span>
+                           <h5 class="">Zayed Zakkriya</h5>
+                           <span>business</span>
                         </div>
                      </div>
                   </div>
@@ -1346,7 +960,7 @@
                   <div class="col-12">
                      <div class="mr-jhon">
                         <p class="">
-                           Sed elit quam the iaculis sed semper or sit amet the udin vitae nibh at magna akal semper Fusce commodo molestie elit quam, iaculis sum sempervitae nibh at magna semperusce commodo ltieelit semper quam molestie iaculis...
+                           plantlygreen.online exceeded expectations! Top-notch products and service. Highly recommend. Kudos to the team!
                         </p>
                      </div>
                      <div class="designer">
@@ -1354,8 +968,8 @@
                            <img src="assets/img/Testi-3.png" alt="Testi-3" class="jhon-img img-fluid">
                         </div>
                         <div class="name">
-                           <h5 class="">mr.John doehhhh</h5>
-                           <span>Designer</span>
+                           <h5 class="">ishan </h5>
+                           <span></span>
                         </div>
                      </div>
                   </div>
@@ -1711,14 +1325,14 @@
                               <ul class="add_row">
                                  <li>
                                     <div class="data1 add contact-ic">
-                                       <a href="#">Demo A - 2  Puffin Street,<br> Puffinville India,  Surat</a>
+                                       <a href="#">Demo 123, Garden Street,India.,<br> Bangalore, Karnataka 670301, </a>
                                     </div>
                                  </li>
                                  <li>
-                                    <a href="#" class="contact-ic call_ic">+911234567890</a>
+                                    <a href="#" class="contact-ic call_ic">+91 95674 91453</a>
                                  </li>
                                  <li>
-                                    <a href="#" class="mail_f contact-ic mail_ic">website@gmail.com</a>
+                                    <a href="#" class="mail_f contact-ic mail_ic">plantlyonline@gmail.com</a>
                                  </li>
                               </ul>
                            </div>
@@ -1769,12 +1383,10 @@
                            </div>
                            <div class="categorie collapse" id="tproduct">
                               <ul>
-                                 <li><a href="shop-left-sidebar.html">Flowering Plants</a></li>
-                                 <li><a href="shop-left-sidebar.html">Plant Seed</a></li>
-                                 <li><a href="shop-left-sidebar.html">Luck Plants</a></li>
-                                 <li><a href="shop-left-sidebar.html">Raisin Pot</a></li>
-                                 <li><a href="shop-left-sidebar.html">Live Plant</a></li>
+                                 <li><a href="shop-left-sidebar.html">Indoor Plants</a></li>
+                                 <li><a href="shop-left-sidebar.html">Lucky Plants</a></li>
                                  <li><a href="shop-left-sidebar.html">outdoor Plants</a></li>
+                                 <li><a href="shop-left-sidebar.html">Purifying Plants</a></li>
                               </ul>
                            </div>
                         </div>
