@@ -454,7 +454,7 @@
                             <% for(let j = 0; j < salesReport[i].product.length; j++) { %>
                               <tr>
                                 <td class="text-white"><%= salesReport[i]._id.toString().slice(-5) %></td>
-                                <td class="text-white"><%= salesReport[i].userId.name %></td>
+                                <td class="text-white"><%= salesReport[i].shippingAddress.name %></td>
                                 <td class="text-white"><%= salesReport[i].product[j].productId.name %></td>
                                 <td class="text-white">₹ <%= salesReport[i].product[j].price %></td>
                                 <td class="text-white"><%= salesReport[i].paymentMethod %></td>

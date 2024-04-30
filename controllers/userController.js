@@ -362,6 +362,8 @@ const loadShop = async (req, res) => {
       productsQuery = productsQuery.regex("name", new RegExp(searchValue, "i"));
     }
 
+
+
     const totalProducts = await productModel.countDocuments(productsQuery);
     productsQuery = productsQuery.skip((page - 1) * limit).limit(limit);
 

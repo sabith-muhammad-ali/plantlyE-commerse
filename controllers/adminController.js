@@ -50,6 +50,19 @@ const loadDashboard = async (req, res) => {
     const orderData = await orderModel.find({});
     const productData = await productModel.find({});
     const categoryData = await categoryModel.find({});
+    const count = await categoryModel.countDocuments({});
+    const productCount = await productModel.countDocuments({});
+    const totalDiscount = await orderModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalDiscount: { $sum: "$discountAmount" }
+        }
+      }
+    ]);
+    
+
+    
 
     let totalSalesAmount = 0;
 
@@ -261,7 +274,10 @@ const loadDashboard = async (req, res) => {
       topCategoryLabels,
       topCategoryCount,
       topPerformingCategories,
-      filterData: filterData
+      filterData: filterData,
+      count,
+      productCount,
+      totalDiscount,
     });
   } catch (error) {
     console.log(error.message);
@@ -350,11 +366,13 @@ const loadSalesReport = async (req, res) => {
 
     salesReport.forEach((order) => {
       order.product.forEach((item) => {
-        if (item.productStatus === "Delivered") {
+        
           totalSalesAmount += item.price * item.quantity;
-        }
+        
       });
     });
+
+    console.log("sales-report",salesReport);
 
     const totalSales = salesReport.length;
 

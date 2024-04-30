@@ -991,6 +991,33 @@ document.getElementById('clearButton').addEventListener('click', function() {
                  searchInput.value = storedSearchValue;
              }
             });
+
+            function pagination(page) {
+    var queryString = window.location.search;
+    var params = new URLSearchParams(queryString);
+
+    // Preserve existing query parameters
+    var category = params.get('category');
+    var sort = params.get('sort');
+    var search = params.get('search');
+
+    params.set('page', page);
+
+    // Add selected category, sort, and search to the pagination link
+    if (category) {
+        params.set('category', category);
+    }
+    if (sort) {
+        params.set('sort', sort);
+    }
+    if (search) {
+        params.set('search', search);
+    }
+
+    var newQueryString = params.toString();
+    var newUrl = `/shop?${newQueryString}`;
+    window.location.href = newUrl;
+}
       </script>
       
 
