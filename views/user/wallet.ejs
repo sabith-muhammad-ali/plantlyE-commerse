@@ -480,26 +480,32 @@
                  </tr>
              </thead>
              <tbody>
-               <% console.log("walletData:",walletData) %>
-               <% for (let i = 0; i < walletData.history.length; i++) { %>
-
-                  <tr>
-                      <td><%= i + 1 %></td>
-                      <td><%= walletData.history[i].amount %></td>
-                      <td><%= walletData.history[i].date.toLocaleString() %></td>
-                      <td><%= walletData.history[i].reason%></td>
-                      <td class="<%= walletData.history[i].transaction === 'Debit' ? 'debit' : 'credit' %>">
-                        <%= walletData.history[i].transaction %>
-                    </td>
-                  </tr>
+               <% if (walletData && walletData.history) { %>
+                   <% for (let i = 0; i < walletData.history.length; i++) { %>
+                       <tr>
+                           <td><%= i + 1 %></td>
+                           <td><%= walletData.history[i].amount %></td>
+                           <td><%= walletData.history[i].date.toLocaleString() %></td>
+                           <td><%= walletData.history[i].reason %></td>
+                           <td class="<%= walletData.history[i].transaction === 'Debit' ? 'debit' : 'credit' %>">
+                               <%= walletData.history[i].transaction %>
+                           </td>
+                       </tr>
+                   <% } %>
+               <% } else { %>
+                   <tr>
+                       <td colspan="5">No transaction history available.</td>
+                   </tr>
                <% } %>
-                 
-             </tbody>
+           </tbody>
          </table>
          <div>
-             <span class="font-weight-bold">Total Wallet Price:</span>
-             <span id="total_wallet_price" class="font-weight-bold text-success"><%= walletData.amount %></span>
-         </div>
+            <span class="font-weight-bold">Total Wallet Price:</span>
+            <% if (walletData && walletData.amount) { %>
+                <span id="total_wallet_price" class="font-weight-bold text-success"><%= walletData.amount %></span>
+            <% } else { %>
+                <span id="total_wallet_price" class="font-weight-bold text-success">N/A</span>
+            <% } %>
      </div>
       <!-- login_page -->
       <!-- forgot page  -->

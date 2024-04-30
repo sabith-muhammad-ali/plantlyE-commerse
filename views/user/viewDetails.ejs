@@ -37,6 +37,9 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         integrity="sha384-RTzjGCzKaJLUIh41wAipKGU7Ks2X+13RVXu0W7cpn6OM+gFKohA9yOnvg4KuooiC" crossorigin="anonymous">
+
+
+
 </head>
 <style>
     .cancel-btn {
@@ -1162,6 +1165,25 @@
 
         }
     </script>
+
+<!-- invoice -->
+<script>
+    var defaultData = {
+        products: [
+            {
+                quantity: 2,
+                description: "Test product",
+                taxRate: 6,
+                price: 33.87
+            }
+        ]
+    };
+
+    easyinvoice.createInvoice(defaultData, function (result) {
+        console.log('PDF base64 string: ', result.pdf);
+        // Here you can handle the PDF, e.g., display it in an iframe or download it
+    });
+</script>
 
 
 

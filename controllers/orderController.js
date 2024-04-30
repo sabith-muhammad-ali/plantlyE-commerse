@@ -9,7 +9,7 @@ const offerModel = require("../models/offerModel");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const path = require("path");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppetter-core");
 const ejs = require("ejs");
 const fs = require("fs");
 
@@ -429,7 +429,7 @@ const returnOrder = async (req, res) => {
         {
           $push: {
             history: {
-              Reason: "For Proudct Returned",
+              reason: "For Proudct Returned",
               amount: productPrice,
               transaction: "Credited",
               date: new Date(),
@@ -503,7 +503,10 @@ const invoice = async (req, res) => {
       }
     );
 
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+       headless: "new",
+       executablePath: '/snap/bin/chromium', 
+      });
     const page = await browser.newPage();
 
     await page.setContent(updatedHtml, { waitUntil: "networkidle0" });

@@ -337,7 +337,7 @@
                                  
                                  <div class="dropdown-menu s_cart dropdown-menu-right">
                                     <ul class="shopping-cart p-2">
-                                       <% if (cart && cart.length > 0) { %>
+                                       <% if (typeof cart !== 'undefined' && cart.length > 0) { %>
                                           <% cart.forEach(function(cartItem) { %>
                                               <% cartItem.items.forEach(function(item) { %>
                                                   <li class="pb-2 d-block">

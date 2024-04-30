@@ -789,23 +789,23 @@
                                                    Online Payment
                                                 </label>
                                              </span>
-                                             <% if (walletData.amount < subtotal) { %>
-                                                <span class="form-check d-inline-block ml-2">
-                                                   <input class="form-check-input" type="radio" name="payment"
-                                                      id="pay_by_bank" value="wallet" disabled>
-                                                   <label class="form-check-label" for="pay_by_bank">wallet</label>
-                                                </span>
-                                                <p class=" text text-danger">Wallet Balance: ₹<%= walletData.amount %>
-                                                      (Not enough balance)</p>
+                                             <% if (walletData && walletData.amount !== undefined) { %>
+                                                <% if (walletData.amount < subtotal) { %>
+                                                    <span class="form-check d-inline-block ml-2">
+                                                        <input class="form-check-input" type="radio" name="payment" id="pay_by_bank" value="wallet" disabled>
+                                                        <label class="form-check-label" for="pay_by_bank">wallet</label>
+                                                    </span>
+                                                    <p class=" text text-danger">Wallet Balance: ₹<%= walletData.amount %> (Not enough balance)</p>
                                                 <% } else { %>
-                                                   <span class="form-check d-inline-block ml-2">
-                                                      <input class="form-check-input" type="radio" name="payment"
-                                                         id="pay_by_bank" value="wallet">
-                                                      <label class="form-check-label" for="pay_by_bank">wallet</label>
-                                                   </span>
-                                                   <p>Wallet Balance: ₹<%= walletData.amount %>
-                                                   </p>
-                                                   <% } %>%>
+                                                    <span class="form-check d-inline-block ml-2">
+                                                        <input class="form-check-input" type="radio" name="payment" id="pay_by_bank" value="wallet">
+                                                        <label class="form-check-label" for="pay_by_bank">wallet</label>
+                                                    </span>
+                                                    <p>Wallet Balance: ₹<%= walletData.amount %></p>
+                                                <% } %>
+                                            <% } else { %>
+                                                <p>Wallet Is Empty!</p>
+                                            <% } %>
                                  </div>
                                  <div class="form-group form-check">
                                     <% if(subtotal > 1000) { %>
