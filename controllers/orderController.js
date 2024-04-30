@@ -9,7 +9,7 @@ const offerModel = require("../models/offerModel");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const path = require("path");
-const puppeteer = require("puppetter-core");
+const puppeteer = require("puppeteer-core");
 const ejs = require("ejs");
 const fs = require("fs");
 
