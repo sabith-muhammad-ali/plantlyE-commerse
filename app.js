@@ -38,6 +38,10 @@ const admin = require("./routes/adminRoute");
 app.use("/", user);
 app.use("/admin", admin);
 
+app.use((req, res, next) => {
+  res.status(404).render('user/page-not-found');
+});
+
 /////////////////////////////////////////////////////////////////
 const securePassword = async (password) => {
   try {
